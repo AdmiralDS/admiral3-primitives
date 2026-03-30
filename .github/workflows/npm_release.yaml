@@ -1,0 +1,53 @@
+name: Release Package to npmjs
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+jobs:
+  verify-release:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Check format
+        run: npm run format:check
+      - name: Check lint
+        run: npm run lint
+      - name: Check types
+        run: npm run typecheck
+      - name: Run unit tests
+        run: npm run test:run
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        run: npm run test:e2e
+      - name: Build package
+        run: npm run build
+      - name: Verify publish tarball
+        run: npm run pack:check
+
+  publish:
+    needs: verify-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+          registry-url: 'https://registry.npmjs.org'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Build package
+        run: npm run build
+      - name: Publish package
+        run: npm publish --provenance --access public

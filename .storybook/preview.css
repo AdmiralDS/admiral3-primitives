@@ -1,0 +1,19 @@
+body.sb-theme-dark,
+body.sb-theme-dark #storybook-root,
+body.sb-theme-dark .sb-show-main,
+body.sb-theme-dark .sb-main-padded,
+body.sb-theme-dark .docs-story {
+  color-scheme: dark;
+  background: Canvas;
+  color: CanvasText;
+}
+
+body.sb-theme-light,
+body.sb-theme-light #storybook-root,
+body.sb-theme-light .sb-show-main,
+body.sb-theme-light .sb-main-padded,
+body.sb-theme-light .docs-story {
+  color-scheme: light;
+  background: Canvas;
+  color: CanvasText;
+}
