@@ -1,0 +1,46 @@
+body.sb-theme-dark,
+body.sb-theme-dark #storybook-root,
+body.sb-theme-dark .sb-show-main,
+body.sb-theme-dark .sb-main-padded,
+body.sb-theme-dark .docs-story {
+  font-family: 'VTB Group UI', Arial, sans-serif;
+  color-scheme: dark;
+  background: Canvas;
+  color: CanvasText;
+}
+
+body.sb-theme-light,
+body.sb-theme-light #storybook-root,
+body.sb-theme-light .sb-show-main,
+body.sb-theme-light .sb-main-padded,
+body.sb-theme-light .docs-story {
+  font-family: 'VTB Group UI', Arial, sans-serif;
+  color-scheme: light;
+  background: Canvas;
+  color: CanvasText;
+}
+
+.story-canvas {
+  box-sizing: border-box;
+  min-block-size: 100vh;
+  inline-size: 100%;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.docs-story {
+  box-sizing: border-box;
+  min-block-size: 180px;
+  padding: 32px;
+}
+
+.docs-story > div:first-child {
+  box-sizing: border-box;
+  min-block-size: 116px;
+  inline-size: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

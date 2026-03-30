@@ -1,0 +1,36 @@
+{
+  "usesTypeScript": true,
+  "usesCssModule": false,
+  "usesStyledComponents": true,
+  "testLibrary": "Vitest",
+  "component": {
+    "default": {
+      "path": "src/components",
+      "withLazy": false,
+      "withStory": false,
+      "withStyle": true,
+      "withTest": true
+    },
+    "primitive": {
+      "path": "src/components",
+      "withLazy": false,
+      "withStory": true,
+      "withStyle": true,
+      "withTest": true,
+      "withIndex": true,
+      "withTypes": true,
+      "withConstants": true,
+      "withPlaygroundTemplate": true,
+      "customTemplates": {
+        "component": "scripts/templates/generate-react-component/TemplateName.tsx",
+        "style": "scripts/templates/generate-react-component/style.ts",
+        "test": "scripts/templates/generate-react-component/TemplateName.test.tsx",
+        "story": "scripts/templates/generate-react-component/TemplateName.stories.tsx",
+        "index": "scripts/templates/generate-react-component/index.ts",
+        "types": "scripts/templates/generate-react-component/types.ts",
+        "constants": "scripts/templates/generate-react-component/constants.ts",
+        "playgroundTemplate": "scripts/templates/generate-react-component/TemplateNamePlayground.template.tsx"
+      }
+    }
+  }
+}
