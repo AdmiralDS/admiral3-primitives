@@ -7,7 +7,7 @@ import { BadgeDotPlaygroundTemplate } from '../../src/components/BadgeDot/storie
 
 const defaultArgs: BadgeDotProps = {
   appearance: 'neutral',
-  dimension: 'S',
+  dimension: 'm',
 };
 
 export const badgeDotScenarios: PlaygroundScenario[] = [
@@ -20,13 +20,13 @@ export const badgeDotScenarios: PlaygroundScenario[] = [
     id: 'badge-dot/info',
     title: 'BadgeDot Info',
     render: () => (
-      <BadgeDotPlaygroundTemplate {...defaultArgs} appearance="info" data-testid="badge-dot" dimension="XXL" />
+      <BadgeDotPlaygroundTemplate {...defaultArgs} appearance="info" data-testid="badge-dot" dimension="xxl" />
     ),
   },
   {
     id: 'badge-dot/custom-colors',
     title: 'BadgeDot Custom Colors',
-    render: () => <BadgeDotCustomColorsTemplate {...defaultArgs} data-testid="badge-dot" dimension="XXL" />,
+    render: () => <BadgeDotCustomColorsTemplate {...defaultArgs} data-testid="badge-dot" dimension="xxl" />,
   },
   {
     id: 'badge-dot/dirty',

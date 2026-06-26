@@ -31,7 +31,7 @@ export default meta;
 
 const defaultArgs: BadgeDotProps = {
   appearance: 'neutral',
-  dimension: 'S',
+  dimension: 'm',
 };
 
 export const Playground: StoryObj<BadgeDotProps> = {

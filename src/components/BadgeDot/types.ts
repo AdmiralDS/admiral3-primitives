@@ -12,17 +12,17 @@ export interface BadgeDotColorConfig {
 }
 
 /** Размер BadgeDot. */
-export type BadgeDotSize = (typeof BADGE_DOT_DIMENSIONS)[number];
+export type BadgeDotDimension = (typeof BADGE_DOT_DIMENSIONS)[number];
 
 export interface BadgeDotProps extends HTMLAttributes<HTMLDivElement> {
   /** Цветовой вариант BadgeDot или пользовательские цвета. */
   appearance?: BadgeDotAppearance | BadgeDotColorConfig;
   /** Размер BadgeDot. */
-  dimension?: BadgeDotSize;
+  dimension?: BadgeDotDimension;
 }
 
 export interface StyledBadgeDotProps {
   $appearance: BadgeDotAppearance;
   $colorConfig?: BadgeDotColorConfig;
-  $dimension: BadgeDotSize;
+  $dimension: BadgeDotDimension;
 }

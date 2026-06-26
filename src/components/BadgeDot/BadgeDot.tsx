@@ -6,7 +6,7 @@ import type { BadgeDotProps } from './types';
 const DEFAULT_APPEARANCE = 'neutral';
 
 export const BadgeDot = forwardRef<HTMLDivElement, BadgeDotProps>(
-  ({ appearance = DEFAULT_APPEARANCE, dimension = 'S', ...props }, ref) => {
+  ({ appearance = DEFAULT_APPEARANCE, dimension = 'm', ...props }, ref) => {
     const ariaHidden = props['aria-hidden'] ?? (props['aria-label'] || props['aria-labelledby'] ? undefined : true);
     const isCustomAppearance = typeof appearance === 'object';
     const presetAppearance = isCustomAppearance ? DEFAULT_APPEARANCE : appearance;
