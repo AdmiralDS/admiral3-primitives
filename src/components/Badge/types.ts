@@ -14,17 +14,17 @@ export interface BadgeColorConfig {
 }
 
 /** Размер Badge. */
-export type BadgeSize = (typeof BADGE_DIMENSIONS)[number];
+export type BadgeDimension = (typeof BADGE_DIMENSIONS)[number];
 
 export interface BadgeProps extends HTMLAttributes<HTMLDivElement> {
   /** Цветовой вариант Badge или пользовательские цвета. Значение по умолчанию 'neutral1'. */
   appearance?: BadgeAppearance | BadgeColorConfig;
-  /** Размер Badge. Значение по умолчанию 'S'. */
-  dimension?: BadgeSize;
+  /** Размер Badge. Значение по умолчанию 'm'. */
+  dimension?: BadgeDimension;
 }
 
 export interface StyledBadgeProps {
   $appearance: BadgeAppearance;
   $colorConfig?: BadgeColorConfig;
-  $dimension: BadgeSize;
+  $dimension: BadgeDimension;
 }

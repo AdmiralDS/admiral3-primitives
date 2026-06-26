@@ -9,7 +9,7 @@ export const BadgeDirtyTemplate = (args: BadgeProps) => {
       {BADGE_APPEARANCES.map((appearance) =>
         BADGE_DIMENSIONS.map((dimension) => (
           <Badge key={`${appearance}-${dimension}`} {...args} appearance={appearance} dimension={dimension}>
-            {dimension === 'S' ? 5 : 159}
+            {dimension === 's' ? 5 : 159}
           </Badge>
         )),
       )}

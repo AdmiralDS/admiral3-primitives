@@ -1,8 +1,8 @@
 import { textStyles } from '@admiral-ds/admiral3-tokens';
 import styled, { type CSSObject } from 'styled-components';
 
-import { BADGE_SIZE_PARAMETERS } from './constants';
-import type { BadgeAppearance, BadgeSize, StyledBadgeProps } from './types';
+import { BADGE_DIMENSION_PARAMETERS } from './constants';
+import type { BadgeAppearance, BadgeDimension, StyledBadgeProps } from './types';
 import { cssToken } from '../../theme/cssToken';
 import type { CssToken } from '../../theme/cssToken';
 
@@ -57,9 +57,9 @@ export const badgeTextColors: Record<BadgeAppearance, CssToken> = {
   whiteStatic: cssToken('--admiral-color-text-primary-text1-rest', (theme) => theme.color.text.primary.text1.rest),
 };
 
-export const badgeTypography: Record<BadgeSize, CSSObject> = {
-  S: textStyles.caption.caption1,
-  M: textStyles.body.body2Long,
+export const badgeTypography: Record<BadgeDimension, CSSObject> = {
+  s: textStyles.caption.caption1,
+  m: textStyles.body.body2Long,
 };
 
 export const StyledBadge = styled.div.attrs<
@@ -76,9 +76,9 @@ export const StyledBadge = styled.div.attrs<
   align-items: center;
   justify-content: center;
   width: fit-content;
-  min-width: ${({ $dimension }) => BADGE_SIZE_PARAMETERS[$dimension].size}px;
-  height: ${({ $dimension }) => BADGE_SIZE_PARAMETERS[$dimension].size}px;
-  padding: 0 ${({ $dimension }) => BADGE_SIZE_PARAMETERS[$dimension].horizontalPadding}px;
+  min-width: ${({ $dimension }) => BADGE_DIMENSION_PARAMETERS[$dimension].size}px;
+  height: ${({ $dimension }) => BADGE_DIMENSION_PARAMETERS[$dimension].size}px;
+  padding: 0 ${({ $dimension }) => BADGE_DIMENSION_PARAMETERS[$dimension].horizontalPadding}px;
   border-radius: var(--Round, 1000px);
   background-color: ${(props) =>
     props.$colorConfig?.backgroundColor ?? badgeBackgroundColors[props.$appearance](props)};

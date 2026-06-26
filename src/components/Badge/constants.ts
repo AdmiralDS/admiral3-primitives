@@ -1,4 +1,4 @@
-export const BADGE_DIMENSIONS = ['S', 'M'] as const;
+export const BADGE_DIMENSIONS = ['s', 'm'] as const;
 
 export const BADGE_APPEARANCES = [
   'neutral1',
@@ -15,15 +15,15 @@ export const BADGE_APPEARANCES = [
   'whiteStatic',
 ] as const;
 
-export const BADGE_SIZE_PARAMETERS: Record<
+export const BADGE_DIMENSION_PARAMETERS: Record<
   (typeof BADGE_DIMENSIONS)[number],
   { size: number; horizontalPadding: number }
 > = {
-  S: {
+  s: {
     size: 16,
     horizontalPadding: 4,
   },
-  M: {
+  m: {
     size: 20,
     horizontalPadding: 6,
   },
