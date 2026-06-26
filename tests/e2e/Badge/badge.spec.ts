@@ -19,12 +19,12 @@ test.describe('Badge playground', () => {
     await expect(badge).toBeVisible();
     await expect(badge).toHaveCSS('background-color', expectedBackgroundColor);
     await expect(badge).toHaveCSS('color', expectedTextColor);
-    await expect(badge).toHaveCSS('min-width', '20px');
-    await expect(badge).toHaveCSS('height', '20px');
+    await expect(badge).toHaveCSS('min-width', '16px');
+    await expect(badge).toHaveCSS('height', '16px');
 
     const box = await badge.boundingBox();
     expect(box).not.toBeNull();
-    expect(box?.height).toBeCloseTo(20, 1);
+    expect(box?.height).toBeCloseTo(16, 1);
 
     await page.locator('#playground-theme').selectOption('dark');
     await expect(page.locator('[data-admiral-theme]')).toHaveAttribute('data-admiral-theme', 'dark');

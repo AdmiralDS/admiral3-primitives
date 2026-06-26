@@ -31,7 +31,7 @@ export default meta;
 
 const defaultArgs: BadgeProps = {
   appearance: 'neutral1',
-  dimension: 'S',
+  dimension: 'm',
   children: 5,
 };
 
@@ -83,7 +83,7 @@ export const Appearances: StoryObj<BadgeProps> = {
 export const CustomColors: StoryObj<BadgeProps> = {
   args: {
     ...defaultArgs,
-    dimension: 'M',
+    dimension: 's',
     children: 8,
   },
   render: BadgeCustomColorsTemplate,

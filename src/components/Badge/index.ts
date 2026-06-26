@@ -1,2 +1,2 @@
 export { Badge } from './Badge';
-export type { BadgeAppearance, BadgeColorConfig, BadgeProps, BadgeSize } from './types';
+export type { BadgeAppearance, BadgeColorConfig, BadgeProps, BadgeDimension } from './types';

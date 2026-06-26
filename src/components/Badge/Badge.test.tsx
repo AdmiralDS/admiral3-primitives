@@ -7,12 +7,12 @@ import { ThemeProvider } from 'styled-components';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { Badge } from './Badge';
-import { BADGE_APPEARANCES, BADGE_DIMENSIONS, BADGE_SIZE_PARAMETERS } from './constants';
+import { BADGE_APPEARANCES, BADGE_DIMENSIONS, BADGE_DIMENSION_PARAMETERS } from './constants';
 import { badgeBackgroundColors, badgeTextColors, badgeTypography } from './style';
-import type { BadgeSize } from './types';
+import type { BadgeDimension } from './types';
 
-const getBadgeDimensionStyles = (dimension: BadgeSize) => {
-  const { size, horizontalPadding } = BADGE_SIZE_PARAMETERS[dimension];
+const getBadgeDimensionStyles = (dimension: BadgeDimension) => {
+  const { size, horizontalPadding } = BADGE_DIMENSION_PARAMETERS[dimension];
 
   return {
     minWidth: `${size}px`,
@@ -21,7 +21,7 @@ const getBadgeDimensionStyles = (dimension: BadgeSize) => {
   };
 };
 
-const getBadgeTypographyStyles = (dimension: BadgeSize) => ({
+const getBadgeTypographyStyles = (dimension: BadgeDimension) => ({
   fontSize: badgeTypography[dimension].fontSize,
   lineHeight: badgeTypography[dimension].lineHeight,
 });
@@ -63,11 +63,11 @@ describe('Badge', () => {
     expect(ref.current).toBe(screen.getByTestId('badge'));
   });
 
-  it('uses default neutral1 appearance and S dimension', () => {
+  it('uses default neutral1 appearance and M dimension', () => {
     render(<Badge data-testid="badge">5</Badge>);
 
     expect(screen.getByTestId('badge')).toHaveStyle({
-      ...getBadgeDimensionStyles('S'),
+      ...getBadgeDimensionStyles('m'),
       borderRadius: 'var(--Round, 1000px)',
       backgroundColor: resolveToken(badgeBackgroundColors.neutral1),
       color: resolveToken(badgeTextColors.neutral1),

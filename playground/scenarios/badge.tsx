@@ -7,7 +7,7 @@ import { BadgePlaygroundTemplate } from '../../src/components/Badge/stories/Badg
 
 const defaultArgs: BadgeProps = {
   appearance: 'neutral1',
-  dimension: 'S',
+  dimension: 'm',
   children: 5,
 };
 
@@ -21,7 +21,7 @@ export const badgeScenarios: PlaygroundScenario[] = [
     id: 'badge/info',
     title: 'Badge Info',
     render: () => (
-      <BadgePlaygroundTemplate {...defaultArgs} appearance="info" data-testid="badge" dimension="M">
+      <BadgePlaygroundTemplate {...defaultArgs} appearance="info" data-testid="badge" dimension="s">
         159
       </BadgePlaygroundTemplate>
     ),
