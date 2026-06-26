@@ -7,12 +7,12 @@ import { ThemeProvider } from 'styled-components';
 import { afterEach, describe, expect, it } from 'vitest';
 
 import { BadgeDot } from './BadgeDot';
-import { BADGE_DOT_APPEARANCES, BADGE_DOT_DIMENSIONS, BADGE_DOT_SIZE_PARAMETERS } from './constants';
+import { BADGE_DOT_APPEARANCES, BADGE_DOT_DIMENSIONS, BADGE_DOT_DIMENSION_PARAMETERS } from './constants';
 import { badgeDotBackgroundColors } from './style';
-import type { BadgeDotSize } from './types';
+import type { BadgeDotDimension } from './types';
 
-const getBadgeDotDimensionStyles = (dimension: BadgeDotSize) => {
-  const size = BADGE_DOT_SIZE_PARAMETERS[dimension];
+const getBadgeDotDimensionStyles = (dimension: BadgeDotDimension) => {
+  const size = BADGE_DOT_DIMENSION_PARAMETERS[dimension];
 
   return {
     width: `${size}px`,
@@ -67,7 +67,7 @@ describe('BadgeDot', () => {
     const dot = screen.getByTestId('badge-dot');
 
     expect(dot).toHaveStyle({
-      ...getBadgeDotDimensionStyles('S'),
+      ...getBadgeDotDimensionStyles('m'),
       borderRadius: '50%',
       backgroundColor: resolveToken(badgeDotBackgroundColors.neutral),
     });

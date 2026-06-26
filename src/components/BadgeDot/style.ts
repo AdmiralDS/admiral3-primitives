@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { BADGE_DOT_SIZE_PARAMETERS } from './constants';
+import { BADGE_DOT_DIMENSION_PARAMETERS } from './constants';
 import type { BadgeDotAppearance, StyledBadgeDotProps } from './types';
 import { cssToken } from '../../theme/cssToken';
 import type { CssToken } from '../../theme/cssToken';
@@ -36,7 +36,7 @@ export const StyledBadgeDot = styled.div.attrs<
   box-sizing: border-box;
   background-color: ${(props) =>
     props.$colorConfig?.backgroundColor ?? badgeDotBackgroundColors[props.$appearance](props)};
-  width: ${({ $dimension }) => BADGE_DOT_SIZE_PARAMETERS[$dimension]}px;
-  height: ${({ $dimension }) => BADGE_DOT_SIZE_PARAMETERS[$dimension]}px;
+  width: ${({ $dimension }) => BADGE_DOT_DIMENSION_PARAMETERS[$dimension]}px;
+  height: ${({ $dimension }) => BADGE_DOT_DIMENSION_PARAMETERS[$dimension]}px;
   border-radius: 50%;
 `;

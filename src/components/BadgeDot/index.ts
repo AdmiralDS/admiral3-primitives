@@ -1,2 +1,2 @@
 export { BadgeDot } from './BadgeDot';
-export type { BadgeDotAppearance, BadgeDotColorConfig, BadgeDotProps, BadgeDotSize } from './types';
+export type { BadgeDotAppearance, BadgeDotColorConfig, BadgeDotProps, BadgeDotDimension } from './types';
