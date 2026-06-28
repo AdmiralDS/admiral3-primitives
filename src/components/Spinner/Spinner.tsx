@@ -6,7 +6,7 @@ import type { SpinnerProps } from './types';
 const DEFAULT_COLOR = 'colored';
 
 export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
-  ({ dimension = 'M', color = DEFAULT_COLOR, svgMixin, ...props }, ref) => {
+  ({ dimension = 'm', color = DEFAULT_COLOR, svgMixin, ...props }, ref) => {
     const isCustomColor = typeof color === 'object';
     const presetColor = isCustomColor ? DEFAULT_COLOR : color;
     const colorConfig = isCustomColor ? color : undefined;
@@ -19,7 +19,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
         aria-live="assertive"
         {...props}
       >
-        <StyledSpinnerIcon $color={presetColor} $colorConfig={colorConfig} />
+        <StyledSpinnerIcon aria-hidden $color={presetColor} $colorConfig={colorConfig} />
       </StyledSpinner>
     );
   },

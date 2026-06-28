@@ -3,7 +3,6 @@ import { createRef } from 'react';
 import { cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { SPINNER_ROOT_DATA_ATTRIBUTE } from './constants';
 import { Spinner } from './Spinner';
 
 describe('Spinner', () => {
@@ -21,7 +20,6 @@ describe('Spinner', () => {
     render(<Spinner data-testid="spinner" title="Spinner" />);
 
     expect(screen.getByTestId('spinner')).toHaveAttribute('title', 'Spinner');
-    expect(screen.getByTestId('spinner')).toHaveAttribute(SPINNER_ROOT_DATA_ATTRIBUTE, 'true');
   });
 
   it('forwards ref to the root element', () => {

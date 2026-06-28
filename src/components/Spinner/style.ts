@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-import { SPINNER_SIZE_PARAMETERS } from './constants';
+import { SPINNER_DIMENSION_PARAMETERS } from './constants';
 import Spinner from './Subtract.svg?react';
 import type { SpinnerColor, StyledSpinnerProps, StyledSpinnerIconProps } from './types';
 import { cssToken } from '../../theme/cssToken';
@@ -9,8 +9,8 @@ import type { CssToken } from '../../theme/cssToken';
 export const StyledSpinner = styled.div<StyledSpinnerProps>`
   position: relative;
   container-type: inline-size;
-  height: ${({ $dimension }) => SPINNER_SIZE_PARAMETERS[$dimension]}px;
-  width: ${({ $dimension }) => SPINNER_SIZE_PARAMETERS[$dimension]}px;
+  height: ${({ $dimension }) => SPINNER_DIMENSION_PARAMETERS[$dimension]}px;
+  width: ${({ $dimension }) => SPINNER_DIMENSION_PARAMETERS[$dimension]}px;
 
   & svg {
     ${(p) => p.$svgMixin || ''}

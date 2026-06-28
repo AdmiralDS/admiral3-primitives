@@ -1,13 +1,11 @@
-export const SPINNER_ROOT_DATA_ATTRIBUTE = 'data-spinner';
-
-export const SPINNER_DIMENSIONS = ['XS', 'S', 'M', 'L', 'XL'] as const;
+export const SPINNER_DIMENSIONS = ['xs', 's', 'm', 'l', 'xl'] as const;
 
 export const SPINNER_COLORS = ['colored', 'neutral', 'staticWhite', 'inverted'] as const;
 
-export const SPINNER_SIZE_PARAMETERS: Record<(typeof SPINNER_DIMENSIONS)[number], number> = {
-  XS: 16,
-  S: 20,
-  M: 24,
-  L: 48,
-  XL: 64,
+export const SPINNER_DIMENSION_PARAMETERS: Record<(typeof SPINNER_DIMENSIONS)[number], number> = {
+  xs: 16,
+  s: 20,
+  m: 24,
+  l: 48,
+  xl: 64,
 };
