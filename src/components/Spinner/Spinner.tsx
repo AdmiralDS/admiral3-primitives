@@ -5,8 +5,11 @@ import type { SpinnerProps } from './types';
 
 const DEFAULT_APPEARANCE = 'colored';
 
+/** Spinner - это компонент для демонстрации процесса загрузки, ожидания.
+ * Может применяется как самостоятельный элемент, так и в составе других
+ * компонентов, например кнопок. */
 export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
-  ({ dimension = 'm', appearance = DEFAULT_APPEARANCE, svgMixin, ...props }, ref) => {
+  ({ dimension = 'm', appearance = DEFAULT_APPEARANCE, svgCssMixin, ...props }, ref) => {
     const isCustomAppearance = typeof appearance === 'object';
     const presetAppearance = isCustomAppearance ? DEFAULT_APPEARANCE : appearance;
     const colorConfig = isCustomAppearance ? appearance : undefined;
@@ -14,7 +17,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
       <StyledSpinner
         ref={ref}
         $dimension={dimension}
-        $svgMixin={svgMixin}
+        $svgCssMixin={svgCssMixin}
         role="alert"
         aria-live="assertive"
         {...props}

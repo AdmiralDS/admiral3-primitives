@@ -13,7 +13,7 @@ export const StyledSpinner = styled.div<StyledSpinnerProps>`
   width: ${({ $dimension }) => SPINNER_DIMENSION_PARAMETERS[$dimension]}px;
 
   & svg {
-    ${(p) => p.$svgMixin || ''}
+    ${(p) => p.$svgCssMixin || ''}
   }
 `;
 
@@ -40,27 +40,27 @@ export const StyledSpinnerIcon = styled(Spinner)<StyledSpinnerIconProps>`
   animation: ${spin} 1s linear infinite;
   /** styled-components поддерживает container query начиная с v6 */
   @container (min-width: 64px) {
-    path.spinner-icon:not([data-dimension='xl']) {
+    path:not([data-dimension='xl']) {
       display: none;
     }
   }
   @container (max-width: 48px) and (min-width: 25px) {
-    path.spinner-icon:not([data-dimension='l']) {
+    path:not([data-dimension='l']) {
       display: none;
     }
   }
   @container (max-width: 24px) and (min-width: 21px) {
-    path.spinner-icon:not([data-dimension='m']) {
+    path:not([data-dimension='m']) {
       display: none;
     }
   }
   @container (max-width: 20px) and (min-width: 17px) {
-    path.spinner-icon:not([data-dimension='ms']) {
+    path:not([data-dimension='s']) {
       display: none;
     }
   }
   @container (max-width: 16px) {
-    path.spinner-icon:not([data-dimension='s']) {
+    path:not([data-dimension='xs']) {
       display: none;
     }
   }

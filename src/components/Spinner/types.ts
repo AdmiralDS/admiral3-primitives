@@ -23,7 +23,7 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
 
 export interface StyledSpinnerProps {
   $dimension: SpinnerDimension;
-  $svgMixin?: ReturnType<typeof css>;
+  $svgCssMixin?: ReturnType<typeof css>;
 }
 
 export interface StyledSpinnerIconProps {
