@@ -3,13 +3,13 @@ import { forwardRef } from 'react';
 import { StyledSpinner, StyledSpinnerIcon } from './style';
 import type { SpinnerProps } from './types';
 
-const DEFAULT_COLOR = 'colored';
+const DEFAULT_APPEARANCE = 'colored';
 
 export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
-  ({ dimension = 'm', color = DEFAULT_COLOR, svgMixin, ...props }, ref) => {
-    const isCustomColor = typeof color === 'object';
-    const presetColor = isCustomColor ? DEFAULT_COLOR : color;
-    const colorConfig = isCustomColor ? color : undefined;
+  ({ dimension = 'm', appearance = DEFAULT_APPEARANCE, svgMixin, ...props }, ref) => {
+    const isCustomAppearance = typeof appearance === 'object';
+    const presetAppearance = isCustomAppearance ? DEFAULT_APPEARANCE : appearance;
+    const colorConfig = isCustomAppearance ? appearance : undefined;
     return (
       <StyledSpinner
         ref={ref}
@@ -19,7 +19,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
         aria-live="assertive"
         {...props}
       >
-        <StyledSpinnerIcon aria-hidden $color={presetColor} $colorConfig={colorConfig} />
+        <StyledSpinnerIcon aria-hidden $appearance={presetAppearance} $colorConfig={colorConfig} />
       </StyledSpinner>
     );
   },

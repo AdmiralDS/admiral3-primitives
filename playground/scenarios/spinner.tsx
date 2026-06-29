@@ -15,23 +15,23 @@ export const spinnerScenarios: PlaygroundScenario[] = [
   {
     id: 'spinner/neutral',
     title: 'Spinner Neutral',
-    render: () => <SpinnerPlaygroundTemplate {...defaultArgs} color="neutral" data-testid="spinner" />,
+    render: () => <SpinnerPlaygroundTemplate {...defaultArgs} appearance="neutral" data-testid="spinner" />,
   },
   {
     id: 'spinner/inverted',
     title: 'Spinner Inverted',
-    render: () => <SpinnerPlaygroundTemplate {...defaultArgs} color="inverted" data-testid="spinner" />,
+    render: () => <SpinnerPlaygroundTemplate {...defaultArgs} appearance="inverted" data-testid="spinner" />,
   },
   {
     id: 'spinner/staticWhite',
     title: 'Spinner Static White',
-    render: () => <SpinnerPlaygroundTemplate {...defaultArgs} color="staticWhite" data-testid="spinner" />,
+    render: () => <SpinnerPlaygroundTemplate {...defaultArgs} appearance="staticWhite" data-testid="spinner" />,
   },
   {
     id: 'spinner/customColor',
     title: 'Spinner Custom Color',
     render: () => (
-      <SpinnerPlaygroundTemplate {...defaultArgs} color={{ backgroundColor: 'green' }} data-testid="spinner" />
+      <SpinnerPlaygroundTemplate {...defaultArgs} appearance={{ backgroundColor: 'green' }} data-testid="spinner" />
     ),
   },
 ];

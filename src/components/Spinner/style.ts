@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components';
 
 import { SPINNER_DIMENSION_PARAMETERS } from './constants';
 import Spinner from './Subtract.svg?react';
-import type { SpinnerColor, StyledSpinnerProps, StyledSpinnerIconProps } from './types';
+import type { SpinnerAppearance, StyledSpinnerProps, StyledSpinnerIconProps } from './types';
 import { cssToken } from '../../theme/cssToken';
 import type { CssToken } from '../../theme/cssToken';
 
@@ -26,7 +26,7 @@ const spin = keyframes`
   }
 `;
 
-const spinnerBackgroundColors: Record<SpinnerColor, CssToken> = {
+const spinnerBackgroundColors: Record<SpinnerAppearance, CssToken> = {
   neutral: cssToken('--admiral-color-text-neutral-text1-rest', (theme) => theme.color.text.neutral.text1.rest),
   colored: cssToken('--admiral-color-text-primary-text1-rest', (theme) => theme.color.text.primary.text1.rest),
   staticWhite: cssToken(
@@ -66,7 +66,7 @@ export const StyledSpinnerIcon = styled(Spinner)<StyledSpinnerIconProps>`
   }
 
   path {
-    fill: ${(props) => props.$colorConfig?.backgroundColor ?? spinnerBackgroundColors[props.$color](props)};
+    fill: ${(props) => props.$colorConfig?.backgroundColor ?? spinnerBackgroundColors[props.$appearance](props)};
   }
   width: 100%;
   height: 100%;
@@ -77,4 +77,10 @@ export const StyledSpinnerIcon = styled(Spinner)<StyledSpinnerIconProps>`
  * 3) storybook + playground
  * 4) При изменениях в svg, playground нужно перезапускать
  * 6) подумать над импортом иконок
+ * appearance vs color
+ * a11y
+ * stories
+ * playground
+ * e2e
+ * unit tests
  */
