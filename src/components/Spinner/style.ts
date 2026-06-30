@@ -1,25 +1,10 @@
 import styled, { keyframes } from 'styled-components';
 
 import { SPINNER_DIMENSION_PARAMETERS } from './constants';
-import Spinner from './Subtract.svg?react';
+import SpinnerIcon from './SpinnerIcon.svg?react';
 import type { SpinnerAppearance, StyledSpinnerProps, StyledSpinnerIconProps } from './types';
 import { cssToken } from '../../theme/cssToken';
 import type { CssToken } from '../../theme/cssToken';
-
-export const StyledSpinner = styled.div.attrs<
-  StyledSpinnerProps & {
-    'data-appearance': string;
-    'data-dimension': string;
-  }
->((props) => ({
-  'data-appearance': props.$colorConfig ? 'custom' : props.$appearance,
-  'data-dimension': String(props.$dimension),
-}))<StyledSpinnerProps>`
-  position: relative;
-  container-type: inline-size;
-  height: ${({ $dimension }) => SPINNER_DIMENSION_PARAMETERS[$dimension]}px;
-  width: ${({ $dimension }) => SPINNER_DIMENSION_PARAMETERS[$dimension]}px;
-`;
 
 const spin = keyframes`
   0% {
@@ -40,8 +25,15 @@ export const spinnerBackgroundColors: Record<SpinnerAppearance, CssToken> = {
   inverted: cssToken('--admiral-color-text-neutral-inverted-rest', (theme) => theme.color.text.neutral.inverted.rest),
 };
 
-export const StyledSpinnerIcon = styled(Spinner)<StyledSpinnerIconProps>`
+/** TODO: разобраться, почему playground не реагирует на изменения в исходном svg-файле */
+export const StyledSpinnerIcon = styled(SpinnerIcon)<StyledSpinnerIconProps>`
+  path {
+    fill: ${(props) => props.$colorConfig?.backgroundColor ?? spinnerBackgroundColors[props.$appearance](props)};
+  }
+  width: 100%;
+  height: 100%;
   animation: ${spin} 1s linear infinite;
+
   /** styled-components поддерживает container query начиная с v6 */
   @container (min-width: 64px) {
     path:not([data-dimension='xl']) {
@@ -68,16 +60,19 @@ export const StyledSpinnerIcon = styled(Spinner)<StyledSpinnerIconProps>`
       display: none;
     }
   }
-
-  path {
-    fill: ${(props) => props.$colorConfig?.backgroundColor ?? spinnerBackgroundColors[props.$appearance](props)};
-  }
-  width: 100%;
-  height: 100%;
 `;
 
-/** TODO:
- * 4) При изменениях в svg, playground нужно перезапускать
- * 6) подумать над импортом иконок
- * a11y
- */
+export const StyledSpinner = styled.div.attrs<
+  StyledSpinnerProps & {
+    'data-appearance': string;
+    'data-dimension': string;
+  }
+>((props) => ({
+  'data-appearance': props.$colorConfig ? 'custom' : props.$appearance,
+  'data-dimension': String(props.$dimension),
+}))<StyledSpinnerProps>`
+  position: relative;
+  container-type: inline-size;
+  height: ${({ $dimension }) => SPINNER_DIMENSION_PARAMETERS[$dimension]}px;
+  width: ${({ $dimension }) => SPINNER_DIMENSION_PARAMETERS[$dimension]}px;
+`;
