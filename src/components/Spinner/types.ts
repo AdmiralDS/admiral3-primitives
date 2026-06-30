@@ -1,7 +1,5 @@
 import type { HTMLAttributes } from 'react';
 
-import type { css } from 'styled-components';
-
 import type { SPINNER_DIMENSIONS, SPINNER_APPEARANCES } from './constants';
 
 export type SpinnerDimension = (typeof SPINNER_DIMENSIONS)[number];
@@ -17,13 +15,12 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
   dimension?: SpinnerDimension;
   /** Цветовой вариант Spinner или пользовательские цвета. Значение по умолчанию 'colored'. */
   appearance?: SpinnerAppearance | SpinnerColorConfig;
-  /** CSS миксин svg иконки */
-  svgCssMixin?: ReturnType<typeof css>;
 }
 
 export interface StyledSpinnerProps {
   $dimension: SpinnerDimension;
-  $svgCssMixin?: ReturnType<typeof css>;
+  $appearance?: SpinnerAppearance;
+  $colorConfig?: SpinnerColorConfig;
 }
 
 export interface StyledSpinnerIconProps {

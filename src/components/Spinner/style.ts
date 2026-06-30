@@ -6,15 +6,19 @@ import type { SpinnerAppearance, StyledSpinnerProps, StyledSpinnerIconProps } fr
 import { cssToken } from '../../theme/cssToken';
 import type { CssToken } from '../../theme/cssToken';
 
-export const StyledSpinner = styled.div<StyledSpinnerProps>`
+export const StyledSpinner = styled.div.attrs<
+  StyledSpinnerProps & {
+    'data-appearance': string;
+    'data-dimension': string;
+  }
+>((props) => ({
+  'data-appearance': props.$colorConfig ? 'custom' : props.$appearance,
+  'data-dimension': String(props.$dimension),
+}))<StyledSpinnerProps>`
   position: relative;
   container-type: inline-size;
   height: ${({ $dimension }) => SPINNER_DIMENSION_PARAMETERS[$dimension]}px;
   width: ${({ $dimension }) => SPINNER_DIMENSION_PARAMETERS[$dimension]}px;
-
-  & svg {
-    ${(p) => p.$svgCssMixin || ''}
-  }
 `;
 
 const spin = keyframes`
@@ -26,7 +30,7 @@ const spin = keyframes`
   }
 `;
 
-const spinnerBackgroundColors: Record<SpinnerAppearance, CssToken> = {
+export const spinnerBackgroundColors: Record<SpinnerAppearance, CssToken> = {
   neutral: cssToken('--admiral-color-text-neutral-text1-rest', (theme) => theme.color.text.neutral.text1.rest),
   colored: cssToken('--admiral-color-text-primary-text1-rest', (theme) => theme.color.text.primary.text1.rest),
   staticWhite: cssToken(
@@ -73,14 +77,7 @@ export const StyledSpinnerIcon = styled(Spinner)<StyledSpinnerIconProps>`
 `;
 
 /** TODO:
- * 2) tests
- * 3) storybook + playground
  * 4) При изменениях в svg, playground нужно перезапускать
  * 6) подумать над импортом иконок
- * appearance vs color
  * a11y
- * stories
- * playground
- * e2e
- * unit tests
  */

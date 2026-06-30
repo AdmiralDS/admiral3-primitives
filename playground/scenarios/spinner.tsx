@@ -10,7 +10,7 @@ const defaultArgs: SpinnerProps = {
   dimension: 'm',
 };
 
-export const badgeScenarios: PlaygroundScenario[] = [
+export const spinnerScenarios: PlaygroundScenario[] = [
   {
     id: 'spinner/default',
     title: 'Spinner Default',

@@ -9,7 +9,7 @@ const DEFAULT_APPEARANCE = 'colored';
  * Может применяется как самостоятельный элемент, так и в составе других
  * компонентов, например кнопок. */
 export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
-  ({ dimension = 'm', appearance = DEFAULT_APPEARANCE, svgCssMixin, ...props }, ref) => {
+  ({ dimension = 'm', appearance = DEFAULT_APPEARANCE, ...props }, ref) => {
     const isCustomAppearance = typeof appearance === 'object';
     const presetAppearance = isCustomAppearance ? DEFAULT_APPEARANCE : appearance;
     const colorConfig = isCustomAppearance ? appearance : undefined;
@@ -17,7 +17,7 @@ export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
       <StyledSpinner
         ref={ref}
         $dimension={dimension}
-        $svgCssMixin={svgCssMixin}
+        $colorConfig={colorConfig}
         role="alert"
         aria-live="assertive"
         {...props}

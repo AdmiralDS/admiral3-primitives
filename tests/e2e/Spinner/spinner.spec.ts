@@ -1,16 +1,54 @@
 import { expect, test } from '@playwright/test';
 
-import { getPlaygroundScenarioPath } from '../utils';
+import { getPlaygroundScenarioPath, resolveCssColorToken } from '../utils';
 
-const defaultScenarioId = 'spinner/default';
+const neutralScenarioId = 'spinner/neutral';
+const customColorsScenarioId = 'spinner/custom-colors';
+const neutralBackgroundColorToken = '--admiral-color-text-neutral-text1-rest';
+const customBackgroundColorToken = '--admiral-color-base-extra-purple-base1-rest';
 
 test.describe('Spinner playground', () => {
-  test('renders default playground scenario', async ({ page }) => {
-    await page.goto(getPlaygroundScenarioPath(defaultScenarioId));
+  test('resolves token colors and layout size in the browser', async ({ page }) => {
+    await page.goto(getPlaygroundScenarioPath(neutralScenarioId));
 
-    const component = page.getByTestId('spinner');
+    const spinner = page.getByTestId('spinner');
+    const spinnerPath = spinner.locator('svg path:first-child');
+    const expectedBackgroundColor = await resolveCssColorToken(page, neutralBackgroundColorToken);
 
-    await expect(component).toBeVisible();
-    await expect(component).toHaveText('Spinner');
+    await expect(spinner).toBeVisible();
+    await expect(spinnerPath).toHaveCSS('fill', expectedBackgroundColor);
+    await expect(spinner).toHaveCSS('width', '20px');
+    await expect(spinner).toHaveCSS('height', '20px');
+
+    await page.locator('#playground-theme').selectOption('dark');
+    await expect(page.locator('[data-admiral-theme]')).toHaveAttribute('data-admiral-theme', 'dark');
+    const expectedDarkBackgroundColor = await resolveCssColorToken(page, neutralBackgroundColorToken);
+    await expect(spinnerPath).toHaveCSS('fill', expectedDarkBackgroundColor);
+  });
+  test('resolves custom color config in the browser', async ({ page }) => {
+    await page.goto(getPlaygroundScenarioPath(customColorsScenarioId));
+
+    const spinner = page.getByTestId('spinner');
+    const spinnerPath = spinner.locator('svg path:first-child');
+    const expectedBackgroundColor = await resolveCssColorToken(page, customBackgroundColorToken);
+    await expect(spinner).toHaveAttribute('data-appearance', 'custom');
+    await expect(spinnerPath).toHaveCSS('fill', expectedBackgroundColor);
+
+    await page.locator('#playground-theme').selectOption('dark');
+    await expect(page.locator('[data-admiral-theme]')).toHaveAttribute('data-admiral-theme', 'dark');
+    const expectedDarkBackgroundColor = await resolveCssColorToken(page, customBackgroundColorToken);
+    await expect(spinnerPath).toHaveCSS('fill', expectedDarkBackgroundColor);
+  });
+  test('check correct svg path visibility', async ({ page }) => {
+    await page.goto(getPlaygroundScenarioPath(customColorsScenarioId));
+
+    const spinner = page.getByTestId('spinner');
+    const svgIconPaths = spinner.locator('svg path:not([data-dimension="m"])');
+
+    const pathElements = await svgIconPaths.all();
+    expect(pathElements.length).toBeGreaterThan(0);
+    for (const path of pathElements) {
+      await expect(path).toHaveCSS('display', 'none');
+    }
   });
 });
