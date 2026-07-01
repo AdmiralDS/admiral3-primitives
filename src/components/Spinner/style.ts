@@ -25,7 +25,6 @@ export const spinnerBackgroundColors: Record<SpinnerAppearance, CssToken> = {
   inverted: cssToken('--admiral-color-text-neutral-inverted-rest', (theme) => theme.color.text.neutral.inverted.rest),
 };
 
-/** TODO: разобраться, почему playground не реагирует на изменения в исходном svg-файле */
 export const StyledSpinnerIcon = styled(SpinnerIcon)<StyledSpinnerIconProps>`
   path {
     fill: ${(props) => props.$colorConfig?.backgroundColor ?? spinnerBackgroundColors[props.$appearance](props)};
