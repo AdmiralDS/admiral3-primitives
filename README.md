@@ -26,16 +26,13 @@ npm install @admiral-ds/admiral3-icons @admiral-ds/admiral3-tokens react react-d
 
 ## Использование
 
+Импортируйте нужные компоненты и типы из корня пакета:
+
 ```tsx
-import { Badge, BadgeDot } from '@admiral-ds/admiral3-primitives';
+import { Badge, type BadgeProps } from '@admiral-ds/admiral3-primitives';
 
 export function Demo() {
-  return (
-    <>
-      <Badge appearance="info">5</Badge>
-      <BadgeDot appearance="info" dimension="S" aria-label="New item" />
-    </>
-  );
+  return <Badge appearance="info">5</Badge>;
 }
 ```
 
@@ -44,13 +41,8 @@ export function Demo() {
 
 ## Экспорт
 
-Используйте импорт из корня пакета:
-
-```tsx
-import { Badge, type BadgeProps } from '@admiral-ds/admiral3-primitives';
-```
-
-Публичный API доступен через единый root entry point пакета.
+Публичный API доступен через единый root entry point пакета. Примеры в README показывают способ импорта и не являются
+полным перечнем компонентов.
 
 ## Разработка
 

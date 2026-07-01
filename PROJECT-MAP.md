@@ -94,7 +94,7 @@ Storybook и playground импортируют пакет через alias `@adm
 - `generate-react-cli.json` - конфигурация `generate-react-cli` для scaffolding primitive-компонентов по локальным templates.
 - `LICENSE` - лицензионный файл пакета.
 - `PROJECT-MAP.md` - текущая карта структуры проекта и назначений файлов.
-- `README.md` - пользовательская документация пакета: установка, peer dependencies, базовый импорт, публичный root entrypoint и ссылки на contributor/test docs.
+- `README.md` - пользовательская документация пакета: установка, peer dependencies, способ импорта из публичного root entrypoint и ссылки на contributor/test docs. README не перечисляет все компоненты пакета.
 - `eslint.config.js` - flat config ESLint. Подключает TypeScript, import rules, React hooks, React Refresh, Storybook, Prettier и задает правила сортировки импортов, запрет `any`, циклов и дублей импортов.
 - `package-lock.json` - lockfile npm. Фиксирует точные версии зависимостей и должен меняться только вместе с изменениями зависимостей или npm metadata.
 - `package.json` - manifest npm-пакета. Описывает имя, версию, root `exports`, публикуемые файлы, side effects, scripts, peer/dev dependencies, repository metadata и publish config.
