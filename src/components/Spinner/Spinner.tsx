@@ -10,7 +10,8 @@ const DEFAULT_APPEARANCE = 'colored';
  * компонентов, например кнопок. */
 export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
   ({ dimension = 'm', appearance = DEFAULT_APPEARANCE, ...props }, ref) => {
-    const ariaLabel = props['aria-label'] || props['aria-labelledby'] || 'Loading...';
+    const hasAccessibleName = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined;
+    const ariaLabel = hasAccessibleName ? undefined : 'Loading...';
     const isCustomAppearance = typeof appearance === 'object';
     const presetAppearance = isCustomAppearance ? DEFAULT_APPEARANCE : appearance;
     const colorConfig = isCustomAppearance ? appearance : undefined;

@@ -35,6 +35,19 @@ describe('Spinner', () => {
     expect(screen.getByTestId('spinner')).toHaveAttribute('aria-label', 'Loading...');
   });
 
+  it('uses default aria-label when accessible name is not provided', () => {
+    render(<Spinner data-testid="spinner" />);
+
+    expect(screen.getByTestId('spinner')).toHaveAttribute('aria-label', 'Loading...');
+  });
+
+  it('does not use aria-labelledby value as aria-label', () => {
+    render(<Spinner data-testid="spinner" aria-labelledby="spinner-title" />);
+
+    expect(screen.getByTestId('spinner')).toHaveAttribute('aria-labelledby', 'spinner-title');
+    expect(screen.getByTestId('spinner')).not.toHaveAttribute('aria-label');
+  });
+
   it('forwards ref to the root element', () => {
     const ref = createRef<HTMLDivElement>();
 
