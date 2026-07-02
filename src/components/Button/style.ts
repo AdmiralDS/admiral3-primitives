@@ -2,30 +2,34 @@ import { textStyles } from '@admiral-ds/admiral3-tokens';
 import styled, { type CSSObject } from 'styled-components';
 
 // import { BUTTON_ROOT_DATA_ATTRIBUTE } from './constants';
-import { buttonAppearanceMixin } from './appearanceMixins';
+import { buttonAppearanceMixin } from './appearanceMixin/index';
 import type { ButtonDimension, StyledButtonProps } from './types';
 import { cssToken } from '../../theme/cssToken';
 
 const buttonTypography: Record<ButtonDimension, CSSObject> = {
-  L: textStyles.button.button1,
-  M: textStyles.button.button1,
-  S: textStyles.button.button2,
-  XS: textStyles.button.button3,
+  l: textStyles.button.button1,
+  m: textStyles.button.button1,
+  s: textStyles.button.button2,
+  xs: textStyles.button.button3,
 };
 
 const buttonGap: Record<ButtonDimension, number> = {
-  L: 8,
-  M: 8,
-  S: 6,
-  XS: 6,
+  l: 8,
+  m: 8,
+  s: 6,
+  xs: 6,
 };
 
 const buttonPadding: Record<ButtonDimension, string> = {
-  L: '11px 19px',
-  M: '7px 15px',
-  S: '5px 11px',
-  XS: '3px 7px',
+  l: '11px 19px',
+  m: '7px 15px',
+  s: '5px 11px',
+  xs: '3px 7px',
 };
+
+// TODO такое ощущение, что styled.attrs применяет Partial<StyledButtonProps>,
+// так как ts не подсвечивает ошибку, если не передан обязательный параметр
+// Подумать, в чем дело, может data-атрибуты вынести на уровень компонентов?
 
 export const StyledButton = styled.button.attrs<
   StyledButtonProps & {
@@ -33,8 +37,8 @@ export const StyledButton = styled.button.attrs<
     'data-dimension': string;
   }
 >((props) => ({
-  'data-appearance': props.$appearance,
-  'data-dimension': props.$dimension,
+  'data-appearance': props.$colorConfig ? 'custom' : props.$appearance,
+  'data-dimension': String(props.$dimension),
 }))<StyledButtonProps>`
   position: relative;
   box-sizing: border-box;
@@ -49,6 +53,12 @@ export const StyledButton = styled.button.attrs<
   vertical-align: middle;
   cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
   ${buttonAppearanceMixin}
+
+  &:focus-visible {
+    outline-offset: 2px;
+    outline: 2px solid
+      ${cssToken('--admiral-color-stroke-primary-stroke1-rest', (theme) => theme.color.stroke.primary.stroke1.rest)};
+  }
 `;
 
 /** Вопросы:

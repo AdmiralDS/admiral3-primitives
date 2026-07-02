@@ -5,9 +5,9 @@ import type { ButtonProps } from './types';
 
 /** Button primitive component. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ dimension = 'L', appearance = 'solid', children, ...props }, ref) => {
+  ({ dimension = 'm', appearance = 'solid', colorMode = 'colored', children, ...props }, ref) => {
     return (
-      <StyledButton ref={ref} {...props}>
+      <StyledButton ref={ref} $dimension={dimension} {...props}>
         {children}
       </StyledButton>
     );
