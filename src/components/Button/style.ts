@@ -1,7 +1,6 @@
 import { textStyles } from '@admiral-ds/admiral3-tokens';
 import styled, { type CSSObject } from 'styled-components';
 
-// import { BUTTON_ROOT_DATA_ATTRIBUTE } from './constants';
 import { buttonAppearanceMixin } from './appearanceMixin/index';
 import type { ButtonDimension, StyledButtonProps } from './types';
 import { cssToken } from '../../theme/cssToken';
@@ -21,10 +20,10 @@ const buttonGap: Record<ButtonDimension, number> = {
 };
 
 const buttonPadding: Record<ButtonDimension, string> = {
-  l: '11px 19px',
-  m: '7px 15px',
-  s: '5px 11px',
-  xs: '3px 7px',
+  l: '12px 20px',
+  m: '8px 16px',
+  s: '6px 12px',
+  xs: '4px 8px',
 };
 
 // TODO такое ощущение, что styled.attrs применяет Partial<StyledButtonProps>,
@@ -52,6 +51,7 @@ export const StyledButton = styled.button.attrs<
   border-radius: ${cssToken('--admiral-radius-by-base-4-medium', (theme) => theme.radius.byBase['4'].medium)};
   vertical-align: middle;
   cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
+
   ${buttonAppearanceMixin}
 
   &:focus-visible {
@@ -60,6 +60,12 @@ export const StyledButton = styled.button.attrs<
       ${cssToken('--admiral-color-stroke-primary-stroke1-rest', (theme) => theme.color.stroke.primary.stroke1.rest)};
   }
 `;
+
+// ${(props) => {
+//   if (isSolidGhost(props)) return buttonAppearanceMixin2; // Здесь props автоматически сужен до SolidGhostStylesProps
+//   if (isFlatOutline(props)) return buttonAppearanceMixin1; // Здесь props автоматически сужен до FlatOutlineStylesProps
+//   return '';
+// }}
 
 /** Вопросы:
  * 7) Пример с иконками (нужны ли отдельные параметры)

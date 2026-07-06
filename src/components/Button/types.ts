@@ -25,10 +25,12 @@ export interface ButtonColorConfig {
   textColor: string;
   /** Цвет обводки Button. */
   borderColor?: string;
+  // disabledBackgroundColor?: string;
+  // disabledTextColor?: string;
+  // disabledBorderColor?: string;
 }
 
 export interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  appearance?: ButtonAppearance | ButtonColorConfig;
   /** Размер Button. Значение по умолчанию 'm'. */
   dimension?: ButtonDimension;
   /** Пользовательские цвета Button. */
@@ -37,10 +39,9 @@ export interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
   children?: React.ReactNode;
 }
 
-/** Почему тоже самое не работает с Omit вместо Exclude? */
 export interface SolidGhostAppearanceProps extends BaseButtonProps {
   /** Цветовой вариант Button. */
-  appearance?: 'solid' | 'ghost';
+  appearance?: Extract<ButtonAppearance, 'solid' | 'ghost'>;
   /** Режим цветового окрашивания Button. Значение по умолчанию 'colored'. */
   colorMode?: Exclude<ButtonColorMode, 'staticWhite'>;
 }
@@ -56,6 +57,7 @@ export type ButtonProps = SolidGhostAppearanceProps | FlatOutlineAppearanceProps
 
 export interface StyledButtonProps {
   $appearance: ButtonAppearance;
+  $colorMode: ButtonColorMode;
   $dimension: ButtonDimension;
   $colorConfig?: ButtonColorConfig;
   // $displayAsDisabled?: boolean;

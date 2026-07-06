@@ -1,11 +1,12 @@
 import { css } from 'styled-components';
 
+import type { ButtonColorMode } from '../types';
 import { flatAppearanceMixin } from './flatAppearanceMixin';
 import { ghostAppearanceMixin } from './ghostAppearanceMixin';
+import { outlineAppearanceMixin } from './outlineAppearanceMixin';
 import { solidAppearanceMixin } from './solidAppearanceMixin';
-import { outlineAppearanceMixin } from '../appearanceMixins';
 
-export const buttonAppearanceMixin = css`
+export const buttonAppearanceMixin = css<{ $colorMode: ButtonColorMode }>`
   &[data-appearance~='solid'] {
     ${solidAppearanceMixin}
   }
