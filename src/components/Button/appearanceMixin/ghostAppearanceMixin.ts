@@ -1,48 +1,8 @@
 import { css } from 'styled-components';
 
+import { ghostColors } from './colors';
 import { cssToken } from '../../../theme/cssToken';
-import type { CssToken } from '../../../theme/cssToken';
 import type { ButtonColorMode } from '../types';
-
-type GhostColorSet = 'background' | 'backgroundHover' | 'backgroundPress' | 'color';
-
-const ghostWithColoredMode: Record<GhostColorSet, CssToken> = {
-  background: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
-  ),
-  backgroundHover: cssToken(
-    '--admiral-color-base-neutral-invisible-hover',
-    (theme) => theme.color.base.neutral.invisible.hover,
-  ),
-  backgroundPress: cssToken(
-    '--admiral-color-base-neutral-invisible-press',
-    (theme) => theme.color.base.neutral.invisible.press,
-  ),
-  color: cssToken('--admiral-color-text-primary-text1-rest', (theme) => theme.color.text.primary.text1.rest),
-};
-
-const ghostWithNeutralMode: Record<GhostColorSet, CssToken> = {
-  background: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
-  ),
-  backgroundHover: cssToken(
-    '--admiral-color-base-neutral-invisible-hover',
-    (theme) => theme.color.base.neutral.invisible.hover,
-  ),
-  backgroundPress: cssToken(
-    '--admiral-color-base-neutral-invisible-press',
-    (theme) => theme.color.base.neutral.invisible.press,
-  ),
-  color: cssToken('--admiral-color-text-neutral-text1-rest', (theme) => theme.color.text.neutral.text1.rest),
-};
-
-const ghostColors: Record<ButtonColorMode, Record<GhostColorSet, CssToken>> = {
-  colored: ghostWithColoredMode,
-  neutral: ghostWithNeutralMode,
-  staticWhite: ghostWithColoredMode,
-};
 
 export const ghostAppearanceMixin = css<{ $colorMode: ButtonColorMode }>`
   background-color: ${(p) => ghostColors[p.$colorMode].background};

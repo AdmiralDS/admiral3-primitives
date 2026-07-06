@@ -61,15 +61,8 @@ export const StyledButton = styled.button.attrs<
   }
 `;
 
-// ${(props) => {
-//   if (isSolidGhost(props)) return buttonAppearanceMixin2; // Здесь props автоматически сужен до SolidGhostStylesProps
-//   if (isFlatOutline(props)) return buttonAppearanceMixin1; // Здесь props автоматически сужен до FlatOutlineStylesProps
-//   return '';
-// }}
-
 /** Вопросы:
  * 7) Пример с иконками (нужны ли отдельные параметры)
  * 10) квадратное отображение
- * 11) whiteStatic/colored/neutral
  * 12) Custom color config
  */

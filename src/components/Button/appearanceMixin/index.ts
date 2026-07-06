@@ -1,12 +1,16 @@
 import { css } from 'styled-components';
 
-import type { ButtonColorMode } from '../types';
+import type { ButtonColorConfig, ButtonColorMode, ButtonAppearance } from '../types';
+import { customAppearanceMixin } from './customAppereanceMixin';
 import { flatAppearanceMixin } from './flatAppearanceMixin';
 import { ghostAppearanceMixin } from './ghostAppearanceMixin';
 import { outlineAppearanceMixin } from './outlineAppearanceMixin';
 import { solidAppearanceMixin } from './solidAppearanceMixin';
 
-export const buttonAppearanceMixin = css<{ $colorMode: ButtonColorMode }>`
+export const buttonAppearanceMixin = css<{
+  $colorMode: ButtonColorMode;
+  $appearance: ButtonAppearance;
+}>`
   &[data-appearance~='solid'] {
     ${solidAppearanceMixin}
   }
@@ -18,5 +22,8 @@ export const buttonAppearanceMixin = css<{ $colorMode: ButtonColorMode }>`
   }
   &[data-appearance~='ghost'] {
     ${ghostAppearanceMixin}
+  }
+  &[data-appearance~='custom'] {
+    ${customAppearanceMixin}
   }
 `;

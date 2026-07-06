@@ -17,18 +17,73 @@ export interface BackgroundColorConfig {
   press: string;
 }
 
-/** Пользовательские цвета Button. */
+/** Пользовательские цвета Button.
+ *
+ * В состоянии disabled кнопка по умолчанию окрашивается согласно appearance,
+ * если не заданы другие цвета через {color}Disabled свойства в colorConfig.
+ **/
 export interface ButtonColorConfig {
   /** Цвет фона Button. */
-  backgroundColor: BackgroundColorConfig;
+  backgroundColor?: BackgroundColorConfig;
+  /** Цвет фона Button в disabled состоянии. */
+  backgroundColorDisabled?: string;
   /** Цвет текста/иконок Button. */
-  textColor: string;
+  textColor?: string;
+  /** Цвет текста/иконок Button в disabled состоянии. */
+  textColorDisabled?: string;
   /** Цвет обводки Button. */
   borderColor?: string;
-  // disabledBackgroundColor?: string;
-  // disabledTextColor?: string;
-  // disabledBorderColor?: string;
+  /** Цвет обводки Button в disabled. */
+  borderColorDisabled?: string;
 }
+
+/** Пользовательские цвета Button.
+ *
+ * В состоянии disabled кнопка по умолчанию окрашивается согласно appearance,
+ * если не заданы другие цвета через {color}Disabled свойства в colorConfig.
+ *
+ * В режимах colorMode='neutral' или colorMode='staticWhite' кнопка
+ * по умолчанию окрашивается согласно appearance, если не заданы другие
+ * цвета через {color}Neutral и {color}StaticWhite свойства в colorConfig.
+ **/
+// export interface ButtonColorConfig {
+//   /** Цвет фона Button. */
+//   backgroundColor: BackgroundColorConfig;
+//   /** Цвет фона Button при colorMode равном neutral. */
+//   backgroundColorNeutral?: BackgroundColorConfig;
+//   /** Цвет фона Button при colorMode равном staticWhite. */
+//   backgroundColorStaticWhite?: BackgroundColorConfig;
+//   /** Цвет фона Button в disabled состоянии. */
+//   backgroundColorDisabled?: string;
+//   /** Цвет фона Button в disabled состоянии при colorMode равном neutral. */
+//   backgroundColorDisabledNeutral?: string;
+//   /** Цвет фона Button в disabled состоянии при colorMode равном staticWhite. */
+//   backgroundColorDisabledStaticWhite?: string;
+//   /** Цвет текста/иконок Button. */
+//   textColor: string;
+//   /** Цвет текста/иконок Button при colorMode равном neutral. */
+//   textColorNeutral?: string;
+//   /** Цвет текста/иконок Button при colorMode равном staticWhite. */
+//   textColorStaticWhite?: string;
+//   /** Цвет текста/иконок Button в disabled состоянии. */
+//   textColorDisabled?: string;
+//   /** Цвет текста/иконок Button в disabled состоянии при colorMode равном neutral. */
+//   textColorDisabledNeutral?: string;
+//   /** Цвет текста/иконок Button в disabled состоянии при colorMode равном staticWhite. */
+//   textColorDisabledStaticWhite?: string;
+//   /** Цвет обводки Button. */
+//   borderColor?: string;
+//   /** Цвет обводки Button при colorMode равном neutral. */
+//   borderColorNeutral?: string;
+//   /** Цвет обводки Button при colorMode равном staticWhite. */
+//   borderColorStaticWhite?: string;
+//   /** Цвет обводки Button в disabled состоянии. */
+//   borderColorDisable?: string;
+//   /** Цвет обводки Button в disabled состоянии при colorMode равном neutral. */
+//   borderColorDisabledNeutral?: string;
+//   /** Цвет обводки Button в disabled состоянии при colorMode равном staticWhite. */
+//   borderColorDisabledStaticWhite?: string;
+// }
 
 export interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /** Размер Button. Значение по умолчанию 'm'. */
