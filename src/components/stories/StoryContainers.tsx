@@ -20,7 +20,7 @@ export const StoryDemoContainer = styled.div<StoryDemoContainerProps>`
   ${({ $withBackground = true }) =>
     $withBackground &&
     css`
-      background-color: var(--admiral-color-base-neutral-base2-rest);
+      background-color: var(--admiral-color-neutral-base-2-rest);
     `}
 `;
 
@@ -37,11 +37,11 @@ export const StoryDemoDescription = styled.p<{ $textAlign?: 'start' | 'center' }
   ${textStyles.body.body2Long}
   max-inline-size: 640px;
   margin: 0;
-  color: var(--admiral-color-text-neutral-text1-rest);
+  color: var(--admiral-color-neutral-text-1-rest);
   text-align: ${({ $textAlign = 'start' }) => $textAlign};
 
   code {
     font: inherit;
-    color: var(--admiral-color-text-primary-text1-rest);
+    color: var(--admiral-color-primary-text-1-rest);
   }
 `;

@@ -13,7 +13,7 @@ export const BadgeDotCustomColorsTemplate = (args: BadgeDotProps) => {
       <BadgeDot
         {...args}
         appearance={{
-          backgroundColor: 'var(--admiral-color-base-extra-blue-base1-rest)',
+          backgroundColor: 'var(--admiral-color-blue-base-1-rest)',
         }}
       />
     </StoryDemoContainer>

@@ -13,7 +13,7 @@ export const SpinnerCustomColorsTemplate = (args: SpinnerProps) => {
       <Spinner
         {...args}
         appearance={{
-          backgroundColor: 'var(--admiral-color-base-extra-purple-base1-rest)',
+          backgroundColor: 'var(--admiral-color-purple-base-1-rest)',
         }}
       />
     </StoryDemoContainer>
