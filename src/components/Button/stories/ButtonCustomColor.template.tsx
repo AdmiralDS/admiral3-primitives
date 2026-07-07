@@ -5,7 +5,7 @@ import { StoryDemoContainer } from '../../stories/StoryContainers';
 export const ButtonCustomColorTemplate = (args: ButtonProps) => {
   return (
     <StoryDemoContainer>
-      <Button
+      {/* <Button
         {...args}
         colorConfig={{
           backgroundColor: {
@@ -14,7 +14,7 @@ export const ButtonCustomColorTemplate = (args: ButtonProps) => {
             press: 'var(--admiral-color-base-status-error-base1-press)',
           },
         }}
-      />
+      /> */}
       <Button
         {...args}
         appearance="outline"

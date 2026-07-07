@@ -10,6 +10,8 @@ import { ButtonIconBadgeTemplate } from './ButtonIconBadge.template';
 import buttonIconBadgeTemplateRaw from './ButtonIconBadge.template?raw';
 import { ButtonPlaygroundTemplate } from './ButtonPlayground.template';
 import buttonPlaygroundTemplateRaw from './ButtonPlayground.template?raw';
+import { ButtonStatesTemplate } from './ButtonStates.template';
+import buttonStatesTemplateRaw from './ButtonStates.template?raw';
 import { BUTTON_APPEARANCES, BUTTON_COLOR_MODES, BUTTON_DIMENSIONS } from '../constants';
 
 // Создаем плоский тип (без discriminated unions) специально для Storybook args
@@ -33,6 +35,21 @@ const meta = {
     dimension: {
       control: { type: 'inline-radio' },
       options: BUTTON_DIMENSIONS,
+    },
+    disabled: {
+      control: { type: 'boolean' },
+    },
+    displayAsDisabled: {
+      control: { type: 'boolean' },
+    },
+    displayAsSquare: {
+      control: { type: 'boolean' },
+    },
+    loading: {
+      control: { type: 'boolean' },
+    },
+    skeleton: {
+      control: { type: 'boolean' },
     },
   },
 } satisfies Meta<typeof Button>;
@@ -102,6 +119,22 @@ export const CustomColor: StoryObj<StorybookButtonProps> = {
     docs: {
       source: {
         code: buttonCustomColorTemplateRaw,
+      },
+    },
+  },
+};
+
+export const States: StoryObj<StorybookButtonProps> = {
+  args: defaultArgs,
+  render: (args) => <ButtonStatesTemplate {...(args as ButtonProps)} />,
+
+  parameters: {
+    controls: {
+      exclude: ['disabled', 'displayAsDisabled', 'loading', 'skeleton'],
+    },
+    docs: {
+      source: {
+        code: buttonStatesTemplateRaw,
       },
     },
   },

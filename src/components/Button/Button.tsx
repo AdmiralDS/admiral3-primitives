@@ -1,6 +1,8 @@
 import { forwardRef } from 'react';
 
-import { StyledButton } from './style';
+import { Spinner } from '@admiral-ds/admiral3-primitives';
+
+import { StyledButton, ButtonContent, SpinnerContainer } from './style';
 import type { ButtonProps } from './types';
 
 const DEFAULT_APPEARANCE = 'solid';
@@ -14,6 +16,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       appearance = DEFAULT_APPEARANCE,
       colorMode: userColorMode = DEFAULT_COLOR_MODE,
       colorConfig,
+      displayAsDisabled = false,
+      displayAsSquare = false,
+      loading = false,
+      loadingPosition,
+      skeleton = false,
       children,
       ...props
     },
@@ -30,6 +37,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       colorMode = DEFAULT_COLOR_MODE;
     }
 
+    const spinnerApperance =
+      appearance === 'solid' ? (colorMode === 'colored' ? 'staticWhite' : 'inverted') : colorMode;
+    const spinnerDimension = dimension === 'l' ? 'm' : dimension;
+
+    const hasAccessibleName = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined;
+    const ariaLabel = hasAccessibleName || !loading ? undefined : 'Loading...';
+
     return (
       <StyledButton
         ref={ref}
@@ -37,9 +51,27 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         $appearance={appearance}
         $colorConfig={colorConfig}
         $colorMode={colorMode}
+        $loading={loading}
+        $loadingPosition={loadingPosition}
+        $skeleton={skeleton}
+        $displayAsDisabled={displayAsDisabled}
+        aria-label={ariaLabel}
         {...props}
       >
-        {children}
+        {loading && !loadingPosition && (
+          <SpinnerContainer>
+            <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
+          </SpinnerContainer>
+        )}
+        <ButtonContent $dimension={dimension}>
+          {loading && loadingPosition === 'start' && (
+            <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
+          )}
+          {children}
+          {loading && loadingPosition === 'end' && (
+            <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
+          )}
+        </ButtonContent>
       </StyledButton>
     );
   },

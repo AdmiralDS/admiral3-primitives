@@ -1,7 +1,6 @@
 import { css } from 'styled-components';
 
 import { ghostColors } from './colors';
-import { cssToken } from '../../../theme/cssToken';
 import type { ButtonColorMode } from '../types';
 
 export const ghostAppearanceMixin = css<{ $colorMode: ButtonColorMode }>`
@@ -21,17 +20,10 @@ export const ghostAppearanceMixin = css<{ $colorMode: ButtonColorMode }>`
 
   &&&&[data-appearance~='disabled'],
   &&&:disabled {
-    background-color: ${cssToken(
-      '--admiral-color-base-neutral-invisible-rest',
-      (theme) => theme.color.base.neutral.invisible.rest,
-    )};
-    color: ${cssToken('--admiral-color-text-neutral-disable-rest', (theme) => theme.color.text.neutral.disable.rest)};
-    border-color: ${cssToken(
-      '--admiral-color-base-neutral-invisible-rest',
-      (theme) => theme.color.base.neutral.invisible.rest,
-    )};
+    background-color: ${(p) => ghostColors[p.$colorMode].backgroundDisabled};
+    color: ${(p) => ghostColors[p.$colorMode].colorDisabled};
     &&& *[fill^='#'] {
-      fill: ${cssToken('--admiral-color-text-neutral-disable-rest', (theme) => theme.color.text.neutral.disable.rest)};
+      fill: ${(p) => ghostColors[p.$colorMode].colorDisabled};
     }
   }
 `;

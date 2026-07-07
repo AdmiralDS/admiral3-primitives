@@ -1,7 +1,7 @@
 import { css } from 'styled-components';
 
 import type { ButtonColorConfig, ButtonColorMode, ButtonAppearance } from '../types';
-import { customAppearanceMixin } from './customAppereanceMixin';
+import { customAppearanceMixin } from './customAppearanceMixin';
 import { flatAppearanceMixin } from './flatAppearanceMixin';
 import { ghostAppearanceMixin } from './ghostAppearanceMixin';
 import { outlineAppearanceMixin } from './outlineAppearanceMixin';

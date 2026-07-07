@@ -22,7 +22,7 @@ export const ButtonIconBadgeTemplate = (args: ButtonProps) => {
         </Button>
 
         <Button {...args}>
-          Button<Badge>5</Badge>
+          Button<Badge dimension="s">5</Badge>
         </Button>
       </Appearances>
     </StoryDemoContainer>

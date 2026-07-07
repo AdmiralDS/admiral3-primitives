@@ -6,6 +6,8 @@ export type ButtonAppearance = (typeof BUTTON_APPEARANCES)[number];
 export type ButtonDimension = (typeof BUTTON_DIMENSIONS)[number];
 /** Режим цветового окрашивания Button. */
 export type ButtonColorMode = (typeof BUTTON_COLOR_MODES)[number];
+/** Варианты отображения Spinner относительно контента Button (слева или справа). */
+export type ButtonLoadingPosition = 'start' | 'end';
 
 /** Пользовательский цвет фона Button. */
 export interface BackgroundColorConfig {
@@ -19,8 +21,10 @@ export interface BackgroundColorConfig {
 
 /** Пользовательские цвета Button.
  *
- * В состоянии disabled кнопка по умолчанию окрашивается согласно appearance,
- * если не заданы другие цвета через {color}Disabled свойства в colorConfig.
+ * По умолчанию Button окрашивается согласно своему appearance,
+ * с помощью свойств ButtonColorConfig можно частично или полностью изменить
+ * цветовое окрашивание Button. Кроме режимов colorMode='neutral' и colorMode='staticWhite',
+ * когда кнопка находится в данных режимах, она не подлежит кастомизации
  **/
 export interface ButtonColorConfig {
   /** Цвет фона Button. */
@@ -90,6 +94,18 @@ export interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
   dimension?: ButtonDimension;
   /** Пользовательские цвета Button. */
   colorConfig?: ButtonColorConfig;
+  /** Оставаясь активной для нажатия, Button отображается в disabled-стиле */
+  displayAsDisabled?: boolean;
+  /** Отображать Button квадратной */
+  displayAsSquare?: boolean;
+  /** Отображение Spinner для визуализации состояния загрузки. */
+  loading?: boolean;
+  /** Отображение Spinner сбоку от основного контента кнопки (слева/справа).
+   * Если параметр не задан, то Spinner отображается поверх
+   * контента Button по центру, сохраняя изначальную ширину компонента. */
+  loadingPosition?: ButtonLoadingPosition;
+  /** Состояние скелетона */
+  skeleton?: boolean;
   /** Содержимое компонента. */
   children?: React.ReactNode;
 }
@@ -115,9 +131,9 @@ export interface StyledButtonProps {
   $colorMode: ButtonColorMode;
   $dimension: ButtonDimension;
   $colorConfig?: ButtonColorConfig;
-  // $displayAsDisabled?: boolean;
+  $displayAsDisabled?: boolean;
   // $displayAsSquare?: boolean;
-  // $loading?: boolean;
-  // $skeleton?: boolean;
-  // $buttonCssMixin?: ReturnType<typeof css>;
+  $loading?: boolean;
+  $loadingPosition?: ButtonLoadingPosition;
+  $skeleton?: boolean;
 }
