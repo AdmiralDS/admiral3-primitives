@@ -7,7 +7,14 @@ export const BUTTON_APPEARANCES = ['solid', 'outline', 'flat', 'ghost'] as const
 
 export const BUTTON_COLOR_MODES = ['colored', 'neutral', 'staticWhite'] as const;
 
-export const BUTTON_ICON_DIMENSIONS: Record<(typeof BUTTON_DIMENSIONS)[number], number> = {
+export const BUTTON_DIMENSION_PARAMETERS: Record<(typeof BUTTON_DIMENSIONS)[number], number> = {
+  l: 48,
+  m: 40,
+  s: 32,
+  xs: 24,
+};
+
+export const BUTTON_ICON_DIMENSION_PARAMETERS: Record<(typeof BUTTON_DIMENSIONS)[number], number> = {
   l: 24,
   m: 24,
   s: 20,
@@ -26,6 +33,13 @@ export const BUTTON_PADDING: Record<(typeof BUTTON_DIMENSIONS)[number], string> 
   m: '8px 16px',
   s: '6px 12px',
   xs: '4px 8px',
+};
+
+export const SQUARE_BUTTON_PADDING: Record<(typeof BUTTON_DIMENSIONS)[number], string> = {
+  l: '12px',
+  m: '8px',
+  s: '6px',
+  xs: '4px',
 };
 
 export const BUTTON_TYPOGRAPHY: Record<(typeof BUTTON_DIMENSIONS)[number], CSSObject> = {

@@ -132,7 +132,7 @@ export interface StyledButtonProps {
   $dimension: ButtonDimension;
   $colorConfig?: ButtonColorConfig;
   $displayAsDisabled?: boolean;
-  // $displayAsSquare?: boolean;
+  $displayAsSquare?: boolean;
   $loading?: boolean;
   $loadingPosition?: ButtonLoadingPosition;
   $skeleton?: boolean;

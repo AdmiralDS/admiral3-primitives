@@ -1,7 +1,8 @@
 import styled, { type ExecutionContext, css, keyframes } from 'styled-components';
 
 import { buttonAppearanceMixin } from './appearanceMixin/index';
-import { BUTTON_GAP, BUTTON_PADDING, BUTTON_ICON_DIMENSIONS, BUTTON_TYPOGRAPHY } from './constants';
+import { BUTTON_GAP } from './constants';
+import { buttonDimensionMixin } from './dimensionMixin';
 import type { ButtonDimension, StyledButtonProps } from './types';
 import { cssToken } from '../../theme/cssToken';
 
@@ -46,12 +47,6 @@ export const ButtonContent = styled.div<{ $dimension: ButtonDimension }>`
   > ${SpinnerContainer}, svg {
     flex: 0 0 auto;
   }
-
-  height: ${(p) => BUTTON_ICON_DIMENSIONS[p.$dimension]}px;
-  & > svg {
-    width: ${(p) => BUTTON_ICON_DIMENSIONS[p.$dimension]}px;
-    height: ${(p) => BUTTON_ICON_DIMENSIONS[p.$dimension]}px;
-  }
 `;
 
 // TODO такое ощущение, что styled.attrs применяет Partial<StyledButtonProps>,
@@ -75,16 +70,16 @@ export const StyledButton = styled.button.attrs<
   position: relative;
   box-sizing: border-box;
   display: inline-block;
-  padding: ${({ $dimension }) => BUTTON_PADDING[$dimension]};
-  ${({ $dimension }) => BUTTON_TYPOGRAPHY[$dimension]}
   white-space: nowrap;
   vertical-align: middle;
   appearance: none;
   border: none;
+  overflow: hidden;
   border-radius: ${(p) =>
     p.$skeleton ? 0 : cssToken('--admiral-radius-by-base-4-medium', (theme) => theme.radius.byBase['4'].medium)};
 
   ${buttonAppearanceMixin}
+  ${buttonDimensionMixin}
 
   cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
   ${(p) => (p.$loading || p.$skeleton) && 'pointer-events: none'};

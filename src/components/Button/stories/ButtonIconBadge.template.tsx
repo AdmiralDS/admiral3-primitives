@@ -20,7 +20,9 @@ export const ButtonIconBadgeTemplate = (args: ButtonProps) => {
         <Button {...args}>
           Button <ServiceCheckOutline />
         </Button>
-
+        <Button {...args} displayAsSquare>
+          <ServiceCheckOutline />
+        </Button>
         <Button {...args}>
           Button<Badge dimension="s">5</Badge>
         </Button>

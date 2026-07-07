@@ -55,6 +55,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         $loadingPosition={loadingPosition}
         $skeleton={skeleton}
         $displayAsDisabled={displayAsDisabled}
+        $displayAsSquare={displayAsSquare}
         aria-label={ariaLabel}
         {...props}
       >
