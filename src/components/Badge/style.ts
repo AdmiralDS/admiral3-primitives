@@ -7,54 +7,48 @@ import { cssToken } from '../../theme/cssToken';
 import type { CssToken } from '../../theme/cssToken';
 
 export const badgeBackgroundColors: Record<BadgeAppearance, CssToken> = {
-  neutral1: cssToken('--admiral-color-base-neutral-base1-rest', (theme) => theme.color.base.neutral.base1.rest),
-  neutral1Inactive: cssToken('--admiral-color-base-neutral-base1-rest', (theme) => theme.color.base.neutral.base1.rest),
-  neutral1Disable: cssToken('--admiral-color-base-neutral-base1-rest', (theme) => theme.color.base.neutral.base1.rest),
-  neutral2: cssToken('--admiral-color-base-neutral-opacity-rest', (theme) => theme.color.base.neutral.opacity.rest),
+  neutral1: cssToken('--admiral-color-neutral-base-1-rest', (theme) => theme.color.neutral.base._1.rest),
+  neutral1Inactive: cssToken('--admiral-color-neutral-base-1-rest', (theme) => theme.color.neutral.base._1.rest),
+  neutral1Disable: cssToken('--admiral-color-neutral-base-1-rest', (theme) => theme.color.neutral.base._1.rest),
+  neutral2: cssToken('--admiral-color-neutral-base-opacity-rest', (theme) => theme.color.neutral.base.opacity.rest),
   neutral2Inactive: cssToken(
-    '--admiral-color-base-neutral-opacity-rest',
-    (theme) => theme.color.base.neutral.opacity.rest,
+    '--admiral-color-neutral-base-opacity-rest',
+    (theme) => theme.color.neutral.base.opacity.rest,
   ),
   neutral2Disable: cssToken(
-    '--admiral-color-base-neutral-opacity-rest',
-    (theme) => theme.color.base.neutral.opacity.rest,
+    '--admiral-color-neutral-base-opacity-rest',
+    (theme) => theme.color.neutral.base.opacity.rest,
   ),
-  neutral3: cssToken('--admiral-color-base-neutral-inverted-rest', (theme) => theme.color.base.neutral.inverted.rest),
-  info: cssToken('--admiral-color-base-primary-base1-rest', (theme) => theme.color.base.primary.base1.rest),
-  warning: cssToken(
-    '--admiral-color-base-status-warning-base1-rest',
-    (theme) => theme.color.base.status.warning.base1.rest,
-  ),
-  success: cssToken(
-    '--admiral-color-base-status-success-base1-rest',
-    (theme) => theme.color.base.status.success.base1.rest,
-  ),
-  error: cssToken('--admiral-color-base-status-error-base1-rest', (theme) => theme.color.base.status.error.base1.rest),
+  neutral3: cssToken('--admiral-color-neutral-base-inverted-rest', (theme) => theme.color.neutral.base.inverted.rest),
+  info: cssToken('--admiral-color-primary-base-1-rest', (theme) => theme.color.primary.base._1.rest),
+  warning: cssToken('--admiral-color-warning-base-1-rest', (theme) => theme.color.warning.base._1.rest),
+  success: cssToken('--admiral-color-success-base-1-rest', (theme) => theme.color.success.base._1.rest),
+  error: cssToken('--admiral-color-error-base-1-rest', (theme) => theme.color.error.base._1.rest),
   whiteStatic: cssToken(
-    '--admiral-color-text-neutral-static-white-1',
-    (theme) => theme.color.text.neutral.staticWhite[1],
+    '--admiral-color-neutral-text-static-white-1',
+    (theme) => theme.color.neutral.text.staticWhite._1,
   ),
 };
 
 export const badgeTextColors: Record<BadgeAppearance, CssToken> = {
-  neutral1: cssToken('--admiral-color-text-neutral-text1-rest', (theme) => theme.color.text.neutral.text1.rest),
-  neutral1Inactive: cssToken('--admiral-color-text-neutral-text2-rest', (theme) => theme.color.text.neutral.text2.rest),
+  neutral1: cssToken('--admiral-color-neutral-text-1-rest', (theme) => theme.color.neutral.text._1.rest),
+  neutral1Inactive: cssToken('--admiral-color-neutral-text-2-rest', (theme) => theme.color.neutral.text._2.rest),
   neutral1Disable: cssToken(
-    '--admiral-color-text-neutral-disable-rest',
-    (theme) => theme.color.text.neutral.disable.rest,
+    '--admiral-color-neutral-text-disable-rest',
+    (theme) => theme.color.neutral.text.disable.rest,
   ),
-  neutral2: cssToken('--admiral-color-text-neutral-text1-rest', (theme) => theme.color.text.neutral.text1.rest),
-  neutral2Inactive: cssToken('--admiral-color-text-neutral-text2-rest', (theme) => theme.color.text.neutral.text2.rest),
+  neutral2: cssToken('--admiral-color-neutral-text-1-rest', (theme) => theme.color.neutral.text._1.rest),
+  neutral2Inactive: cssToken('--admiral-color-neutral-text-2-rest', (theme) => theme.color.neutral.text._2.rest),
   neutral2Disable: cssToken(
-    '--admiral-color-text-neutral-disable-rest',
-    (theme) => theme.color.text.neutral.disable.rest,
+    '--admiral-color-neutral-text-disable-rest',
+    (theme) => theme.color.neutral.text.disable.rest,
   ),
-  neutral3: cssToken('--admiral-color-text-neutral-inverted-rest', (theme) => theme.color.text.neutral.inverted.rest),
-  info: cssToken('--admiral-color-text-neutral-static-white-1', (theme) => theme.color.text.neutral.staticWhite[1]),
-  warning: cssToken('--admiral-color-text-neutral-static-white-1', (theme) => theme.color.text.neutral.staticWhite[1]),
-  success: cssToken('--admiral-color-text-neutral-static-white-1', (theme) => theme.color.text.neutral.staticWhite[1]),
-  error: cssToken('--admiral-color-text-neutral-static-white-1', (theme) => theme.color.text.neutral.staticWhite[1]),
-  whiteStatic: cssToken('--admiral-color-text-primary-text1-rest', (theme) => theme.color.text.primary.text1.rest),
+  neutral3: cssToken('--admiral-color-neutral-text-inverted-rest', (theme) => theme.color.neutral.text.inverted.rest),
+  info: cssToken('--admiral-color-neutral-text-static-white-1', (theme) => theme.color.neutral.text.staticWhite._1),
+  warning: cssToken('--admiral-color-neutral-text-static-white-1', (theme) => theme.color.neutral.text.staticWhite._1),
+  success: cssToken('--admiral-color-neutral-text-static-white-1', (theme) => theme.color.neutral.text.staticWhite._1),
+  error: cssToken('--admiral-color-neutral-text-static-white-1', (theme) => theme.color.neutral.text.staticWhite._1),
+  whiteStatic: cssToken('--admiral-color-primary-text-1-rest', (theme) => theme.color.primary.text._1.rest),
 };
 
 export const badgeTypography: Record<BadgeDimension, CSSObject> = {

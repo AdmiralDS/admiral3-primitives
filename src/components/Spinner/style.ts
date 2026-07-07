@@ -16,13 +16,13 @@ const spin = keyframes`
 `;
 
 export const spinnerBackgroundColors: Record<SpinnerAppearance, CssToken> = {
-  neutral: cssToken('--admiral-color-text-neutral-text1-rest', (theme) => theme.color.text.neutral.text1.rest),
-  colored: cssToken('--admiral-color-text-primary-text1-rest', (theme) => theme.color.text.primary.text1.rest),
+  neutral: cssToken('--admiral-color-neutral-text-1-rest', (theme) => theme.color.neutral.text._1.rest),
+  colored: cssToken('--admiral-color-primary-text-1-rest', (theme) => theme.color.primary.text._1.rest),
   staticWhite: cssToken(
-    '--admiral-color-text-neutral-static-white-1',
-    (theme) => theme.color.text.neutral.staticWhite[1],
+    '--admiral-color-neutral-text-static-white-1',
+    (theme) => theme.color.neutral.text.staticWhite._1,
   ),
-  inverted: cssToken('--admiral-color-text-neutral-inverted-rest', (theme) => theme.color.text.neutral.inverted.rest),
+  inverted: cssToken('--admiral-color-neutral-text-inverted-rest', (theme) => theme.color.neutral.text.inverted.rest),
 };
 
 export const StyledSpinnerIcon = styled(SpinnerIcon)<StyledSpinnerIconProps>`

@@ -9,8 +9,8 @@ const SpinnerList = styled.div<{ $appearance?: SpinnerProps['appearance'] }>`
   display: flex;
   align-items: center;
   gap: 14px;
-  ${(p) => p.$appearance == 'staticWhite' && `background: var(--admiral-color-base-primary-base1-rest);`}
-  ${(p) => p.$appearance == 'inverted' && `background: var(--admiral-color-base-neutral-inverted-rest);`}
+  ${(p) => p.$appearance == 'staticWhite' && `background: var(--admiral-color-primary-base-1-rest);`}
+  ${(p) => p.$appearance == 'inverted' && `background: var(--admiral-color-neutral-base-inverted-rest);`}
 `;
 
 export const SpinnerDirtyTemplate = (args: SpinnerProps) => {

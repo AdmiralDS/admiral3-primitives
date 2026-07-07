@@ -4,9 +4,9 @@ import { getPlaygroundScenarioPath, resolveCssColorToken } from '../utils';
 
 const infoScenarioId = 'badge/info';
 const customColorsScenarioId = 'badge/custom-colors';
-const infoBackgroundColorToken = '--admiral-color-base-primary-base1-rest';
-const customBackgroundColorToken = '--admiral-color-base-extra-blue-base1-rest';
-const staticWhiteTextColorToken = '--admiral-color-text-neutral-static-white-1';
+const infoBackgroundColorToken = '--admiral-color-primary-base-1-rest';
+const customBackgroundColorToken = '--admiral-color-blue-base-1-rest';
+const staticWhiteTextColorToken = '--admiral-color-neutral-text-static-white-1';
 
 test.describe('Badge playground', () => {
   test('resolves token colors and layout size in the browser', async ({ page }) => {
