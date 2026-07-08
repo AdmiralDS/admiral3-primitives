@@ -77,18 +77,16 @@ export const StyledButton = styled.button.attrs<
   overflow: hidden;
   border-radius: ${(p) =>
     p.$skeleton ? 0 : cssToken('--admiral-radius-by-base-4-medium', (theme) => theme.radius.byBase['4'].medium)};
-
-  ${buttonAppearanceMixin}
-  ${buttonDimensionMixin}
-
   cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
-  ${(p) => (p.$loading || p.$skeleton) && 'pointer-events: none'};
-
+  ${(p) => (p.$loading || p.$skeleton) && 'pointer-events: none;'}
   ${({ $skeleton }) => ($skeleton ? skeletonAnimationMixin : '')};
 
   ${ButtonContent} {
     ${(p) => ((p.$loading && !p.$loadingPosition) || p.$skeleton ? 'visibility: hidden;' : '')}
   }
+
+  ${buttonAppearanceMixin}
+  ${buttonDimensionMixin}
 
   &:focus-visible {
     outline-offset: 2px;

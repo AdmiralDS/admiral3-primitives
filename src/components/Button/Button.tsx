@@ -1,6 +1,6 @@
 import { forwardRef } from 'react';
 
-import { Spinner } from '@admiral-ds/admiral3-primitives';
+import { Spinner } from '#src/components/Spinner';
 
 import { StyledButton, ButtonContent, SpinnerContainer } from './style';
 import type { ButtonProps } from './types';
@@ -8,7 +8,11 @@ import type { ButtonProps } from './types';
 const DEFAULT_APPEARANCE = 'solid';
 const DEFAULT_COLOR_MODE = 'colored';
 
-/** Button primitive component. */
+/** Кнопки представлены в четырех размерностях L, M, S и XS.
+ * Для дополнительных акцентов и более прозрачных действий могут применяться кнопки
+ * с иконками и текстом. Иконка может быть как перед надписью, так и после. В некоторых
+ * случаях могут использоваться кнопки только с иконками. Как правило, это иконки,
+ * значения которых общепонятны и не вызывают сомнений. */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {

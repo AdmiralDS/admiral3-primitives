@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite';
+import styled from 'styled-components';
 
 import { Button, type ButtonProps, type ButtonAppearance, type ButtonColorMode } from '@admiral-ds/admiral3-primitives';
 
@@ -10,19 +11,54 @@ import { ButtonIconBadgeTemplate } from './ButtonIconBadge.template';
 import buttonIconBadgeTemplateRaw from './ButtonIconBadge.template?raw';
 import { ButtonPlaygroundTemplate } from './ButtonPlayground.template';
 import buttonPlaygroundTemplateRaw from './ButtonPlayground.template?raw';
+import { ButtonSizesTemplate } from './ButtonSizes.template';
+import buttonSizesTemplateRaw from './ButtonSizes.template?raw';
 import { ButtonStatesTemplate } from './ButtonStates.template';
 import buttonStatesTemplateRaw from './ButtonStates.template?raw';
-import { BUTTON_APPEARANCES, BUTTON_COLOR_MODES, BUTTON_DIMENSIONS } from '../constants';
+import { StoryDemoDescription } from '../../stories/StoryContainers';
+import { BUTTON_APPEARANCES, BUTTON_COLOR_MODES, BUTTON_DIMENSIONS, BUTTON_LOADING_POSITIONS } from '../constants';
 
 // Создаем плоский тип (без discriminated unions) специально для Storybook args
 type StorybookButtonProps = Omit<ButtonProps, 'appearance' | 'colorMode'> & {
   appearance?: ButtonAppearance;
   colorMode?: ButtonColorMode;
 };
+const ErrorMessage = styled.div`
+  padding: 8px 12px;
+  background-color: var(--admiral-color-base-status-error-base3-rest);
+  border-bottom: 2px solid var(--admiral-color-text-status-error-text1-rest);
+  margin-bottom: 40px;
+`;
 
 const meta = {
   title: 'Components/Button',
   component: Button,
+  decorators: [
+    // Декоратор для проверки валидности пропсов
+    (Story, context) => {
+      const { appearance, colorMode } = context.args as StorybookButtonProps;
+
+      const isInvalid = (appearance === 'solid' || appearance === 'ghost') && colorMode === 'staticWhite';
+
+      return (
+        <div
+          data-admiral-theme={
+            (appearance === 'flat' || appearance === 'outline') && colorMode === 'staticWhite' ? 'dark' : 'light'
+          }
+        >
+          {isInvalid && (
+            <ErrorMessage>
+              <StoryDemoDescription>
+                ⚠️ Невалидная комбинация: <code>colorMode="staticWhite"</code> не поддерживается для{' '}
+                <code>appearance="{appearance}"</code>. Компонент отобразится с <code>colorMode="colored"</code>.
+              </StoryDemoDescription>
+            </ErrorMessage>
+          )}
+          <Story />
+        </div>
+      );
+    },
+  ],
   argTypes: {
     appearance: {
       control: { type: 'inline-radio' },
@@ -47,6 +83,10 @@ const meta = {
     },
     loading: {
       control: { type: 'boolean' },
+    },
+    loadingPosition: {
+      control: { type: 'inline-radio' },
+      options: BUTTON_LOADING_POSITIONS,
     },
     skeleton: {
       control: { type: 'boolean' },
@@ -76,13 +116,26 @@ export const Playground: StoryObj<StorybookButtonProps> = {
   },
 };
 
-export const Appereances: StoryObj<StorybookButtonProps> = {
+export const Sizes: StoryObj<StorybookButtonProps> = {
+  args: defaultArgs,
+  render: (args) => <ButtonSizesTemplate {...(args as ButtonProps)} />,
+
+  parameters: {
+    docs: {
+      source: {
+        code: buttonSizesTemplateRaw,
+      },
+    },
+  },
+};
+
+export const AppereancesAndColorModes: StoryObj<StorybookButtonProps> = {
   args: defaultArgs,
   render: (args) => <ButtonAppereancesTemplate {...(args as ButtonProps)} />,
 
   parameters: {
     controls: {
-      exclude: ['appereance', 'colorMode'],
+      exclude: ['appearance', 'colorMode', 'dimension'],
     },
     docs: {
       source: {
@@ -92,33 +145,17 @@ export const Appereances: StoryObj<StorybookButtonProps> = {
   },
 };
 
-export const WithIconBadge: StoryObj<StorybookButtonProps> = {
+export const WithIconAndBadge: StoryObj<StorybookButtonProps> = {
   args: defaultArgs,
   render: (args) => <ButtonIconBadgeTemplate {...(args as ButtonProps)} />,
 
   parameters: {
     controls: {
-      exclude: ['children'],
+      exclude: ['children', 'appearance', 'colorMode', 'displayAsSquare'],
     },
     docs: {
       source: {
         code: buttonIconBadgeTemplateRaw,
-      },
-    },
-  },
-};
-
-export const CustomColor: StoryObj<StorybookButtonProps> = {
-  args: defaultArgs,
-  render: (args) => <ButtonCustomColorTemplate {...(args as ButtonProps)} />,
-
-  parameters: {
-    // controls: {
-    //   exclude: ['appearance'],
-    // },
-    docs: {
-      source: {
-        code: buttonCustomColorTemplateRaw,
       },
     },
   },
@@ -130,11 +167,27 @@ export const States: StoryObj<StorybookButtonProps> = {
 
   parameters: {
     controls: {
-      exclude: ['disabled', 'displayAsDisabled', 'loading', 'skeleton'],
+      exclude: ['disabled', 'displayAsDisabled', 'loading', 'loadingPosition', 'skeleton'],
     },
     docs: {
       source: {
         code: buttonStatesTemplateRaw,
+      },
+    },
+  },
+};
+
+export const CustomColor: StoryObj<StorybookButtonProps> = {
+  args: defaultArgs,
+  render: (args) => <ButtonCustomColorTemplate {...(args as ButtonProps)} />,
+
+  parameters: {
+    controls: {
+      exclude: ['appearance', 'colorMode'],
+    },
+    docs: {
+      source: {
+        code: buttonCustomColorTemplateRaw,
       },
     },
   },

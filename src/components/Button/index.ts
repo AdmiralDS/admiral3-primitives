@@ -1,2 +1,12 @@
 export { Button } from './Button';
-export type { ButtonProps, ButtonAppearance, ButtonColorConfig, ButtonDimension, ButtonColorMode } from './types';
+export type {
+  ButtonProps,
+  BaseButtonProps,
+  SolidGhostAppearanceProps,
+  FlatOutlineAppearanceProps,
+  ButtonAppearance,
+  ButtonColorConfig,
+  ButtonDimension,
+  ButtonColorMode,
+  ButtonLoadingPosition,
+} from './types';

@@ -4,9 +4,10 @@ import { getToken } from './colors';
 import type { ButtonColorMode, ButtonAppearance, ButtonColorConfig } from '../types';
 
 export const customAppearanceMixin = css<{
-  $colorConfig?: ButtonColorConfig;
   $colorMode: ButtonColorMode;
   $appearance: ButtonAppearance;
+  $colorConfig?: ButtonColorConfig;
+  $skeleton?: boolean;
 }>`
   background-color: ${(p) =>
     p.$colorMode === 'colored' && p.$colorConfig?.backgroundColor?.rest
@@ -28,6 +29,7 @@ export const customAppearanceMixin = css<{
             box-shadow: inset 0 0 0 1px ${getToken(p.$appearance)[p.$colorMode].border};
           `
         : ''}
+  ${(p) => (p.$skeleton ? 'box-shadow: none;' : '')}
 
   &&& *[fill^='#'] {
     fill: ${(p) =>
