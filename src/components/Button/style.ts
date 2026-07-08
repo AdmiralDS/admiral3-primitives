@@ -1,4 +1,4 @@
-import styled, { type ExecutionContext, css, keyframes } from 'styled-components';
+import styled, { css, keyframes, type ExecutionContext } from 'styled-components';
 
 import { buttonAppearanceMixin } from './appearanceMixin/index';
 import { BUTTON_GAP } from './constants';
@@ -49,10 +49,9 @@ export const ButtonContent = styled.div<{ $dimension: ButtonDimension }>`
   }
 `;
 
-// TODO такое ощущение, что styled.attrs применяет Partial<StyledButtonProps>,
+// TODO Кажется styled.attrs применяет Partial<StyledButtonProps> под капотом,
 // так как ts не подсвечивает ошибку, если не передан обязательный параметр
-// Подумать, в чем дело, может data-атрибуты вынести на уровень компонентов?
-
+// Подумать, в чем дело, может data-атрибуты вынести на уровень компонента?
 export const StyledButton = styled.button.attrs<
   StyledButtonProps & {
     'data-appearance': string;

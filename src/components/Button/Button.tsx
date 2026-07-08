@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, Children } from 'react';
 
 import { Spinner } from '#src/components/Spinner';
 
@@ -16,6 +16,7 @@ const DEFAULT_COLOR_MODE = 'colored';
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
+      type = 'button',
       dimension = 'm',
       appearance = DEFAULT_APPEARANCE,
       colorMode: userColorMode = DEFAULT_COLOR_MODE,
@@ -31,11 +32,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     /** Runtime защита от невалидных параметров, использование fallback-значения */
-    let colorMode: ButtonProps['colorMode'] = userColorMode;
+    let colorMode = userColorMode;
     if ((appearance === 'solid' || appearance === 'ghost') && userColorMode === 'staticWhite') {
       if (process.env.NODE_ENV !== 'production') {
         console.warn(
-          `Invalid props combination: appearance="${appearance}" cannot be used with colorMode="${userColorMode}"`,
+          `Invalid props combination: appearance="${appearance}" cannot be used with colorMode="${userColorMode}, 
+          colorMode="colored" will be used instead.`,
         );
       }
       colorMode = DEFAULT_COLOR_MODE;
@@ -72,7 +74,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           {loading && loadingPosition === 'start' && (
             <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
           )}
-          {children}
+          {Children.toArray(children).map((child, index) =>
+            typeof child === 'string' ? <div key={child + index}>{child}</div> : child,
+          )}
           {loading && loadingPosition === 'end' && (
             <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
           )}

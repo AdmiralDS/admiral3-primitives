@@ -37,7 +37,7 @@ export interface ButtonColorConfig {
   textColorDisabled?: string;
   /** Цвет обводки Button. */
   borderColor?: string;
-  /** Цвет обводки Button в disabled. */
+  /** Цвет обводки Button в disabled состоянии. */
   borderColorDisabled?: string;
 }
 
@@ -56,7 +56,7 @@ export interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
    * Если параметр не задан, то Spinner отображается поверх
    * контента Button по центру, сохраняя изначальную ширину компонента. */
   loadingPosition?: ButtonLoadingPosition;
-  /** Состояние скелетона */
+  /** Состояние скелетона. */
   skeleton?: boolean;
   /** Содержимое компонента. */
   children?: React.ReactNode;

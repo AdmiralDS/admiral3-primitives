@@ -2,10 +2,10 @@ import { css } from 'styled-components';
 
 import {
   BUTTON_DIMENSION_PARAMETERS,
-  BUTTON_TYPOGRAPHY,
   BUTTON_ICON_DIMENSION_PARAMETERS,
   BUTTON_PADDING,
   SQUARE_BUTTON_PADDING,
+  BUTTON_TYPOGRAPHY,
 } from './constants';
 
 const defaultDimensionMixin = css<{ $displayAsSquare?: boolean }>`

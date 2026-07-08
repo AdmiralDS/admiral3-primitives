@@ -10,6 +10,7 @@ import { solidAppearanceMixin } from './solidAppearanceMixin';
 export const buttonAppearanceMixin = css<{
   $colorMode: ButtonColorMode;
   $appearance: ButtonAppearance;
+  $colorConfig?: ButtonColorConfig;
   $skeleton?: boolean;
 }>`
   &[data-appearance~='solid'] {
