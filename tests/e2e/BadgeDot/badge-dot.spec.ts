@@ -4,8 +4,8 @@ import { getPlaygroundScenarioPath, resolveCssColorToken } from '../utils';
 
 const infoScenarioId = 'badge-dot/info';
 const customColorsScenarioId = 'badge-dot/custom-colors';
-const infoBackgroundColorToken = '--admiral-color-base-primary-base1-rest';
-const customBackgroundColorToken = '--admiral-color-base-extra-blue-base1-rest';
+const infoBackgroundColorToken = '--admiral-color-primary-base-1-rest';
+const customBackgroundColorToken = '--admiral-color-blue-base-1-rest';
 
 test.describe('BadgeDot playground', () => {
   test('resolves token colors and layout size in the browser', async ({ page }) => {

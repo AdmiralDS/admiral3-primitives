@@ -4,8 +4,8 @@ import { getPlaygroundScenarioPath, resolveCssColorToken } from '../utils';
 
 const neutralScenarioId = 'spinner/neutral';
 const customColorsScenarioId = 'spinner/custom-colors';
-const neutralBackgroundColorToken = '--admiral-color-text-neutral-text1-rest';
-const customBackgroundColorToken = '--admiral-color-base-extra-purple-base1-rest';
+const neutralBackgroundColorToken = '--admiral-color-neutral-text-1-rest';
+const customBackgroundColorToken = '--admiral-color-purple-base-1-rest';
 
 test.describe('Spinner playground', () => {
   test('resolves token colors and layout size in the browser', async ({ page }) => {

@@ -13,8 +13,8 @@ export const BadgeCustomColorsTemplate = (args: BadgeProps) => {
       <Badge
         {...args}
         appearance={{
-          backgroundColor: 'var(--admiral-color-base-extra-blue-base1-rest)',
-          textColor: 'var(--admiral-color-text-neutral-static-white-1)',
+          backgroundColor: 'var(--admiral-color-blue-base-1-rest)',
+          textColor: 'var(--admiral-color-neutral-text-static-white-1)',
         }}
       />
     </StoryDemoContainer>
