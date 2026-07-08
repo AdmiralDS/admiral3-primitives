@@ -50,7 +50,7 @@ export const ButtonContent = styled.div<{ $dimension: ButtonDimension }>`
 `;
 
 // TODO Кажется styled.attrs применяет Partial<StyledButtonProps> под капотом,
-// так как ts не подсвечивает ошибку, если не передан обязательный параметр
+// так как ts не подсвечивает ошибку, если не передан обязательный параметр.
 // Подумать, в чем дело, может data-атрибуты вынести на уровень компонента?
 export const StyledButton = styled.button.attrs<
   StyledButtonProps & {
@@ -64,6 +64,7 @@ export const StyledButton = styled.button.attrs<
   ]
     .filter((val) => val !== undefined)
     .join(' '),
+  'data-color-mode': String(props.$colorMode),
   'data-dimension': String(props.$dimension),
 }))<StyledButtonProps>`
   position: relative;
