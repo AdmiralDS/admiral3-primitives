@@ -18,257 +18,239 @@ type GhostColorSet = Exclude<ColorSet, 'border' | 'borderDisabled'>;
 
 /** apperance='solid и colorMode='colored' */
 const solidWithColoredMode: Record<SolidColorSet, CssToken> = {
-  background: cssToken('--admiral-color-base-primary-base1-rest', (theme) => theme.color.base.primary.base1.rest),
-  backgroundHover: cssToken(
-    '--admiral-color-base-primary-base1-hover',
-    (theme) => theme.color.base.primary.base1.hover,
-  ),
-  backgroundPress: cssToken(
-    '--admiral-color-base-primary-base1-press',
-    (theme) => theme.color.base.primary.base1.press,
-  ),
+  background: cssToken('--admiral-color-primary-base-1-rest', (theme) => theme.color.primary.base._1.rest),
+  backgroundHover: cssToken('--admiral-color-primary-base-1-hover', (theme) => theme.color.primary.base._1.hover),
+  backgroundPress: cssToken('--admiral-color-primary-base-1-press', (theme) => theme.color.primary.base._1.press),
   backgroundDisabled: cssToken(
-    '--admiral-color-base-neutral-opacity-rest',
-    (theme) => theme.color.base.neutral.opacity.rest,
+    '--admiral-color-neutral-base-opacity-rest',
+    (theme) => theme.color.neutral.base.opacity.rest,
   ),
-  color: cssToken('--admiral-color-text-neutral-static-white-1', (theme) => theme.color.text.neutral.staticWhite[1]),
+  color: cssToken('--admiral-color-neutral-text-static-white-1', (theme) => theme.color.neutral.text.staticWhite._1),
   colorDisabled: cssToken(
-    '--admiral-color-text-neutral-disable-rest',
-    (theme) => theme.color.text.neutral.disable.rest,
+    '--admiral-color-neutral-text-disable-rest',
+    (theme) => theme.color.neutral.text.disable.rest,
   ),
 };
 
 /** apperance='solid и colorMode='neutral' */
 const solidWithNeutralMode: Record<SolidColorSet, CssToken> = {
-  background: cssToken('--admiral-color-base-neutral-inverted-rest', (theme) => theme.color.base.neutral.inverted.rest),
+  background: cssToken('--admiral-color-neutral-base-inverted-rest', (theme) => theme.color.neutral.base.inverted.rest),
   backgroundHover: cssToken(
-    '--admiral-color-base-neutral-inverted-hover',
-    (theme) => theme.color.base.neutral.inverted.hover,
+    '--admiral-color-neutral-base-inverted-hover',
+    (theme) => theme.color.neutral.base.inverted.hover,
   ),
   backgroundPress: cssToken(
-    '--admiral-color-base-neutral-inverted-press',
-    (theme) => theme.color.base.neutral.inverted.press,
+    '--admiral-color-neutral-base-inverted-press',
+    (theme) => theme.color.neutral.base.inverted.press,
   ),
   backgroundDisabled: cssToken(
-    '--admiral-color-base-neutral-opacity-rest',
-    (theme) => theme.color.base.neutral.opacity.rest,
+    '--admiral-color-neutral-base-opacity-rest',
+    (theme) => theme.color.neutral.base.opacity.rest,
   ),
-  color: cssToken('--admiral-color-text-neutral-inverted-rest', (theme) => theme.color.text.neutral.inverted.rest),
+  color: cssToken('--admiral-color-neutral-text-inverted-rest', (theme) => theme.color.neutral.text.inverted.rest),
   colorDisabled: cssToken(
-    '--admiral-color-text-neutral-disable-rest',
-    (theme) => theme.color.text.neutral.disable.rest,
+    '--admiral-color-neutral-text-disable-rest',
+    (theme) => theme.color.neutral.text.disable.rest,
   ),
 };
 
 /** apperance='flat и colorMode='colored' */
 const flatWithColoredMode: Record<FlatColorSet, CssToken> = {
-  background: cssToken('--admiral-color-base-primary-base3-rest', (theme) => theme.color.base.primary.base3.rest),
-  backgroundHover: cssToken(
-    '--admiral-color-base-primary-base3-hover',
-    (theme) => theme.color.base.primary.base3.hover,
-  ),
-  backgroundPress: cssToken(
-    '--admiral-color-base-primary-base3-press',
-    (theme) => theme.color.base.primary.base3.press,
-  ),
+  background: cssToken('--admiral-color-primary-base-3-rest', (theme) => theme.color.primary.base._3.rest),
+  backgroundHover: cssToken('--admiral-color-primary-base-3-hover', (theme) => theme.color.primary.base._3.hover),
+  backgroundPress: cssToken('--admiral-color-primary-base-3-press', (theme) => theme.color.primary.base._3.press),
   backgroundDisabled: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
+    '--admiral-color-neutral-base-invisible-rest',
+    (theme) => theme.color.neutral.base.invisible.rest,
   ),
-  color: cssToken('--admiral-color-text-primary-text1-rest', (theme) => theme.color.text.primary.text1.rest),
+  color: cssToken('--admiral-color-primary-text-1-rest', (theme) => theme.color.primary.text._1.rest),
   colorDisabled: cssToken(
-    '--admiral-color-text-neutral-disable-rest',
-    (theme) => theme.color.text.neutral.disable.rest,
+    '--admiral-color-neutral-text-disable-rest',
+    (theme) => theme.color.neutral.text.disable.rest,
   ),
 };
 
 /** apperance='flat и colorMode='neutral' */
 const flatWithNeutralMode: Record<FlatColorSet, CssToken> = {
-  background: cssToken('--admiral-color-base-neutral-opacity-rest', (theme) => theme.color.base.neutral.opacity.rest),
+  background: cssToken('--admiral-color-neutral-base-opacity-rest', (theme) => theme.color.neutral.base.opacity.rest),
   backgroundHover: cssToken(
-    '--admiral-color-base-neutral-opacity-hover',
-    (theme) => theme.color.base.neutral.opacity.hover,
+    '--admiral-color-neutral-base-opacity-hover',
+    (theme) => theme.color.neutral.base.opacity.hover,
   ),
   backgroundPress: cssToken(
-    '--admiral-color-base-neutral-opacity-press',
-    (theme) => theme.color.base.neutral.opacity.press,
+    '--admiral-color-neutral-base-opacity-press',
+    (theme) => theme.color.neutral.base.opacity.press,
   ),
   backgroundDisabled: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
+    '--admiral-color-neutral-base-invisible-rest',
+    (theme) => theme.color.neutral.base.invisible.rest,
   ),
-  color: cssToken('--admiral-color-text-neutral-text1-rest', (theme) => theme.color.text.neutral.text1.rest),
+  color: cssToken('--admiral-color-neutral-text-1-rest', (theme) => theme.color.neutral.text._1.rest),
   colorDisabled: cssToken(
-    '--admiral-color-text-neutral-disable-rest',
-    (theme) => theme.color.text.neutral.disable.rest,
+    '--admiral-color-neutral-text-disable-rest',
+    (theme) => theme.color.neutral.text.disable.rest,
   ),
 };
 
 /** apperance='flat и colorMode='staticWhite' */
 const flatWithStaticWhiteMode: Record<FlatColorSet, CssToken> = {
   background: cssToken(
-    '--admiral-color-base-neutral-opacity-static-rest',
-    (theme) => theme.color.base.neutral.opacityStatic.rest,
+    '--admiral-color-neutral-base-opacity-static-rest',
+    (theme) => theme.color.neutral.base.opacityStatic.rest,
   ),
   backgroundHover: cssToken(
-    '--admiral-color-base-neutral-opacity-static-hover',
-    (theme) => theme.color.base.neutral.opacityStatic.hover,
+    '--admiral-color-neutral-base-opacity-static-hover',
+    (theme) => theme.color.neutral.base.opacityStatic.hover,
   ),
   backgroundPress: cssToken(
-    '--admiral-color-base-neutral-opacity-static-press',
-    (theme) => theme.color.base.neutral.opacityStatic.press,
+    '--admiral-color-neutral-base-opacity-static-press',
+    (theme) => theme.color.neutral.base.opacityStatic.press,
   ),
   backgroundDisabled: cssToken(
-    '--admiral-color-base-neutral-opacity-static-rest',
-    (theme) => theme.color.base.neutral.opacityStatic.rest,
+    '--admiral-color-neutral-base-opacity-static-rest',
+    (theme) => theme.color.neutral.base.opacityStatic.rest,
   ),
-  color: cssToken('--admiral-color-text-neutral-static-white-1', (theme) => theme.color.text.neutral.staticWhite[1]),
+  color: cssToken('--admiral-color-neutral-text-static-white-1', (theme) => theme.color.neutral.text.staticWhite._1),
   colorDisabled: cssToken(
-    '--admiral-color-text-neutral-static-white-disable',
-    (theme) => theme.color.text.neutral.staticWhite.disable,
+    '--admiral-color-neutral-text-static-white-disable',
+    (theme) => theme.color.neutral.text.staticWhite.disable,
   ),
 };
 
 /** apperance='outline и colorMode='colored' */
 const outlineWithColoredMode: Record<OutlineColorSet, CssToken> = {
   background: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
+    '--admiral-color-neutral-base-invisible-rest',
+    (theme) => theme.color.neutral.base.invisible.rest,
   ),
   backgroundHover: cssToken(
-    '--admiral-color-base-neutral-invisible-hover',
-    (theme) => theme.color.base.neutral.invisible.hover,
+    '--admiral-color-neutral-base-invisible-hover',
+    (theme) => theme.color.neutral.base.invisible.hover,
   ),
   backgroundPress: cssToken(
-    '--admiral-color-base-neutral-invisible-press',
-    (theme) => theme.color.base.neutral.invisible.press,
+    '--admiral-color-neutral-base-invisible-press',
+    (theme) => theme.color.neutral.base.invisible.press,
   ),
   backgroundDisabled: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
+    '--admiral-color-neutral-base-invisible-rest',
+    (theme) => theme.color.neutral.base.invisible.rest,
   ),
-  border: cssToken('--admiral-color-stroke-primary-stroke1-rest', (theme) => theme.color.stroke.primary.stroke1.rest),
-  borderDisabled: cssToken(
-    '--admiral-color-stroke-neutral-stroke2-rest',
-    (theme) => theme.color.stroke.neutral.stroke2.rest,
-  ),
-  color: cssToken('--admiral-color-text-primary-text1-rest', (theme) => theme.color.text.primary.text1.rest),
+  border: cssToken('--admiral-color-primary-stroke-1-rest', (theme) => theme.color.primary.stroke._1.rest),
+  borderDisabled: cssToken('--admiral-color-neutral-stroke-2-rest', (theme) => theme.color.neutral.stroke._2.rest),
+  color: cssToken('--admiral-color-primary-text-1-rest', (theme) => theme.color.primary.text._1.rest),
   colorDisabled: cssToken(
-    '--admiral-color-text-neutral-disable-rest',
-    (theme) => theme.color.text.neutral.disable.rest,
+    '--admiral-color-neutral-text-disable-rest',
+    (theme) => theme.color.neutral.text.disable.rest,
   ),
 };
 
 /** apperance='outline и colorMode='neutral' */
 const outlineWithNeutralMode: Record<OutlineColorSet, CssToken> = {
   background: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
+    '--admiral-color-neutral-base-invisible-rest',
+    (theme) => theme.color.neutral.base.invisible.rest,
   ),
   backgroundHover: cssToken(
-    '--admiral-color-base-neutral-invisible-hover',
-    (theme) => theme.color.base.neutral.invisible.hover,
+    '--admiral-color-neutral-base-invisible-hover',
+    (theme) => theme.color.neutral.base.invisible.hover,
   ),
   backgroundPress: cssToken(
-    '--admiral-color-base-neutral-invisible-press',
-    (theme) => theme.color.base.neutral.invisible.press,
+    '--admiral-color-neutral-base-invisible-press',
+    (theme) => theme.color.neutral.base.invisible.press,
   ),
   backgroundDisabled: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
+    '--admiral-color-neutral-base-invisible-rest',
+    (theme) => theme.color.neutral.base.invisible.rest,
   ),
-  border: cssToken('--admiral-color-stroke-neutral-stroke2-rest', (theme) => theme.color.stroke.neutral.stroke2.rest),
-  borderDisabled: cssToken(
-    '--admiral-color-stroke-neutral-stroke2-rest',
-    (theme) => theme.color.stroke.neutral.stroke2.rest,
-  ),
-  color: cssToken('--admiral-color-text-neutral-text1-rest', (theme) => theme.color.text.neutral.text1.rest),
+  border: cssToken('--admiral-color-neutral-stroke-2-rest', (theme) => theme.color.neutral.stroke._2.rest),
+  borderDisabled: cssToken('--admiral-color-neutral-stroke-2-rest', (theme) => theme.color.neutral.stroke._2.rest),
+  color: cssToken('--admiral-color-neutral-text-1-rest', (theme) => theme.color.neutral.text._1.rest),
   colorDisabled: cssToken(
-    '--admiral-color-text-neutral-disable-rest',
-    (theme) => theme.color.text.neutral.disable.rest,
+    '--admiral-color-neutral-text-disable-rest',
+    (theme) => theme.color.neutral.text.disable.rest,
   ),
 };
 
 /** apperance='outline и colorMode='staticWhite' */
 const outlineWithStaticWhiteMode: Record<OutlineColorSet, CssToken> = {
   background: cssToken(
-    '--admiral-color-base-neutral-invisible-static-rest',
-    (theme) => theme.color.base.neutral.invisibleStatic.rest,
+    '--admiral-color-neutral-base-invisible-static-rest',
+    (theme) => theme.color.neutral.base.invisibleStatic.rest,
   ),
   backgroundHover: cssToken(
-    '--admiral-color-base-neutral-invisible-static-hover',
-    (theme) => theme.color.base.neutral.invisibleStatic.hover,
+    '--admiral-color-neutral-base-invisible-static-hover',
+    (theme) => theme.color.neutral.base.invisibleStatic.hover,
   ),
   backgroundPress: cssToken(
-    '--admiral-color-base-neutral-invisible-static-press',
-    (theme) => theme.color.base.neutral.invisibleStatic.press,
+    '--admiral-color-neutral-base-invisible-static-press',
+    (theme) => theme.color.neutral.base.invisibleStatic.press,
   ),
   backgroundDisabled: cssToken(
-    '--admiral-color-base-neutral-invisible-static-rest',
-    (theme) => theme.color.base.neutral.invisibleStatic.rest,
+    '--admiral-color-neutral-base-invisible-static-rest',
+    (theme) => theme.color.neutral.base.invisibleStatic.rest,
   ),
   border: cssToken(
-    '--admiral-color-stroke-neutral-static-white-4',
-    (theme) => theme.color.stroke.neutral.staticWhite[4],
+    '--admiral-color-neutral-stroke-static-white-4',
+    (theme) => theme.color.neutral.stroke.staticWhite._4,
   ),
   borderDisabled: cssToken(
-    '--admiral-color-stroke-neutral-static-white-4',
-    (theme) => theme.color.stroke.neutral.staticWhite[4],
+    '--admiral-color-neutral-stroke-static-white-4',
+    (theme) => theme.color.neutral.stroke.staticWhite._4,
   ),
-  color: cssToken('--admiral-color-text-neutral-static-white-1', (theme) => theme.color.text.neutral.staticWhite[1]),
+  color: cssToken('--admiral-color-neutral-text-static-white-1', (theme) => theme.color.neutral.text.staticWhite._1),
   colorDisabled: cssToken(
-    '--admiral-color-text-neutral-static-white-disable',
-    (theme) => theme.color.text.neutral.staticWhite.disable,
+    '--admiral-color-neutral-text-static-white-disable',
+    (theme) => theme.color.neutral.text.staticWhite.disable,
   ),
 };
 
 /** apperance='ghost и colorMode='colored' */
 const ghostWithColoredMode: Record<GhostColorSet, CssToken> = {
   background: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
+    '--admiral-color-neutral-base-invisible-rest',
+    (theme) => theme.color.neutral.base.invisible.rest,
   ),
   backgroundHover: cssToken(
-    '--admiral-color-base-neutral-invisible-hover',
-    (theme) => theme.color.base.neutral.invisible.hover,
+    '--admiral-color-neutral-base-invisible-hover',
+    (theme) => theme.color.neutral.base.invisible.hover,
   ),
   backgroundPress: cssToken(
-    '--admiral-color-base-neutral-invisible-press',
-    (theme) => theme.color.base.neutral.invisible.press,
+    '--admiral-color-neutral-base-invisible-press',
+    (theme) => theme.color.neutral.base.invisible.press,
   ),
   backgroundDisabled: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
+    '--admiral-color-neutral-base-invisible-rest',
+    (theme) => theme.color.neutral.base.invisible.rest,
   ),
-  color: cssToken('--admiral-color-text-primary-text1-rest', (theme) => theme.color.text.primary.text1.rest),
+  color: cssToken('--admiral-color-primary-text-1-rest', (theme) => theme.color.primary.text._1.rest),
   colorDisabled: cssToken(
-    '--admiral-color-text-neutral-disable-rest',
-    (theme) => theme.color.text.neutral.disable.rest,
+    '--admiral-color-neutral-text-disable-rest',
+    (theme) => theme.color.neutral.text.disable.rest,
   ),
 };
 
 /** apperance='ghost и colorMode='neutral' */
 const ghostWithNeutralMode: Record<GhostColorSet, CssToken> = {
   background: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
+    '--admiral-color-neutral-base-invisible-rest',
+    (theme) => theme.color.neutral.base.invisible.rest,
   ),
   backgroundHover: cssToken(
-    '--admiral-color-base-neutral-invisible-hover',
-    (theme) => theme.color.base.neutral.invisible.hover,
+    '--admiral-color-neutral-base-invisible-hover',
+    (theme) => theme.color.neutral.base.invisible.hover,
   ),
   backgroundPress: cssToken(
-    '--admiral-color-base-neutral-invisible-press',
-    (theme) => theme.color.base.neutral.invisible.press,
+    '--admiral-color-neutral-base-invisible-press',
+    (theme) => theme.color.neutral.base.invisible.press,
   ),
   backgroundDisabled: cssToken(
-    '--admiral-color-base-neutral-invisible-rest',
-    (theme) => theme.color.base.neutral.invisible.rest,
+    '--admiral-color-neutral-base-invisible-rest',
+    (theme) => theme.color.neutral.base.invisible.rest,
   ),
-  color: cssToken('--admiral-color-text-neutral-text1-rest', (theme) => theme.color.text.neutral.text1.rest),
+  color: cssToken('--admiral-color-neutral-text-1-rest', (theme) => theme.color.neutral.text._1.rest),
   colorDisabled: cssToken(
-    '--admiral-color-text-neutral-disable-rest',
-    (theme) => theme.color.text.neutral.disable.rest,
+    '--admiral-color-neutral-text-disable-rest',
+    (theme) => theme.color.neutral.text.disable.rest,
   ),
 };
 

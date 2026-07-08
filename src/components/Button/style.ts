@@ -9,13 +9,13 @@ import { cssToken } from '../../theme/cssToken';
 // TODO убрать после слияния со Skeleton
 const skeletonAnimation = (p: ExecutionContext & object) => keyframes`
   0% {
-    background-color: ${cssToken('--admiral-color-base-neutral-opacity-rest', (theme) => theme.color.base.neutral.opacity.rest)(p)};
+    background-color: ${cssToken('--admiral-color-neutral-base-opacity-rest', (theme) => theme.color.neutral.base.opacity.rest)(p)};
   }
   50% {
-    background-color: ${cssToken('--admiral-color-base-neutral-opacity-hover', (theme) => theme.color.base.neutral.opacity.hover)(p)};
+    background-color: ${cssToken('--admiral-color-neutral-base-opacity-hover', (theme) => theme.color.neutral.base.opacity.hover)(p)};
   }
   100% {
-    background-color: ${cssToken('--admiral-color-base-neutral-opacity-rest', (theme) => theme.color.base.neutral.opacity.rest)(p)};
+    background-color: ${cssToken('--admiral-color-neutral-base-opacity-rest', (theme) => theme.color.neutral.base.opacity.rest)(p)};
   }
 `;
 const skeletonAnimationMixin = css`
@@ -90,6 +90,6 @@ export const StyledButton = styled.button.attrs<
   &:focus-visible {
     outline-offset: 2px;
     outline: 2px solid
-      ${cssToken('--admiral-color-stroke-primary-stroke1-rest', (theme) => theme.color.stroke.primary.stroke1.rest)};
+      ${cssToken('--admiral-color-primary-stroke-1-rest', (theme) => theme.color.primary.stroke._1.rest)};
   }
 `;

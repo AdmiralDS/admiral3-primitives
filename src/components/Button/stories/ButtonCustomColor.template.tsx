@@ -23,9 +23,9 @@ export const ButtonCustomColorTemplate = (args: Omit<ButtonProps, 'appearance' |
           {...args}
           colorConfig={{
             backgroundColor: {
-              rest: 'var(--admiral-color-base-status-error-base1-rest)',
-              hover: 'var(--admiral-color-base-status-error-base1-hover)',
-              press: 'var(--admiral-color-base-status-error-base1-press)',
+              rest: 'var(--admiral-color-error-base-1-rest)',
+              hover: 'var(--admiral-color-error-base-1-hover)',
+              press: 'var(--admiral-color-error-base-1-press)',
             },
           }}
         />
@@ -34,26 +34,26 @@ export const ButtonCustomColorTemplate = (args: Omit<ButtonProps, 'appearance' |
           appearance="flat"
           colorConfig={{
             backgroundColor: {
-              rest: 'var(--admiral-color-base-status-error-base3-rest)',
-              hover: 'var(--admiral-color-base-status-error-base3-hover)',
-              press: 'var(--admiral-color-base-status-error-base3-press)',
+              rest: 'var(--admiral-color-error-base-3-rest)',
+              hover: 'var(--admiral-color-error-base-3-hover)',
+              press: 'var(--admiral-color-error-base-3-press)',
             },
-            textColor: 'var(--admiral-color-text-status-error-text1-rest)',
+            textColor: 'var(--admiral-color-error-text-1-rest)',
           }}
         />
         <Button
           {...args}
           appearance="outline"
           colorConfig={{
-            borderColor: 'var(--admiral-color-stroke-status-error-stroke1-rest)',
-            textColor: 'var(--admiral-color-text-status-error-text1-rest)',
+            borderColor: 'var(--admiral-color-error-stroke-1-rest)',
+            textColor: 'var(--admiral-color-error-text-1-rest)',
           }}
         />
         <Button
           {...args}
           appearance="ghost"
           colorConfig={{
-            textColor: 'var(--admiral-color-text-status-error-text1-rest)',
+            textColor: 'var(--admiral-color-error-text-1-rest)',
           }}
         />
       </Appearance>
@@ -62,9 +62,9 @@ export const ButtonCustomColorTemplate = (args: Omit<ButtonProps, 'appearance' |
           {...args}
           colorConfig={{
             backgroundColor: {
-              rest: 'var(--admiral-color-base-status-success-base1-rest)',
-              hover: 'var(--admiral-color-base-status-success-base1-hover)',
-              press: 'var(--admiral-color-base-status-success-base1-press)',
+              rest: 'var(--admiral-color-success-base-1-rest)',
+              hover: 'var(--admiral-color-success-base-1-hover)',
+              press: 'var(--admiral-color-success-base-1-press)',
             },
           }}
         />
@@ -73,26 +73,26 @@ export const ButtonCustomColorTemplate = (args: Omit<ButtonProps, 'appearance' |
           appearance="flat"
           colorConfig={{
             backgroundColor: {
-              rest: 'var(--admiral-color-base-status-success-base3-rest)',
-              hover: 'var(--admiral-color-base-status-success-base3-hover)',
-              press: 'var(--admiral-color-base-status-success-base3-press)',
+              rest: 'var(--admiral-color-success-base-3-rest)',
+              hover: 'var(--admiral-color-success-base-3-hover)',
+              press: 'var(--admiral-color-success-base-3-press)',
             },
-            textColor: 'var(--admiral-color-text-status-success-text1-rest)',
+            textColor: 'var(--admiral-color-success-text-1-rest)',
           }}
         />
         <Button
           {...args}
           appearance="outline"
           colorConfig={{
-            borderColor: 'var(--admiral-color-stroke-status-success-stroke1-rest)',
-            textColor: 'var(--admiral-color-text-status-success-text1-rest)',
+            borderColor: 'var(--admiral-color-success-stroke-1-rest)',
+            textColor: 'var(--admiral-color-success-text-1-rest)',
           }}
         />
         <Button
           {...args}
           appearance="ghost"
           colorConfig={{
-            textColor: 'var(--admiral-color-text-status-success-text1-rest)',
+            textColor: 'var(--admiral-color-success-text-1-rest)',
           }}
         />
       </Appearance>

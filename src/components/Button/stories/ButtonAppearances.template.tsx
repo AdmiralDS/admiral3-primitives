@@ -14,7 +14,7 @@ const ButtonList = styled.div`
   align-items: center;
   gap: 14px;
   padding: 8px;
-  background-color: var(--admiral-color-base-neutral-base2-rest);
+  background-color: var(--admiral-color-neutral-base-2-rest);
 `;
 
 const appearanceLabels: Record<(typeof BUTTON_APPEARANCES)[number], { name: string; description: string }> = {
@@ -69,7 +69,7 @@ export const ButtonAppereancesTemplate = (args: ButtonProps) => {
             ))}
           {(appearance === 'flat' || appearance === 'outline') &&
             BUTTON_COLOR_MODES.map((colorMode) => (
-              <ButtonList key={colorMode}>
+              <ButtonList key={colorMode} data-admiral-theme={colorMode === 'staticWhite' ? 'dark' : 'light'}>
                 {BUTTON_DIMENSIONS.map((dimension) => (
                   <Button
                     key={`${appearance}_${colorMode}`}

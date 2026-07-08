@@ -25,8 +25,8 @@ type StorybookButtonProps = Omit<ButtonProps, 'appearance' | 'colorMode'> & {
 };
 const ErrorMessage = styled.div`
   padding: 8px 12px;
-  background-color: var(--admiral-color-base-status-error-base3-rest);
-  border-bottom: 2px solid var(--admiral-color-text-status-error-text1-rest);
+  background-color: var(--admiral-color-error-base-3-rest);
+  border-bottom: 2px solid var(--admiral-color-error-text-1-rest);
   margin-bottom: 40px;
 `;
 

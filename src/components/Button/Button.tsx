@@ -53,6 +53,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <StyledButton
         ref={ref}
+        type={type}
         $dimension={dimension}
         $appearance={appearance}
         $colorConfig={colorConfig}
