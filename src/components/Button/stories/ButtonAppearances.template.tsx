@@ -58,7 +58,7 @@ export const ButtonAppereancesTemplate = (args: ButtonProps) => {
               <ButtonList key={colorMode}>
                 {BUTTON_DIMENSIONS.map((dimension) => (
                   <Button
-                    key={`${appearance}_${colorMode}`}
+                    key={`${appearance}_${colorMode}_${dimension}`}
                     {...args}
                     appearance={appearance}
                     colorMode={colorMode}
@@ -72,7 +72,7 @@ export const ButtonAppereancesTemplate = (args: ButtonProps) => {
               <ButtonList key={colorMode} data-admiral-theme={colorMode === 'staticWhite' ? 'dark' : 'light'}>
                 {BUTTON_DIMENSIONS.map((dimension) => (
                   <Button
-                    key={`${appearance}_${colorMode}`}
+                    key={`${appearance}_${colorMode}_${dimension}`}
                     {...args}
                     appearance={appearance}
                     colorMode={colorMode}

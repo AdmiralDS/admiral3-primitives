@@ -12,7 +12,10 @@ const DEFAULT_COLOR_MODE = 'colored';
  * Для дополнительных акцентов и более прозрачных действий могут применяться кнопки
  * с иконками и текстом. Иконка может быть как перед надписью, так и после. В некоторых
  * случаях могут использоваться кнопки только с иконками. Как правило, это иконки,
- * значения которых общепонятны и не вызывают сомнений. */
+ * значения которых общепонятны и не вызывают сомнений.
+ *
+ * ВАЖНО: кнопки с appearance='solid' и appearance='ghost' могут применяться только
+ * в сочетании с colorMode='colored' или colorMode='neutral' */
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
@@ -31,17 +34,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref,
   ) => {
-    /** Runtime защита от невалидных параметров, использование fallback-значения */
-    let colorMode = userColorMode;
-    if ((appearance === 'solid' || appearance === 'ghost') && userColorMode === 'staticWhite') {
-      if (process.env.NODE_ENV !== 'production') {
-        console.warn(
-          `Invalid props combination: appearance="${appearance}" cannot be used with colorMode="${userColorMode}, 
-          colorMode="colored" will be used instead.`,
-        );
-      }
-      colorMode = DEFAULT_COLOR_MODE;
-    }
+    /** Использование fallback-значения при невалидной комбинации пропсов */
+    const colorMode =
+      (appearance === 'solid' || appearance === 'ghost') && userColorMode === 'staticWhite'
+        ? DEFAULT_COLOR_MODE
+        : userColorMode;
 
     const spinnerApperance =
       appearance === 'solid' ? (colorMode === 'colored' ? 'staticWhite' : 'inverted') : colorMode;
