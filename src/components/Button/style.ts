@@ -78,6 +78,7 @@ export const StyledButton = styled.button.attrs<
   border-radius: ${(p) =>
     p.$skeleton ? 0 : cssToken('--admiral-radius-by-base-4-medium', (theme) => theme.radius.byBase['4'].medium)};
   cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
+  // TODO обновить после выбора единого паттерна для работы с loading и skeleton состояниями
   ${(p) => (p.$loading || p.$skeleton) && 'pointer-events: none;'}
   ${({ $skeleton }) => ($skeleton ? skeletonAnimationMixin : '')};
 
