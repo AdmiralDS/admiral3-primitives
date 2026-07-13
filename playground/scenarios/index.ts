@@ -2,6 +2,7 @@ import type { ReactElement } from 'react';
 
 import { badgeScenarios } from './badge';
 import { badgeDotScenarios } from './badge-dot';
+import { buttonScenarios } from './button';
 import { spinnerScenarios } from './spinner';
 
 export type PlaygroundScenario = {
@@ -10,4 +11,4 @@ export type PlaygroundScenario = {
   render: () => ReactElement;
 };
 
-export const playgroundScenarios = [...badgeDotScenarios, ...badgeScenarios, ...spinnerScenarios];
+export const playgroundScenarios = [...badgeDotScenarios, ...badgeScenarios, ...buttonScenarios, ...spinnerScenarios];
