@@ -71,7 +71,7 @@ export interface SolidGhostAppearanceProps extends BaseButtonProps {
 
 export interface FlatOutlineAppearanceProps extends BaseButtonProps {
   /** Цветовой вариант Button. */
-  appearance?: Extract<ButtonAppearance, 'flat' | 'outline'>;
+  appearance: Extract<ButtonAppearance, 'flat' | 'outline'>;
   /** Режим цветового окрашивания Button. Значение по умолчанию 'colored'. */
   colorMode?: ButtonColorMode;
 }
