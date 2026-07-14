@@ -2,8 +2,9 @@ import type { ReactElement } from 'react';
 
 import { badgeScenarios } from './badge';
 import { badgeDotScenarios } from './badge-dot';
-import { spinnerScenarios } from './spinner';
+import { buttonScenarios } from './button';
 import { skeletonScenarios } from './skeleton';
+import { spinnerScenarios } from './spinner';
 
 export type PlaygroundScenario = {
   id: string;
@@ -11,4 +12,10 @@ export type PlaygroundScenario = {
   render: () => ReactElement;
 };
 
-export const playgroundScenarios = [...badgeDotScenarios, ...badgeScenarios, ...spinnerScenarios, ...skeletonScenarios];
+export const playgroundScenarios = [
+  ...badgeDotScenarios,
+  ...badgeScenarios,
+  ...buttonScenarios,
+  ...skeletonScenarios,
+  ...spinnerScenarios,
+];

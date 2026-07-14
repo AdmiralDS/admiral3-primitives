@@ -81,7 +81,7 @@ export default defineConfig([
         },
       ],
       '@typescript-eslint/no-explicit-any': 'error',
-      'no-console': 'warn',
+      'no-console': ['warn', { allow: ['warn'] }],
       'prettier/prettier': 'error',
       'import/no-cycle': ['error', { ignoreExternal: true }],
       'import/no-duplicates': ['error', { considerQueryString: true }],
