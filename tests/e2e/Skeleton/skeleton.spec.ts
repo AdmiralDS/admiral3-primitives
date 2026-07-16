@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Locator } from '@playwright/test';
 
 import { getPlaygroundScenarioPath, resolveCssColorToken } from '../utils';
 
@@ -22,6 +22,14 @@ const parseRgba = (colorString: string): [number, number, number, number] => {
   const a = matches[3] ? parseFloat(matches[3]) : 1;
 
   return [r, g, b, a];
+};
+
+const setAnimationTime = async (element: Locator, time: number) => {
+  await element.evaluate((el: HTMLElement, currentTime: number) => {
+    const animation = el.getAnimations()[0];
+    animation.pause();
+    animation.currentTime = currentTime;
+  }, time);
 };
 
 test.describe('Skeleton playground', () => {
@@ -66,10 +74,7 @@ test.describe('Skeleton playground', () => {
     const skeleton = page.getByTestId('skeleton');
 
     // Анимация на старте (0%)
-    await skeleton.evaluate((el) => {
-      el.style.animationPlayState = 'paused';
-      el.style.animationDelay = '0s';
-    });
+    await setAnimationTime(skeleton, 0);
     const actualBackgroundColor = await skeleton.evaluate((el) => getComputedStyle(el).backgroundColor);
     const expectedBackgroundColor = await resolveCssColorToken(page, skeletonRestBackgroundColorToken);
     const [actualR, actualG, actualB, actualA] = parseRgba(actualBackgroundColor);
@@ -81,9 +86,7 @@ test.describe('Skeleton playground', () => {
     expect(Math.abs(actualA - expectedA)).toBeLessThan(0.01);
 
     // Перематываем анимацию на середину (50% / 1 секунда для анимации в 2s)
-    await skeleton.evaluate((el) => {
-      el.style.animationDelay = '-1s';
-    });
+    await setAnimationTime(skeleton, 1000);
     const actualBackgroundColor2 = await skeleton.evaluate((el) => getComputedStyle(el).backgroundColor);
     const expectedBackgroundColor2 = await resolveCssColorToken(page, skeletonHoverBackgroundColorToken);
     const [actualR2, actualG2, actualB2, actualA2] = parseRgba(actualBackgroundColor2);
@@ -103,10 +106,7 @@ test.describe('Skeleton playground', () => {
     const skeleton = page.getByTestId('skeleton');
 
     // Анимация на старте (0%)
-    await skeleton.evaluate((el) => {
-      el.style.animationPlayState = 'paused';
-      el.style.animationDelay = '0s';
-    });
+    await setAnimationTime(skeleton, 0);
     const actualBackgroundColor = await skeleton.evaluate((el) => getComputedStyle(el).backgroundColor);
     const expectedBackgroundColor = await resolveCssColorToken(page, skeletonRestBackgroundColorToken);
     const [actualR, actualG, actualB, actualA] = parseRgba(actualBackgroundColor);
@@ -118,9 +118,7 @@ test.describe('Skeleton playground', () => {
     expect(Math.abs(actualA - expectedA)).toBeLessThan(0.01);
 
     // Перематываем анимацию на середину (50% / 1 секунда для анимации в 2s)
-    await skeleton.evaluate((el) => {
-      el.style.animationDelay = '-1s';
-    });
+    await setAnimationTime(skeleton, 1000);
     const actualBackgroundColor2 = await skeleton.evaluate((el) => getComputedStyle(el).backgroundColor);
     const expectedBackgroundColor2 = await resolveCssColorToken(page, skeletonHoverBackgroundColorToken);
     const [actualR2, actualG2, actualB2, actualA2] = parseRgba(actualBackgroundColor2);
