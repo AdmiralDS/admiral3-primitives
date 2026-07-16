@@ -1,26 +1,11 @@
-import styled, { css, keyframes, type ExecutionContext } from 'styled-components';
+import styled from 'styled-components';
 
 import { buttonAppearanceMixin } from './appearanceMixin/index';
 import { BUTTON_GAP } from './constants';
 import { buttonDimensionMixin } from './dimensionMixin';
 import type { ButtonDimension, StyledButtonProps } from './types';
 import { cssToken } from '../../theme/cssToken';
-
-// TODO убрать после слияния со Skeleton
-const skeletonAnimation = (p: ExecutionContext & object) => keyframes`
-  0% {
-    background-color: ${cssToken('--admiral-color-neutral-base-opacity-rest', (theme) => theme.color.neutral.base.opacity.rest)(p)};
-  }
-  50% {
-    background-color: ${cssToken('--admiral-color-neutral-base-opacity-hover', (theme) => theme.color.neutral.base.opacity.hover)(p)};
-  }
-  100% {
-    background-color: ${cssToken('--admiral-color-neutral-base-opacity-rest', (theme) => theme.color.neutral.base.opacity.rest)(p)};
-  }
-`;
-const skeletonAnimationMixin = css`
-  animation: ${(p) => skeletonAnimation(p)} 2s ease infinite;
-`;
+import { skeletonAnimationMixin } from '../Skeleton';
 
 export const SpinnerContainer = styled.div`
   position: absolute;
