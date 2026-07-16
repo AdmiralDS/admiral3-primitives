@@ -1,3 +1,3 @@
 export { Skeleton } from './Skeleton';
-export { skeletonAnimationMixin } from './style';
+export { skeletonAnimationMixin } from './skeletonAnimation';
 export type { SkeletonProps } from './types';

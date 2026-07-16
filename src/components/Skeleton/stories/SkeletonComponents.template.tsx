@@ -1,28 +1,39 @@
 import styled from 'styled-components';
 
-import { Button, skeletonAnimationMixin } from '@admiral-ds/admiral3-primitives';
+import { Button } from '@admiral-ds/admiral3-primitives';
 
 import { BUTTON_DIMENSIONS } from '../../Button/constants';
-import { StoryDemoContainer } from '../../stories/StoryContainers';
+import { StoryDemoContainer, StoryDemoDescription } from '../../stories/StoryContainers';
 
-const ButtonList = styled.div`
+const List = styled.div<{ $direction?: 'row' | 'column' }>`
   display: flex;
-  align-items: center;
+  flex-direction: ${({ $direction = 'row' }) => $direction};
+  align-items: flex-start;
   gap: 16px;
 `;
 
-// Ряд компонентов библиотеки могут отображаться с анимацией скелетона, что контролируется через паратмер skeleton.
-
 export const SkeletonComponentsTemplate = () => {
   return (
-    <>
-      <ButtonList>
+    <StoryDemoContainer $direction="column" $gap="40px" $withBackground={false}>
+      <StoryDemoDescription>
+        Ряд компонентов библиотеки предоставляют параметр <code>skeleton</code> для отображения компонента с
+        соответствующей анимацией и состоянием загрузки. Например, компонент <code>Button</code>:
+      </StoryDemoDescription>
+      <List>
         {BUTTON_DIMENSIONS.map((dimension) => (
-          <Button key={dimension} dimension={dimension} skeleton>
-            Size {dimension.toUpperCase()}
-          </Button>
+          <List key={dimension} $direction="column">
+            <span>Size {dimension.toUpperCase()}</span>
+            <Button dimension={dimension} skeleton>
+              Button
+            </Button>
+          </List>
         ))}
-      </ButtonList>
-    </>
+      </List>
+      <StoryDemoDescription>
+        Библиотека также предоставляет отдельный миксин <code>skeletonAnimationMixin</code>, который содержит в себе
+        анимацию плавного изменения цвета. Данный миксин может быть полезен при встраивании анимации скелетона в уже
+        готовые компоненты.
+      </StoryDemoDescription>
+    </StoryDemoContainer>
   );
 };

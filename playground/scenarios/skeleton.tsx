@@ -3,7 +3,9 @@ import type { SkeletonProps } from '../../src/components/Skeleton';
 import { SkeletonPlaygroundTemplate } from '../../src/components/Skeleton/stories/SkeletonPlayground.template';
 
 const defaultArgs: SkeletonProps = {
-  children: 'Skeleton',
+  width: 200,
+  height: 40,
+  borderRadius: 4,
 };
 
 export const skeletonScenarios: PlaygroundScenario[] = [
