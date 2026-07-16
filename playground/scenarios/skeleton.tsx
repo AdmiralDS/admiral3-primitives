@@ -1,5 +1,6 @@
+import type { SkeletonProps } from '@admiral-ds/admiral3-primitives';
+
 import type { PlaygroundScenario } from './index';
-import type { SkeletonProps } from '../../src/components/Skeleton';
 import { SkeletonPlaygroundTemplate } from '../../src/components/Skeleton/stories/SkeletonPlayground.template';
 
 const defaultArgs: SkeletonProps = {
