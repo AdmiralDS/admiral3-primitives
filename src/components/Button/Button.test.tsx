@@ -47,6 +47,7 @@ describe('Button', () => {
     render(<Button data-testid="button">Content</Button>);
 
     expect(screen.getByTestId('button')).toHaveTextContent('Content');
+    expect(screen.getByText('Content').tagName).toBe('SPAN');
   });
 
   it('forwards button attributes to the root element', () => {
