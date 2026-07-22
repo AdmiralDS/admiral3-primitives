@@ -11,7 +11,7 @@ const DEFAULT_APPEARANCE = 'colored';
 export const Spinner = forwardRef<HTMLDivElement, SpinnerProps>(
   ({ dimension = 'm', appearance = DEFAULT_APPEARANCE, ...props }, ref) => {
     const hasAccessibleName = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined;
-    const ariaLabel = hasAccessibleName ? undefined : 'Loading...';
+    const ariaLabel = hasAccessibleName ? undefined : 'Загрузка...';
     const isCustomAppearance = typeof appearance === 'object';
     const presetAppearance = isCustomAppearance ? DEFAULT_APPEARANCE : appearance;
     const colorConfig = isCustomAppearance ? appearance : undefined;

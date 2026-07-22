@@ -45,7 +45,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const spinnerDimension = dimension === 'l' ? 'm' : dimension;
 
     const hasAccessibleName = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined;
-    const ariaLabel = hasAccessibleName || !loading ? undefined : 'Loading...';
+    const ariaLabel = hasAccessibleName || !loading ? undefined : 'Загрузка...';
 
     return (
       <StyledButton
