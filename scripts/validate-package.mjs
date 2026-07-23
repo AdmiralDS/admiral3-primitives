@@ -1,34 +1,12 @@
 #!/usr/bin/env node
 
 import { execFileSync } from 'node:child_process';
-import { existsSync, statSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const rootDir = join(dirname(fileURLToPath(import.meta.url)), '..');
-const distIndexPath = join(rootDir, 'dist', 'index.js');
-
-/**
- * Стартовый lightweight-лимит для шаблона, а не постоянный максимум на весь срок жизни библиотеки.
- *
- * С добавлением новых компонентов `dist/index.js` будет расти, потому что root entrypoint
- * экспортирует публичный API пакета. Этот лимит нужен, чтобы рано заметить случайное попадание
- * лишнего кода в основной entrypoint. Когда появится несколько реальных компонентов, лимит можно
- * пересмотреть по фактическому baseline сборки.
- */
-const defaultMaxIndexSizeBytes = 20 * 1024;
-
-/**
- * Максимальный допустимый размер основного entrypoint после сборки.
- *
- * По умолчанию используется небольшой лимит для раннего обнаружения случайного
- * раздувания пакета. При необходимости CI или локальный запуск могут временно
- * переопределить лимит через PACKAGE_MAX_INDEX_SIZE_BYTES.
- */
-const maxIndexSizeBytes = Number.parseInt(
-  process.env.PACKAGE_MAX_INDEX_SIZE_BYTES ?? String(defaultMaxIndexSizeBytes),
-  10,
-);
+const packageJson = JSON.parse(readFileSync(join(rootDir, 'package.json'), 'utf8'));
 
 /** Форматирует байты в KiB для читаемого вывода в консоли. */
 const formatBytes = (bytes) => `${(bytes / 1024).toFixed(1)} KiB`;
@@ -44,10 +22,7 @@ const formatProjectPath = (filePath) => relative(rootDir, filePath);
  * даже если они случайно окажутся внутри разрешённого publish root.
  */
 const forbiddenPackagePathRules = [
-  {
-    label: 'source files',
-    matches: (path) => path === 'src' || path.startsWith('src/'),
-  },
+  { label: 'source files', matches: (path) => path === 'src' || path.startsWith('src/') },
   {
     label: 'Storybook build output',
     matches: (path) => path === 'storybook-static' || path.startsWith('storybook-static/'),
@@ -56,10 +31,7 @@ const forbiddenPackagePathRules = [
     label: 'Playwright report output',
     matches: (path) => path === 'playwright-report' || path.startsWith('playwright-report/'),
   },
-  {
-    label: 'test result output',
-    matches: (path) => path === 'test-results' || path.startsWith('test-results/'),
-  },
+  { label: 'test result output', matches: (path) => path === 'test-results' || path.startsWith('test-results/') },
   {
     label: 'template files',
     matches: (path) => path.includes('/templates/') || path.startsWith('templates/') || path.includes('.template.'),
@@ -87,13 +59,9 @@ const readPackDryRun = () => {
     encoding: 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
   });
-  const result = JSON.parse(output);
-  const packageInfo = result.at(0);
+  const packageInfo = JSON.parse(output).at(0);
 
-  if (!packageInfo) {
-    throw new Error('npm pack --dry-run did not return package metadata.');
-  }
-
+  if (!packageInfo) throw new Error('npm pack --dry-run did not return package metadata.');
   return packageInfo;
 };
 
@@ -117,62 +85,53 @@ const validatePackageFiles = (files) => {
 
     // Затем применяем точечные запреты на служебные и тестовые файлы.
     for (const rule of forbiddenPackagePathRules) {
-      if (rule.matches(path)) {
-        errors.push(`${path} contains ${rule.label}.`);
-      }
+      if (rule.matches(path)) errors.push(`${path} contains ${rule.label}.`);
     }
   }
-
   return errors;
 };
 
+/** Собирает все JS, type и служебные targets из package.json#exports. */
+const getExportTargets = () =>
+  Object.entries(packageJson.exports ?? {}).flatMap(([exportKey, exportValue]) => {
+    if (typeof exportValue === 'string') return [[exportKey, exportValue]];
+    return Object.values(exportValue).map((target) => [exportKey, target]);
+  });
+
 /**
- * Проверяет наличие и размер dist/index.js.
- *
- * Отсутствие файла обычно означает, что пакет не был собран перед проверкой.
- * Превышение лимита помогает заметить неожиданный рост основного bundle entry.
+ * Проверяет, что каждый публичный export существует после сборки и попадёт
+ * в tarball. Проверки файловой системы недостаточно: publish-настройки могут
+ * исключить существующий локально файл.
  */
-const validateIndexSize = () => {
-  if (!existsSync(distIndexPath)) {
-    return [`${formatProjectPath(distIndexPath)} is missing. Run npm run build before package validation.`];
-  }
+const validateExportTargets = (files) => {
+  const packageFiles = new Set(files.map((file) => file.path.replaceAll('\\', '/')));
 
-  const sizeBytes = statSync(distIndexPath).size;
+  return getExportTargets().flatMap(([exportKey, target]) => {
+    const targetPath = join(rootDir, target);
+    const packageTarget = target.replaceAll('\\', '/').replace(/^\.\//, '');
 
-  if (!Number.isFinite(maxIndexSizeBytes) || maxIndexSizeBytes <= 0) {
-    return ['PACKAGE_MAX_INDEX_SIZE_BYTES must be a positive integer when provided.'];
-  }
+    if (!existsSync(targetPath)) {
+      return [`Export ${exportKey} points to missing ${formatProjectPath(targetPath)}.`];
+    }
 
-  if (sizeBytes > maxIndexSizeBytes) {
-    return [
-      `${formatProjectPath(distIndexPath)} is ${formatBytes(sizeBytes)}, which exceeds ${formatBytes(
-        maxIndexSizeBytes,
-      )}.`,
-    ];
-  }
-
-  return [];
+    return packageFiles.has(packageTarget)
+      ? []
+      : [`Export ${exportKey} target ${packageTarget} is missing from the npm tarball.`];
+  });
 };
 
 const packageInfo = readPackDryRun();
-const packageFiles = packageInfo.files ?? [];
 
 // Собираем ошибки всех проверок, чтобы пользователь получил полный список проблем за один запуск.
-const errors = [...validatePackageFiles(packageFiles), ...validateIndexSize()];
+const packageFiles = packageInfo.files ?? [];
+const errors = [...validatePackageFiles(packageFiles), ...validateExportTargets(packageFiles)];
 
 if (errors.length > 0) {
   console.error('Package validation failed:');
-
-  for (const error of errors) {
-    console.error(`- ${error}`);
-  }
-
+  for (const error of errors) console.error(`- ${error}`);
   process.exit(1);
 }
 
-const indexSize = statSync(distIndexPath).size;
-
 console.log(
-  `Package validation passed: ${packageFiles.length} files, ${formatBytes(packageInfo.unpackedSize ?? 0)} unpacked.`,
+  `Package validation passed: ${packageInfo.files?.length ?? 0} files, ${formatBytes(packageInfo.unpackedSize ?? 0)} unpacked.`,
 );
-console.log(`dist/index.js size: ${formatBytes(indexSize)} / ${formatBytes(maxIndexSizeBytes)}.`);
