@@ -51,6 +51,7 @@ export const StyledButton = styled.button.attrs<
     .join(' '),
   'data-color-mode': String(props.$colorMode),
   'data-dimension': String(props.$dimension),
+  'data-loading': props.$loading ? '' : undefined,
 }))<StyledButtonProps>`
   position: relative;
   box-sizing: border-box;
@@ -62,9 +63,12 @@ export const StyledButton = styled.button.attrs<
   overflow: hidden;
   border-radius: ${(p) =>
     p.$skeleton ? 0 : cssToken('--admiral-radius-by-base-4-medium', (theme) => theme.radius.byBase['4'].medium)};
-  cursor: ${(p) => (p.disabled ? 'not-allowed' : 'pointer')};
-  // TODO обновить после выбора единого паттерна для работы с loading и skeleton состояниями
-  ${(p) => (p.$loading || p.$skeleton) && 'pointer-events: none;'}
+
+  cursor: pointer;
+  ${(p) => p.disabled && 'cursor: not-allowed;'}
+  ${(p) => p.$loading && 'cursor: progress;'}
+  ${(p) => p.$skeleton && 'cursor: default;'}
+
   ${({ $skeleton }) => ($skeleton ? skeletonAnimationMixin : '')};
 
   ${ButtonContent} {

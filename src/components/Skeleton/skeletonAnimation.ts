@@ -24,6 +24,12 @@ const skeletonAnimation = (p: ExecutionContext & object) => keyframes`
 `;
 /** Skeleton-анимация для встраивания в стили отдельных компонентов */
 export const skeletonAnimationMixin = css`
-  // TODO Добавить поддержку prefers-reduced-motion после согласования поведения с дизайнером.
   animation: ${(p) => skeletonAnimation(p)} 2s ease infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+    &&& {
+      background-color: ${(p) => skeletonColors.rest(p)};
+      border-color: ${(p) => skeletonColors.rest(p)};
+    }
+  }
 `;

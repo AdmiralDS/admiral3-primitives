@@ -10,11 +10,11 @@ export const solidAppearanceMixin = css<{ $colorMode: ButtonColorMode }>`
     fill: ${(p) => solidColors[p.$colorMode].color(p)};
   }
 
-  &&&:hover {
+  &&&:hover:not(:disabled):not([data-loading]) {
     background-color: ${(p) => solidColors[p.$colorMode].backgroundHover};
   }
 
-  &&&:active {
+  &&&:active:not(:disabled):not([data-loading]) {
     background-color: ${(p) => solidColors[p.$colorMode].backgroundPress};
   }
 

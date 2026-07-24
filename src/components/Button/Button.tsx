@@ -24,11 +24,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       appearance = DEFAULT_APPEARANCE,
       colorMode: userColorMode = DEFAULT_COLOR_MODE,
       colorConfig,
+      disabled,
       displayAsDisabled = false,
       displayAsSquare = false,
       loading = false,
       loadingPosition,
       skeleton = false,
+      onClick,
       children,
       ...props
     },
@@ -46,11 +48,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const hasAccessibleName = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined;
     const ariaLabel = hasAccessibleName || !loading ? undefined : 'Загрузка...';
+    const ariaDisabled = displayAsDisabled || loading ? 'true' : undefined;
 
     return (
       <StyledButton
         ref={ref}
         type={type}
+        disabled={disabled}
         $dimension={dimension}
         $appearance={appearance}
         $colorConfig={colorConfig}
@@ -61,6 +65,9 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         $displayAsDisabled={displayAsDisabled}
         $displayAsSquare={displayAsSquare}
         aria-label={ariaLabel}
+        aria-disabled={ariaDisabled}
+        tabIndex={disabled || skeleton ? -1 : 0}
+        onClick={loading || skeleton ? undefined : onClick}
         {...props}
       >
         {loading && !loadingPosition && (

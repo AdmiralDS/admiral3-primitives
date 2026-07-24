@@ -10,11 +10,11 @@ export const ghostAppearanceMixin = css<{ $colorMode: ButtonColorMode }>`
     fill: ${(p) => ghostColors[p.$colorMode].color};
   }
 
-  &&&:hover {
+  &&&:hover:not(:disabled):not([data-loading]) {
     background-color: ${(p) => ghostColors[p.$colorMode].backgroundHover};
   }
 
-  &&&:active {
+  &&&:active:not(:disabled):not([data-loading]) {
     background-color: ${(p) => ghostColors[p.$colorMode].backgroundPress};
   }
 

@@ -32,6 +32,9 @@ export const StyledSpinnerIcon = styled(SpinnerIcon)<StyledSpinnerIconProps>`
   width: 100%;
   height: 100%;
   animation: ${spin} 1s linear infinite;
+  @media (prefers-reduced-motion: reduce) {
+    animation: none;
+  }
 
   /** styled-components поддерживает container query начиная с v6 */
   @container (min-width: 64px) {
