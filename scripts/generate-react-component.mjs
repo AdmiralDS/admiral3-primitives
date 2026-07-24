@@ -185,6 +185,20 @@ const addPlaygroundScenarioToIndex = () => {
   writeProjectFile(indexPath, nextContent);
 };
 
+/** Добавляет явный публичный subpath компонента в package exports. */
+const addComponentPackageExport = () => {
+  const packageJsonPath = join(rootDir, 'package.json');
+  const packageJson = JSON.parse(readFileSync(packageJsonPath, 'utf8'));
+  const componentExportKey = `./${componentKebabName}`;
+
+  packageJson.exports[componentExportKey] = {
+    types: `./dist/components/${componentName}/index.d.ts`,
+    import: `./dist/components/${componentName}/index.js`,
+  };
+
+  writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`, 'utf8');
+};
+
 // Создаём consumer-like playground scenario для первичной ручной и e2e-проверки компонента.
 mkdirSync(dirname(playgroundScenarioPath), { recursive: true });
 writeFileSync(
@@ -236,6 +250,7 @@ writeProjectFile(
   'src/index.ts',
   ensureLine(readProjectFile('src/index.ts'), `export * from './components/${componentName}';`),
 );
+addComponentPackageExport();
 
 // После создания файлов подключаем компонент к публичному API и playground aggregator.
 addPlaygroundScenarioToIndex();
