@@ -11,10 +11,10 @@ const packageJsonPath = join(rootDir, 'package.json');
 const playgroundScenariosDir = join(rootDir, 'playground', 'scenarios');
 const e2eDir = join(rootDir, 'tests', 'e2e');
 const packageImport = '@admiral-ds/admiral3-primitives';
-const allowedPackageExports = ['.', './package.json'];
 const internalExportSources = new Set(['./constants', './style']);
 const publicComponentExportPattern = /^\.\/components\/[A-Z][A-Za-z0-9]*$/;
 const styledPropsPattern = /^Styled[A-Za-z0-9]*Props$/;
+const componentExportPattern = /^\.\/[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 /**
  * Переводит PascalCase-имя компонента в kebab-case для поиска playground/e2e файлов.
@@ -205,9 +205,9 @@ const packageJson = readProjectJson(packageJsonPath);
 const packageExportKeys = Object.keys(packageJson.exports ?? {});
 
 for (const exportKey of packageExportKeys) {
-  if (!allowedPackageExports.includes(exportKey)) {
+  if (exportKey !== '.' && exportKey !== './package.json' && !componentExportPattern.test(exportKey)) {
     errors.push(
-      `${formatPath(packageJsonPath)} exposes deep export "${exportKey}". Public package exports must stay root-only.`,
+      `${formatPath(packageJsonPath)} exposes unsupported export "${exportKey}". Only root, package.json and kebab-case component entrypoints are allowed.`,
     );
   }
 }
@@ -224,6 +224,11 @@ for (const componentName of componentNames) {
   const componentDir = join(componentsDir, componentName);
   const componentKebabName = toKebabCase(componentName);
   const componentIndexPath = join(componentDir, 'index.ts');
+  const componentExportKey = `./${componentKebabName}`;
+  const expectedComponentExport = {
+    types: `./dist/components/${componentName}/index.d.ts`,
+    import: `./dist/components/${componentName}/index.js`,
+  };
   const requiredFiles = [
     'index.ts',
     'types.ts',
@@ -246,6 +251,12 @@ for (const componentName of componentNames) {
 
   if (!rootIndexContent.includes(rootExportLine)) {
     errors.push(`${componentName}: missing root export "${rootExportLine}" in ${formatPath(rootIndexPath)}`);
+  }
+
+  if (JSON.stringify(packageJson.exports?.[componentExportKey]) !== JSON.stringify(expectedComponentExport)) {
+    errors.push(
+      `${componentName}: ${formatPath(packageJsonPath)} must expose ${componentExportKey} with its public JS and type entrypoints.`,
+    );
   }
 
   const playgroundScenarioPath = join(playgroundScenariosDir, `${componentKebabName}.tsx`);
@@ -331,6 +342,18 @@ for (const componentName of componentNames) {
         );
       }
     }
+  }
+}
+
+const expectedPackageExportKeys = new Set([
+  '.',
+  './package.json',
+  ...componentNames.map((name) => `./${toKebabCase(name)}`),
+]);
+
+for (const exportKey of packageExportKeys) {
+  if (!expectedPackageExportKeys.has(exportKey)) {
+    errors.push(`${formatPath(packageJsonPath)} exposes "${exportKey}" without a matching component directory.`);
   }
 }
 
