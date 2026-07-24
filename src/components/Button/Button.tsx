@@ -73,7 +73,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
           )}
           {Children.toArray(children).map((child, index) =>
-            typeof child === 'string' ? <div key={child + index}>{child}</div> : child,
+            typeof child === 'string' ? <span key={child + index}>{child}</span> : child,
           )}
           {loading && loadingPosition === 'end' && (
             <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
