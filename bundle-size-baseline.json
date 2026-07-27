@@ -1,24 +1,24 @@
 {
   "components": {
     "badge": {
-      "gzipBytes": 934,
+      "gzipBytes": 932,
       "rawBytes": 3394
     },
     "badge-dot": {
-      "gzipBytes": 673,
+      "gzipBytes": 672,
       "rawBytes": 1422
     },
     "button": {
-      "gzipBytes": 5701,
-      "rawBytes": 22674
+      "gzipBytes": 5518,
+      "rawBytes": 22237
     },
     "skeleton": {
-      "gzipBytes": 627,
-      "rawBytes": 1284
+      "gzipBytes": 548,
+      "rawBytes": 1298
     },
     "spinner": {
-      "gzipBytes": 3015,
-      "rawBytes": 6460
+      "gzipBytes": 2925,
+      "rawBytes": 6068
     }
   },
   "version": 1
