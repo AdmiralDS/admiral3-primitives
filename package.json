@@ -9,6 +9,26 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./badge": {
+      "types": "./dist/components/Badge/index.d.ts",
+      "import": "./dist/components/Badge/index.js"
+    },
+    "./badge-dot": {
+      "types": "./dist/components/BadgeDot/index.d.ts",
+      "import": "./dist/components/BadgeDot/index.js"
+    },
+    "./button": {
+      "types": "./dist/components/Button/index.d.ts",
+      "import": "./dist/components/Button/index.js"
+    },
+    "./skeleton": {
+      "types": "./dist/components/Skeleton/index.d.ts",
+      "import": "./dist/components/Skeleton/index.js"
+    },
+    "./spinner": {
+      "types": "./dist/components/Spinner/index.d.ts",
+      "import": "./dist/components/Spinner/index.js"
     }
   },
   "keywords": [
@@ -27,7 +47,7 @@
   "sideEffects": false,
   "scripts": {
     "check:fix": "npm run format && npm run lint:fix",
-    "check:full": "npm run format:check && npm run lint && npm run validate:components && npm run typecheck && npm run test:run && npm run test:e2e",
+    "check:full": "node scripts/check-full.mjs",
     "storybook": "storybook dev -p 6006",
     "playground": "vite --config vite.playground.config.ts",
     "generate:component": "node scripts/generate-react-component.mjs",
@@ -38,6 +58,7 @@
     "playground:build": "vite build --config vite.playground.config.ts",
     "playground:serve": "serve -s dist-playground -l 4173",
     "pack:check": "node scripts/validate-package.mjs",
+    "test:bundle": "node scripts/test-tree-shaking.mjs",
     "test:e2e": "npm run build && npm run playground:build && playwright test",
     "test:e2e-ui": "npm run build && npm run playground:build && playwright test --ui",
     "lint:fix": "eslint . --fix",
