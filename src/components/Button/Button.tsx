@@ -1,6 +1,6 @@
 import { forwardRef, Children } from 'react';
 
-import { Spinner } from '#src/components/Spinner';
+import { SpinnerIcon } from '#src/components/Spinner/SpinnerIcon';
 
 import { StyledButton, ButtonContent, SpinnerContainer } from './style';
 import type { ButtonProps } from './types';
@@ -72,18 +72,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {loading && !loadingPosition && (
           <SpinnerContainer>
-            <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
+            <SpinnerIcon appearance={spinnerApperance} dimension={spinnerDimension} />
           </SpinnerContainer>
         )}
         <ButtonContent $dimension={dimension}>
           {loading && loadingPosition === 'start' && (
-            <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
+            <SpinnerIcon appearance={spinnerApperance} dimension={spinnerDimension} />
           )}
           {Children.toArray(children).map((child, index) =>
-            typeof child === 'string' ? <div key={child + index}>{child}</div> : child,
+            typeof child === 'string' ? <span key={child + index}>{child}</span> : child,
           )}
           {loading && loadingPosition === 'end' && (
-            <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
+            <SpinnerIcon appearance={spinnerApperance} dimension={spinnerDimension} />
           )}
         </ButtonContent>
       </StyledButton>

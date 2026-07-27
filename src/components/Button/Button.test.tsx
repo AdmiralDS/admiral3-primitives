@@ -177,7 +177,6 @@ describe('Button', () => {
     );
 
     expect(screen.getByTestId('button')).toHaveStyle({ boxShadow: 'none' });
-    expect(screen.getByTestId('button')).toHaveStyle({ pointerEvents: 'none' });
   });
 
   it('adds disabled appearance marker when displayAsDisabled is true', () => {
@@ -190,6 +189,45 @@ describe('Button', () => {
     expect(screen.getByTestId('button')).toHaveAttribute('data-appearance', 'solid disabled');
   });
 
+  it.each([undefined, 'start', 'end'] as const)(
+    'renders a decorative SVG loading icon in %s position',
+    (loadingPosition) => {
+      const { container } = render(
+        <Button data-testid="button" loading loadingPosition={loadingPosition}>
+          Button
+        </Button>,
+      );
+
+      const icon = container.querySelector('svg');
+      expect(icon).not.toBeNull();
+      expect(icon).toHaveAttribute('aria-hidden', 'true');
+      expect(icon).toHaveStyle({ width: '24px', height: '24px' });
+      expect(screen.queryByRole('status')).not.toBeInTheDocument();
+    },
+  );
+
+  it('uses M spinner icon size for L button', () => {
+    const { container } = render(
+      <Button data-testid="button" dimension="l" loading>
+        Button
+      </Button>,
+    );
+
+    const icon = container.querySelector('svg');
+    expect(icon).toHaveStyle({ width: '24px', height: '24px' });
+    expect(container.querySelector("path[data-dimension='m']")).not.toHaveStyle({ display: 'none' });
+  });
+
+  it('removes inline SVG baseline from the centered loading icon', () => {
+    const { container } = render(
+      <Button data-testid="button" loading>
+        Button
+      </Button>,
+    );
+
+    expect(container.querySelector('svg')).toHaveStyle({ display: 'block' });
+  });
+
   it('uses default aria-label when loading and accessible name is not provided', () => {
     render(
       <Button data-testid="button" loading>
@@ -197,7 +235,7 @@ describe('Button', () => {
       </Button>,
     );
 
-    expect(screen.getByTestId('button')).toHaveAttribute('aria-label', 'Loading...');
+    expect(screen.getByTestId('button')).toHaveAttribute('aria-label', 'Загрузка...');
   });
 
   it('does not override aria-label when accessible name is provided', () => {

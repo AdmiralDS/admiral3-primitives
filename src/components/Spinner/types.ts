@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes, SVGAttributes } from 'react';
 
 import type { SPINNER_DIMENSIONS, SPINNER_APPEARANCES } from './constants';
 
@@ -7,23 +7,29 @@ export type SpinnerAppearance = (typeof SPINNER_APPEARANCES)[number];
 
 /** Пользовательский цвет Spinner. */
 export interface SpinnerColorConfig {
-  backgroundColor: string;
+  color: string;
 }
 
-export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
+export interface SpinnerProps extends HTMLAttributes<HTMLSpanElement> {
   /** Размер Spinner. Значение по умолчанию 'm'. */
   dimension?: SpinnerDimension;
   /** Цветовой вариант Spinner или пользовательские цвета. Значение по умолчанию 'colored'. */
   appearance?: SpinnerAppearance | SpinnerColorConfig;
 }
 
-export interface StyledSpinnerProps {
-  $dimension: SpinnerDimension;
-  $appearance?: SpinnerAppearance;
-  $colorConfig?: SpinnerColorConfig;
+/**
+ * Внутренний декоративный SVG-индикатор загрузки.
+ * Не добавляет live-region и предназначен для композиции в других компонентах.
+ */
+export interface SpinnerIconProps extends SVGAttributes<SVGSVGElement> {
+  /** Размер иконки. Значение по умолчанию 'm'. */
+  dimension?: SpinnerDimension;
+  /** Цветовой вариант иконки или пользовательский цвет. Значение по умолчанию 'colored'. */
+  appearance?: SpinnerAppearance | SpinnerColorConfig;
 }
 
-export interface StyledSpinnerIconProps {
+export interface StyledSpinnerProps {
   $appearance: SpinnerAppearance;
+  $dimension: SpinnerDimension;
   $colorConfig?: SpinnerColorConfig;
 }
