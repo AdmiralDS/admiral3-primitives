@@ -25,8 +25,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       colorMode: userColorMode = DEFAULT_COLOR_MODE,
       colorConfig,
       disabled,
-      displayAsDisabled = false,
-      displayAsSquare = false,
+      inactive = false,
+      square = false,
       loading = false,
       loadingPosition,
       skeleton = false,
@@ -48,7 +48,17 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const hasAccessibleName = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined;
     const ariaLabel = hasAccessibleName || !loading ? undefined : 'Загрузка...';
-    const ariaDisabled = displayAsDisabled || loading ? 'true' : undefined;
+    const ariaDisabled = inactive || loading ? 'true' : undefined;
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (loading || skeleton) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      onClick?.(event);
+    };
 
     return (
       <StyledButton
@@ -62,12 +72,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         $loading={loading}
         $loadingPosition={loadingPosition}
         $skeleton={skeleton}
-        $displayAsDisabled={displayAsDisabled}
-        $displayAsSquare={displayAsSquare}
+        $inactive={inactive}
+        $square={square}
         aria-label={ariaLabel}
         aria-disabled={ariaDisabled}
         tabIndex={disabled || skeleton ? -1 : 0}
-        onClick={loading || skeleton ? undefined : onClick}
+        onClick={handleClick}
         {...props}
       >
         {loading && !loadingPosition && (

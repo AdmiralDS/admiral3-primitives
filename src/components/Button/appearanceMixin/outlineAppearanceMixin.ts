@@ -11,11 +11,11 @@ export const outlineAppearanceMixin = css<{ $colorMode: ButtonColorMode; $skelet
     fill: ${(p) => outlineColors[p.$colorMode].color};
   }
 
-  &&&:hover:not(:disabled):not([data-loading]) {
+  &&&:hover:not(:disabled):not([aria-disabled]) {
     background-color: ${(p) => outlineColors[p.$colorMode].backgroundHover};
   }
 
-  &&&:active:not(:disabled):not([data-loading]) {
+  &&&:active:not(:disabled):not([aria-disabled]) {
     background-color: ${(p) => outlineColors[p.$colorMode].backgroundPress};
   }
 

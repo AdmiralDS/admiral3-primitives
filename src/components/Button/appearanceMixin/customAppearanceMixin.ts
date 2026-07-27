@@ -38,14 +38,14 @@ export const customAppearanceMixin = css<{
         : getToken(p.$appearance)[p.$colorMode].color};
   }
 
-  &&&:hover:not(:disabled):not([data-loading]) {
+  &&&:hover:not(:disabled):not([aria-disabled]) {
     background-color: ${(p) =>
       p.$colorMode === 'colored' && p.$colorConfig?.backgroundColor?.hover
         ? p.$colorConfig.backgroundColor.hover
         : getToken(p.$appearance)[p.$colorMode].backgroundHover};
   }
 
-  &&&:active:not(:disabled):not([data-loading]) {
+  &&&:active:not(:disabled):not([aria-disabled]) {
     background-color: ${(p) =>
       p.$colorMode === 'colored' && p.$colorConfig?.backgroundColor?.press
         ? p.$colorConfig.backgroundColor.press

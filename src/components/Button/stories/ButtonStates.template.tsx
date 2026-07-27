@@ -19,11 +19,18 @@ export const ButtonStatesTemplate = (args: ButtonProps) => {
         <StoryDemoDescription>Disable</StoryDemoDescription>
       </State>
       <State>
-        <Button {...args} displayAsDisabled />
-        <StoryDemoDescription>Display as disable</StoryDemoDescription>
+        <Button
+          {...args}
+          inactive
+          // TODO: в дальнейшем заменить title на Tooltip/Hint
+          title="Кнопка выглядит задизейбленной, но сохраняет фокус и обработку нажатий. Используйте, когда основное
+          действие кнопки недоступно, но по нажатию нужно объяснить причину (н-р через тултип или
+          нотификацию)."
+        />
+        <StoryDemoDescription>Inactive</StoryDemoDescription>
       </State>
       <State>
-        <Button {...args} loading />
+        <Button {...args} loading onClick={() => window.alert('click')} />
         <StoryDemoDescription>Loading</StoryDemoDescription>
       </State>
       <State>

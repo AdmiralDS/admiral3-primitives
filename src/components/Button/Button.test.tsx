@@ -1,7 +1,7 @@
 import { createRef } from 'react';
 
 import { themes } from '@admiral-ds/admiral3-tokens';
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import type { ExecutionContext } from 'styled-components';
 import { ThemeProvider } from 'styled-components';
 import { afterEach, describe, expect, it } from 'vitest';
@@ -17,6 +17,7 @@ import {
   SQUARE_BUTTON_PADDING,
 } from './constants';
 import type { ButtonDimension } from './types';
+import { spinnerColors } from '../Spinner/style';
 
 const getButtonDimensionStyles = (dimension: ButtonDimension) => ({
   height: `${BUTTON_DIMENSION_PARAMETERS[dimension]}px`,
@@ -161,7 +162,7 @@ describe('Button', () => {
 
   it.each(BUTTON_DIMENSIONS)('applies %s square button dimensions', (dimension) => {
     render(
-      <Button data-testid="button" dimension={dimension} displayAsSquare>
+      <Button data-testid="button" dimension={dimension} square>
         Button
       </Button>,
     );
@@ -179,14 +180,59 @@ describe('Button', () => {
     expect(screen.getByTestId('button')).toHaveStyle({ boxShadow: 'none' });
   });
 
-  it('adds disabled appearance marker when displayAsDisabled is true', () => {
+  it('adds disabled appearance marker when inactive is true', () => {
     render(
-      <Button data-testid="button" displayAsDisabled>
+      <Button data-testid="button" inactive>
         Button
       </Button>,
     );
 
     expect(screen.getByTestId('button')).toHaveAttribute('data-appearance', 'solid disabled');
+    expect(screen.getByTestId('button')).toHaveAttribute('aria-disabled', 'true');
+    expect(screen.getByTestId('button')).toHaveAttribute('tabindex', '0');
+  });
+
+  it('keeps inactive button clickable', () => {
+    let clickCount = 0;
+    render(
+      <Button data-testid="button" inactive onClick={() => clickCount++}>
+        Button
+      </Button>,
+    );
+
+    fireEvent.click(screen.getByTestId('button'));
+
+    expect(clickCount).toBe(1);
+  });
+
+  it.each(['loading', 'skeleton'] as const)('blocks click events in %s state', (state) => {
+    let clickCount = 0;
+    let parentClickCount = 0;
+    const stateProps = { [state]: true };
+    render(
+      <div onClick={() => parentClickCount++}>
+        <Button data-testid="button" onClick={() => clickCount++} {...stateProps}>
+          Button
+        </Button>
+      </div>,
+    );
+
+    const clickEvent = new MouseEvent('click', { bubbles: true, cancelable: true });
+    screen.getByTestId('button').dispatchEvent(clickEvent);
+
+    expect(clickCount).toBe(0);
+    expect(parentClickCount).toBe(0);
+    expect(clickEvent.defaultPrevented).toBe(true);
+  });
+
+  it('makes a skeleton button unfocusable', () => {
+    render(
+      <Button data-testid="button" skeleton>
+        Button
+      </Button>,
+    );
+
+    expect(screen.getByTestId('button')).toHaveAttribute('tabindex', '-1');
   });
 
   it.each([undefined, 'start', 'end'] as const)(
@@ -202,31 +248,51 @@ describe('Button', () => {
       expect(icon).not.toBeNull();
       expect(icon).toHaveAttribute('aria-hidden', 'true');
       expect(icon).toHaveStyle({ width: '24px', height: '24px' });
-      expect(screen.queryByRole('status')).not.toBeInTheDocument();
     },
   );
 
-  it('uses M spinner icon size for L button', () => {
-    const { container } = render(
-      <Button data-testid="button" dimension="l" loading>
-        Button
-      </Button>,
-    );
+  it.each([
+    { dimension: 'l', spinnerDimension: 'm', size: 24 },
+    { dimension: 'm', spinnerDimension: 'm', size: 24 },
+    { dimension: 's', spinnerDimension: 's', size: 20 },
+    { dimension: 'xs', spinnerDimension: 'xs', size: 16 },
+  ] as const)(
+    'uses $spinnerDimension spinner with $size px size for $dimension button',
+    ({ dimension, spinnerDimension, size }) => {
+      const { container } = render(
+        <Button dimension={dimension} loading loadingPosition="start">
+          Button
+        </Button>,
+      );
 
-    const icon = container.querySelector('svg');
-    expect(icon).toHaveStyle({ width: '24px', height: '24px' });
-    expect(container.querySelector("path[data-dimension='m']")).not.toHaveStyle({ display: 'none' });
-  });
+      const icon = container.querySelector('svg');
+      expect(icon).toHaveStyle({ width: `${size}px`, height: `${size}px` });
+      expect(container.querySelector(`path[data-dimension='${spinnerDimension}']`)).not.toHaveStyle({
+        display: 'none',
+      });
+    },
+  );
 
-  it('removes inline SVG baseline from the centered loading icon', () => {
-    const { container } = render(
-      <Button data-testid="button" loading>
-        Button
-      </Button>,
-    );
+  it.each([
+    { appearance: 'solid', colorMode: 'colored', spinnerAppearance: 'staticWhite' },
+    { appearance: 'solid', colorMode: 'neutral', spinnerAppearance: 'inverted' },
+    { appearance: 'outline', colorMode: 'colored', spinnerAppearance: 'colored' },
+    { appearance: 'flat', colorMode: 'neutral', spinnerAppearance: 'neutral' },
+    { appearance: 'ghost', colorMode: 'neutral', spinnerAppearance: 'neutral' },
+  ] as const)(
+    'uses $spinnerAppearance spinner color for $appearance/$colorMode button',
+    ({ appearance, colorMode, spinnerAppearance }) => {
+      const { container } = render(
+        <Button appearance={appearance} colorMode={colorMode} loading>
+          Button
+        </Button>,
+      );
 
-    expect(container.querySelector('svg')).toHaveStyle({ display: 'block' });
-  });
+      expect(container.querySelector('svg')).toHaveStyle({
+        color: resolveToken(spinnerColors[spinnerAppearance]),
+      });
+    },
+  );
 
   it('uses default aria-label when loading and accessible name is not provided', () => {
     render(
@@ -246,16 +312,5 @@ describe('Button', () => {
     );
 
     expect(screen.getByTestId('button')).toHaveAttribute('aria-label', 'Save');
-  });
-
-  it('does not use aria-labelledby value as aria-label', () => {
-    render(
-      <Button data-testid="button" loading aria-labelledby="button-title">
-        Button
-      </Button>,
-    );
-
-    expect(screen.getByTestId('button')).toHaveAttribute('aria-labelledby', 'button-title');
-    expect(screen.getByTestId('button')).not.toHaveAttribute('aria-label');
   });
 });

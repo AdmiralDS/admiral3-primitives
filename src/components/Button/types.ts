@@ -46,10 +46,14 @@ export interface BaseButtonProps extends React.ButtonHTMLAttributes<HTMLButtonEl
   dimension?: ButtonDimension;
   /** Пользовательские цвета Button. */
   colorConfig?: ButtonColorConfig;
-  /** Оставаясь активной для нажатия, Button отображается в disabled-стиле */
-  displayAsDisabled?: boolean;
-  /** Отображать Button квадратной */
-  displayAsSquare?: boolean;
+  /**
+   * Отображение Button в disabled-стиле, сохраняя фокус и обработку нажатий.
+   * Используйте, когда основное действие недоступно, но по нажатию на кнопку
+   * нужно объяснить причину блокировки (н-р через нотификацию).
+   */
+  inactive?: boolean;
+  /** Отображение Button квадратной */
+  square?: boolean;
   /** Отображение Spinner для визуализации состояния загрузки. */
   loading?: boolean;
   /** Отображение Spinner сбоку от основного контента кнопки (слева/справа).
@@ -83,8 +87,8 @@ export interface StyledButtonProps {
   $colorMode: ButtonColorMode;
   $dimension: ButtonDimension;
   $colorConfig?: ButtonColorConfig;
-  $displayAsDisabled?: boolean;
-  $displayAsSquare?: boolean;
+  $inactive?: boolean;
+  $square?: boolean;
   $loading?: boolean;
   $loadingPosition?: ButtonLoadingPosition;
   $skeleton?: boolean;

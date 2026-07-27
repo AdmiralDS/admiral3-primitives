@@ -43,15 +43,11 @@ export const StyledButton = styled.button.attrs<
     'data-dimension': string;
   }
 >((props) => ({
-  'data-appearance': [
-    props.$colorConfig ? 'custom' : props.$appearance,
-    props.$displayAsDisabled ? 'disabled' : undefined,
-  ]
+  'data-appearance': [props.$colorConfig ? 'custom' : props.$appearance, props.$inactive ? 'disabled' : undefined]
     .filter((val) => val !== undefined)
     .join(' '),
   'data-color-mode': String(props.$colorMode),
   'data-dimension': String(props.$dimension),
-  'data-loading': props.$loading ? '' : undefined,
 }))<StyledButtonProps>`
   position: relative;
   box-sizing: border-box;

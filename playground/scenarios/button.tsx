@@ -1,3 +1,5 @@
+import { ServiceCheckOutline } from '@admiral-ds/admiral3-icons';
+
 import type { ButtonProps } from '@admiral-ds/admiral3-primitives';
 
 import type { PlaygroundScenario } from './index';
@@ -47,8 +49,27 @@ export const buttonScenarios: PlaygroundScenario[] = [
     render: () => <ButtonDirtyTemplate {...defaultArgs} loading data-testid="button" />,
   },
   {
-    id: 'button/state/displayAsDisabled',
-    title: 'Disabled and DisplayAsDisabled Buttons',
-    render: () => <ButtonDirtyTemplate {...defaultArgs} displayAsDisabled data-testid="button" />,
+    id: 'button/content/custom-icons',
+    title: 'Button Custom Icon Sizes',
+    render: () => (
+      <>
+        {(['l', 'm', 's', 'xs'] as const).map((dimension) => (
+          <ButtonDirtyTemplate
+            key={dimension}
+            {...defaultArgs}
+            dimension={dimension}
+            data-testid={`button-icon-${dimension}`}
+          >
+            <ServiceCheckOutline data-testid={`button-custom-icon-${dimension}`} />
+            Button
+          </ButtonDirtyTemplate>
+        ))}
+      </>
+    ),
+  },
+  {
+    id: 'button/state/inactive',
+    title: 'Inactive Button',
+    render: () => <ButtonDirtyTemplate {...defaultArgs} inactive data-testid="button" />,
   },
 ];
