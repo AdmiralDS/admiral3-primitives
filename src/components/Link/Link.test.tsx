@@ -74,6 +74,7 @@ describe('Link', () => {
     expect(onClick).not.toHaveBeenCalled();
     expect(link).toHaveAttribute('aria-disabled', 'true');
     expect(link).toHaveAttribute('tabindex', '-1');
+    expect(link).not.toHaveAttribute('href');
   });
 
   it('does not allow anchor attributes to override the disabled state', () => {

@@ -36,7 +36,11 @@ test.describe('Link playground', () => {
 
     await expect(link).toHaveAttribute('aria-disabled', 'true');
     await expect(link).toHaveAttribute('tabindex', '-1');
+    await expect(link).not.toHaveAttribute('href');
     await expect(link).toHaveCSS('color', disabledColor);
     await expect(link).toHaveCSS('cursor', 'not-allowed');
+
+    await link.hover();
+    await expect(link).toHaveCSS('color', disabledColor);
   });
 });

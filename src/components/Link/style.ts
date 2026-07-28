@@ -53,8 +53,13 @@ export const StyledLink = styled.a<StyledLinkProps>`
   ${({ $disabled }) =>
     $disabled &&
     css`
-      color: ${disabledColor};
       cursor: not-allowed;
-      pointer-events: none;
+      user-select: none;
+
+      &,
+      &:hover,
+      &:active {
+        color: ${disabledColor};
+      }
     `}
 `;

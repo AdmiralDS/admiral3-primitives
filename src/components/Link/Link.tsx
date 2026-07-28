@@ -5,7 +5,10 @@ import type { LinkProps } from './types';
 
 /** Компонент используется для навигации. Может применяться отдельно или внутри текста, с иконкой или без. */
 export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ appearance = 'colored', dimension = 'm', disabled = false, children, onClick, tabIndex, ...props }, ref) => {
+  (
+    { appearance = 'colored', dimension = 'm', disabled = false, children, href, onClick, role, tabIndex, ...props },
+    ref,
+  ) => {
     const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
       if (disabled) {
         event.preventDefault();
@@ -26,6 +29,8 @@ export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
         data-appearance={appearance}
         data-dimension={dimension}
         onClick={handleClick}
+        href={disabled ? undefined : href}
+        role={disabled ? 'link' : role}
         tabIndex={disabled ? -1 : tabIndex}
       >
         {Children.toArray(children).map((child, index) =>
