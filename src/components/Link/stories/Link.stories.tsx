@@ -4,6 +4,8 @@ import { Link, type LinkProps } from '@admiral-ds/admiral3-primitives';
 
 import { LinkAppearancesTemplate } from './LinkAppearances.template';
 import linkAppearancesTemplateRaw from './LinkAppearances.template?raw';
+import { LinkAsPropTemplate } from './LinkAsProp.template';
+import linkAsPropTemplateRaw from './LinkAsProp.template?raw';
 import { LinkIconTemplate } from './LinkIcon.template';
 import linkIconTemplateRaw from './LinkIcon.template?raw';
 import { LinkPlaygroundTemplate } from './LinkPlayground.template';
@@ -73,5 +75,15 @@ export const WithIcon: StoryObj<LinkProps> = {
   parameters: {
     controls: { exclude: ['children'] },
     docs: { source: { code: linkIconTemplateRaw } },
+  },
+};
+
+export const LinkAsProp: StoryObj<LinkProps> = {
+  name: 'Link as prop',
+  args: defaultArgs,
+  render: LinkAsPropTemplate,
+  parameters: {
+    controls: { exclude: ['children', 'href'] },
+    docs: { source: { code: linkAsPropTemplateRaw } },
   },
 };

@@ -9,7 +9,6 @@ const LinkList = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  align-self: flex-start;
 `;
 
 export const LinkIconTemplate = (args: LinkProps) => (

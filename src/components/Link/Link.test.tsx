@@ -1,10 +1,22 @@
-import { createRef } from 'react';
+import { createRef, forwardRef, type AnchorHTMLAttributes } from 'react';
 
 import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { LINK_DIMENSIONS, LINK_DIMENSION_PARAMETERS } from './constants';
 import { Link } from './Link';
+
+interface RouterLinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'> {
+  to: string;
+}
+
+const RouterLink = forwardRef<HTMLAnchorElement, RouterLinkProps>(({ to, ...props }, ref) => (
+  <a {...props} href={to} ref={ref} />
+));
+
+// @ts-expect-error Link supports only anchors and components that render anchors.
+const invalidIntrinsicLink = <Link as="button">Button</Link>;
+void invalidIntrinsicLink;
 
 describe('Link', () => {
   afterEach(cleanup);
@@ -99,5 +111,32 @@ describe('Link', () => {
     );
 
     expect(ref.current).toBe(screen.getByTestId('link'));
+  });
+
+  it('supports a custom routing component and its props', () => {
+    const ref = createRef<HTMLAnchorElement>();
+    render(
+      <Link as={RouterLink} to="/profile" ref={ref}>
+        Profile
+      </Link>,
+    );
+
+    const link = screen.getByRole('link', { name: 'Profile' });
+
+    expect(link).toHaveAttribute('href', '/profile');
+    expect(ref.current).toBe(link);
+  });
+
+  it('renders a native anchor without a destination when a custom component is disabled', () => {
+    render(
+      <Link as={RouterLink} to="/profile" disabled>
+        Profile
+      </Link>,
+    );
+
+    const link = screen.getByRole('link', { name: 'Profile' });
+
+    expect(link.tagName).toBe('A');
+    expect(link).not.toHaveAttribute('href');
   });
 });
