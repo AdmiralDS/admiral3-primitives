@@ -48,6 +48,13 @@ describe('Spinner', () => {
     expect(screen.getByTestId('spinner')).not.toHaveAttribute('aria-label');
   });
 
+  it('allows user attributes to override the default live region semantics', () => {
+    render(<Spinner data-testid="spinner" role="progressbar" aria-live="assertive" />);
+
+    expect(screen.getByTestId('spinner')).toHaveAttribute('role', 'progressbar');
+    expect(screen.getByTestId('spinner')).toHaveAttribute('aria-live', 'assertive');
+  });
+
   it('forwards ref to the root element', () => {
     const ref = createRef<HTMLDivElement>();
 

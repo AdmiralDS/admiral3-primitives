@@ -4,7 +4,7 @@ import { StoryDemoContainer, StoryDemoDescription } from '../../stories/StoryCon
 
 export const BadgeDotCustomColorsTemplate = (args: BadgeDotProps) => {
   return (
-    <StoryDemoContainer $direction="column" $gap="16px" $withBackground={false}>
+    <StoryDemoContainer $direction="column" $gap="16px">
       <StoryDemoDescription>
         Пользовательский цвет задается объектом в <code>appearance</code>. Для BadgeDot передавайте{' '}
         <code>backgroundColor</code>: это может быть CSS custom property из токенов или любое валидное CSS-значение
