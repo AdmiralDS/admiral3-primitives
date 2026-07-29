@@ -10,11 +10,11 @@ export const flatAppearanceMixin = css<{ $colorMode: ButtonColorMode }>`
     fill: ${(p) => flatColors[p.$colorMode].color};
   }
 
-  &&&:hover {
+  &&&:hover:not(:disabled):not([aria-disabled]) {
     background-color: ${(p) => flatColors[p.$colorMode].backgroundHover};
   }
 
-  &&&:active {
+  &&&:active:not(:disabled):not([aria-disabled]) {
     background-color: ${(p) => flatColors[p.$colorMode].backgroundPress};
   }
 

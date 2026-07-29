@@ -16,7 +16,7 @@ export const ButtonPlaygroundTemplate = (args: ButtonProps) => {
         {args.children}
         <ServiceShareOutline />
       </Button>
-      <Button {...args} displayAsSquare>
+      <Button {...args} square>
         <ServiceShareOutline />
       </Button>
     </StoryDemoContainer>

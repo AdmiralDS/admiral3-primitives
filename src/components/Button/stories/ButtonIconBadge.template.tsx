@@ -39,7 +39,7 @@ export const ButtonIconBadgeTemplate = (args: Omit<ButtonProps, 'appearance' | '
       </StoryDemoDescription>
       <Appearance>
         {BUTTON_APPEARANCES.map((appearance) => (
-          <Button key={appearance} {...args} appearance={appearance} displayAsSquare>
+          <Button key={appearance} {...args} appearance={appearance} square>
             <ServiceShareOutline />
           </Button>
         ))}

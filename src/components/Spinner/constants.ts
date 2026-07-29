@@ -1,6 +1,7 @@
 export const SPINNER_DIMENSIONS = ['xs', 's', 'm', 'l', 'xl'] as const;
 
 export const SPINNER_APPEARANCES = ['colored', 'neutral', 'inverted', 'staticWhite'] as const;
+export const DEFAULT_APPEARANCE = 'colored';
 
 export const SPINNER_DIMENSION_PARAMETERS: Record<(typeof SPINNER_DIMENSIONS)[number], number> = {
   xs: 16,

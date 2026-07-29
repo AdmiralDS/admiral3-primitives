@@ -9,20 +9,20 @@
       "rawBytes": 1422
     },
     "button": {
-      "gzipBytes": 5703,
-      "rawBytes": 22675
+      "gzipBytes": 5513,
+      "rawBytes": 22241
     },
     "link": {
       "gzipBytes": 960,
       "rawBytes": 2147
     },
     "skeleton": {
-      "gzipBytes": 627,
-      "rawBytes": 1284
+      "gzipBytes": 550,
+      "rawBytes": 1298
     },
     "spinner": {
-      "gzipBytes": 3015,
-      "rawBytes": 6460
+      "gzipBytes": 2962,
+      "rawBytes": 6068
     }
   },
   "version": 1

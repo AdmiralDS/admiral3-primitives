@@ -1,35 +1,16 @@
 import { createRef } from 'react';
 
-import { themes } from '@admiral-ds/admiral3-tokens';
 import { cleanup, render, screen } from '@testing-library/react';
-import type { ExecutionContext } from 'styled-components';
-import { ThemeProvider } from 'styled-components';
 import { afterEach, describe, expect, it } from 'vitest';
 
-import { SPINNER_APPEARANCES, SPINNER_DIMENSIONS, SPINNER_DIMENSION_PARAMETERS } from './constants';
 import { Spinner } from './Spinner';
-import { spinnerBackgroundColors } from './style';
-import type { SpinnerDimension } from './types';
-
-const getSpinnerDimensionStyles = (dimension: SpinnerDimension) => {
-  const size = SPINNER_DIMENSION_PARAMETERS[dimension];
-
-  return {
-    width: `${size}px`,
-    height: `${size}px`,
-  };
-};
-
-const resolveToken = (token: (context: ExecutionContext) => string, theme = themes.light) => {
-  return token({ theme } as ExecutionContext);
-};
 
 describe('Spinner', () => {
   afterEach(() => {
     cleanup();
   });
 
-  it('forwards div attributes to the root element', () => {
+  it('forwards HTML attributes to the root element', () => {
     render(<Spinner data-testid="spinner" aria-label="Loading..." />);
 
     expect(screen.getByTestId('spinner')).toHaveAttribute('aria-label', 'Loading...');
@@ -38,7 +19,14 @@ describe('Spinner', () => {
   it('uses default aria-label when accessible name is not provided', () => {
     render(<Spinner data-testid="spinner" />);
 
-    expect(screen.getByTestId('spinner')).toHaveAttribute('aria-label', 'Loading...');
+    expect(screen.getByTestId('spinner')).toHaveAttribute('aria-label', 'Загрузка...');
+  });
+
+  it('keeps status live-region semantics on the public component', () => {
+    render(<Spinner data-testid="spinner" />);
+
+    expect(screen.getByTestId('spinner')).toHaveAttribute('role', 'status');
+    expect(screen.getByTestId('spinner')).toHaveAttribute('aria-live', 'polite');
   });
 
   it('does not use aria-labelledby value as aria-label', () => {
@@ -56,7 +44,7 @@ describe('Spinner', () => {
   });
 
   it('forwards ref to the root element', () => {
-    const ref = createRef<HTMLDivElement>();
+    const ref = createRef<HTMLSpanElement>();
 
     render(<Spinner ref={ref} data-testid="spinner" />);
 
@@ -64,58 +52,24 @@ describe('Spinner', () => {
   });
 
   it('uses default colored appearance and M dimension', () => {
-    const { container } = render(<Spinner data-testid="spinner" />);
-    expect(screen.getByTestId('spinner')).toHaveStyle({
-      ...getSpinnerDimensionStyles('m'),
-    });
+    render(<Spinner data-testid="spinner" />);
 
-    const svgPathElement = container.querySelector('svg > path');
-    expect(svgPathElement).not.toBeNull();
-    expect(svgPathElement).toHaveStyle({
-      fill: resolveToken(spinnerBackgroundColors.colored),
-    });
+    expect(screen.getByTestId('spinner')).toHaveAttribute('data-appearance', 'colored');
+    expect(screen.getByTestId('spinner')).toHaveAttribute('data-dimension', 'm');
   });
 
-  it.each(SPINNER_DIMENSIONS)('applies %s dimension', (dimension) => {
-    render(<Spinner data-testid="spinner" dimension={dimension} />);
+  it('passes dimension and appearance to the decorative icon', () => {
+    render(<Spinner data-testid="spinner" dimension="l" appearance={{ color: 'var(--custom-spinner-color)' }} />);
 
-    expect(screen.getByTestId('spinner')).toHaveStyle(getSpinnerDimensionStyles(dimension));
-  });
-
-  it.each(SPINNER_APPEARANCES)('uses Admiral CSS tokens for %s appearance', (appearance) => {
-    const { container } = render(<Spinner appearance={appearance} data-testid="spinner" />);
-
-    const svgPathElement = container.querySelector('svg > path');
-    expect(svgPathElement).not.toBeNull();
-    expect(svgPathElement).toHaveStyle({
-      fill: resolveToken(spinnerBackgroundColors[appearance]),
-    });
-  });
-
-  it('uses current styled-components theme as CSS token fallback', () => {
-    const { container } = render(
-      <ThemeProvider theme={themes.dark}>
-        <Spinner appearance="neutral" data-testid="spinner" />
-      </ThemeProvider>,
-    );
-
-    const svgPathElement = container.querySelector('svg > path');
-    expect(svgPathElement).not.toBeNull();
-    expect(svgPathElement).toHaveStyle({
-      fill: resolveToken(spinnerBackgroundColors.neutral, themes.dark),
-    });
-  });
-
-  it('uses custom color config', () => {
-    const { container } = render(
-      <Spinner appearance={{ backgroundColor: 'var(--custom-spinner-background)' }} data-testid="spinner" />,
-    );
+    expect(screen.getByTestId('spinner')).toHaveAttribute('data-dimension', 'l');
     expect(screen.getByTestId('spinner')).toHaveAttribute('data-appearance', 'custom');
 
-    const svgPathElement = container.querySelector('svg > path');
-    expect(svgPathElement).not.toBeNull();
-    expect(svgPathElement).toHaveStyle({
-      fill: 'var(--custom-spinner-background)',
+    const icon = screen.getByTestId('spinner').querySelector('svg');
+    expect(icon).toHaveAttribute('aria-hidden', 'true');
+    expect(icon).toHaveStyle({
+      width: '48px',
+      height: '48px',
+      color: 'var(--custom-spinner-color)',
     });
   });
 });

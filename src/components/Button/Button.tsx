@@ -1,6 +1,6 @@
 import { forwardRef, Children } from 'react';
 
-import { Spinner } from '#src/components/Spinner';
+import { SpinnerIcon } from '#src/components/Spinner/SpinnerIcon';
 
 import { StyledButton, ButtonContent, SpinnerContainer } from './style';
 import type { ButtonProps } from './types';
@@ -24,11 +24,13 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       appearance = DEFAULT_APPEARANCE,
       colorMode: userColorMode = DEFAULT_COLOR_MODE,
       colorConfig,
-      displayAsDisabled = false,
-      displayAsSquare = false,
+      disabled,
+      inactive = false,
+      square = false,
       loading = false,
       loadingPosition,
       skeleton = false,
+      onClick,
       children,
       ...props
     },
@@ -45,12 +47,25 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const spinnerDimension = dimension === 'l' ? 'm' : dimension;
 
     const hasAccessibleName = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined;
-    const ariaLabel = hasAccessibleName || !loading ? undefined : 'Loading...';
+    const ariaLabel = hasAccessibleName || !loading ? undefined : 'Загрузка...';
+    const ariaDisabled = inactive || loading ? 'true' : undefined;
+    const tabIndex = disabled || skeleton ? -1 : 0;
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+      if (loading || skeleton) {
+        event.preventDefault();
+        event.stopPropagation();
+        return;
+      }
+
+      onClick?.(event);
+    };
 
     return (
       <StyledButton
         ref={ref}
         type={type}
+        disabled={disabled}
         $dimension={dimension}
         $appearance={appearance}
         $colorConfig={colorConfig}
@@ -58,25 +73,28 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         $loading={loading}
         $loadingPosition={loadingPosition}
         $skeleton={skeleton}
-        $displayAsDisabled={displayAsDisabled}
-        $displayAsSquare={displayAsSquare}
+        $inactive={inactive}
+        $square={square}
         aria-label={ariaLabel}
+        aria-disabled={ariaDisabled}
+        tabIndex={tabIndex}
+        onClick={handleClick}
         {...props}
       >
         {loading && !loadingPosition && (
           <SpinnerContainer>
-            <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
+            <SpinnerIcon appearance={spinnerApperance} dimension={spinnerDimension} />
           </SpinnerContainer>
         )}
         <ButtonContent $dimension={dimension}>
           {loading && loadingPosition === 'start' && (
-            <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
+            <SpinnerIcon appearance={spinnerApperance} dimension={spinnerDimension} />
           )}
           {Children.toArray(children).map((child, index) =>
             typeof child === 'string' ? <span key={child + index}>{child}</span> : child,
           )}
           {loading && loadingPosition === 'end' && (
-            <Spinner appearance={spinnerApperance} dimension={spinnerDimension} />
+            <SpinnerIcon appearance={spinnerApperance} dimension={spinnerDimension} />
           )}
         </ButtonContent>
       </StyledButton>

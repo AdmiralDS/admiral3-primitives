@@ -75,10 +75,10 @@ const meta = {
     disabled: {
       control: { type: 'boolean' },
     },
-    displayAsDisabled: {
+    inactive: {
       control: { type: 'boolean' },
     },
-    displayAsSquare: {
+    square: {
       control: { type: 'boolean' },
     },
     loading: {
@@ -151,7 +151,7 @@ export const WithIconAndBadge: StoryObj<StorybookButtonProps> = {
 
   parameters: {
     controls: {
-      exclude: ['children', 'appearance', 'colorMode', 'displayAsSquare'],
+      exclude: ['children', 'appearance', 'colorMode', 'square'],
     },
     docs: {
       source: {
@@ -167,7 +167,7 @@ export const States: StoryObj<StorybookButtonProps> = {
 
   parameters: {
     controls: {
-      exclude: ['disabled', 'displayAsDisabled', 'loading', 'loadingPosition', 'skeleton'],
+      exclude: ['disabled', 'inactive', 'loading', 'loadingPosition', 'skeleton'],
     },
     docs: {
       source: {

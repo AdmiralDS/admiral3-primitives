@@ -4,51 +4,69 @@ import { getPlaygroundScenarioPath, resolveCssColorToken } from '../utils';
 
 const neutralScenarioId = 'spinner/neutral';
 const customColorsScenarioId = 'spinner/custom-colors';
-const neutralBackgroundColorToken = '--admiral-color-neutral-text-1-rest';
-const customBackgroundColorToken = '--admiral-color-purple-base-1-rest';
+const neutralColorToken = '--admiral-color-neutral-text-1-rest';
+const customColorToken = '--admiral-color-purple-base-1-rest';
 
 test.describe('Spinner playground', () => {
   test('resolves token colors and layout size in the browser', async ({ page }) => {
     await page.goto(getPlaygroundScenarioPath(neutralScenarioId));
 
     const spinner = page.getByTestId('spinner');
-    const spinnerPath = spinner.locator('svg path:first-child');
-    const expectedBackgroundColor = await resolveCssColorToken(page, neutralBackgroundColorToken);
+    const icon = spinner.locator('svg');
+    const expectedColor = await resolveCssColorToken(page, neutralColorToken);
 
     await expect(spinner).toBeVisible();
-    await expect(spinnerPath).toHaveCSS('fill', expectedBackgroundColor);
-    await expect(spinner).toHaveCSS('width', '20px');
-    await expect(spinner).toHaveCSS('height', '20px');
+    await expect(icon).toHaveCSS('color', expectedColor);
+    await expect(icon).toHaveCSS('width', '20px');
+    await expect(icon).toHaveCSS('height', '20px');
+
+    const box = await spinner.boundingBox();
+    expect(box).not.toBeNull();
+    expect(box?.width).toBeCloseTo(20, 1);
+    expect(box?.height).toBeCloseTo(20, 1);
 
     await page.locator('#playground-theme').selectOption('dark');
     await expect(page.locator('[data-admiral-theme]')).toHaveAttribute('data-admiral-theme', 'dark');
-    const expectedDarkBackgroundColor = await resolveCssColorToken(page, neutralBackgroundColorToken);
-    await expect(spinnerPath).toHaveCSS('fill', expectedDarkBackgroundColor);
+    const expectedDarkColor = await resolveCssColorToken(page, neutralColorToken);
+    await expect(icon).toHaveCSS('color', expectedDarkColor);
   });
+
   test('resolves custom color config in the browser', async ({ page }) => {
     await page.goto(getPlaygroundScenarioPath(customColorsScenarioId));
 
     const spinner = page.getByTestId('spinner');
-    const spinnerPath = spinner.locator('svg path:first-child');
-    const expectedBackgroundColor = await resolveCssColorToken(page, customBackgroundColorToken);
+    const icon = spinner.locator('svg');
+    const expectedColor = await resolveCssColorToken(page, customColorToken);
+
     await expect(spinner).toHaveAttribute('data-appearance', 'custom');
-    await expect(spinnerPath).toHaveCSS('fill', expectedBackgroundColor);
+    await expect(icon).toHaveCSS('color', expectedColor);
 
     await page.locator('#playground-theme').selectOption('dark');
     await expect(page.locator('[data-admiral-theme]')).toHaveAttribute('data-admiral-theme', 'dark');
-    const expectedDarkBackgroundColor = await resolveCssColorToken(page, customBackgroundColorToken);
-    await expect(spinnerPath).toHaveCSS('fill', expectedDarkBackgroundColor);
+    const expectedDarkColor = await resolveCssColorToken(page, customColorToken);
+    await expect(icon).toHaveCSS('color', expectedDarkColor);
   });
-  test('check correct svg path visibility', async ({ page }) => {
+
+  test('shows only the path for the selected dimension', async ({ page }) => {
     await page.goto(getPlaygroundScenarioPath(customColorsScenarioId));
 
     const spinner = page.getByTestId('spinner');
-    const svgIconPaths = spinner.locator('svg path:not([data-dimension="m"])');
+    const selectedPath = spinner.locator('svg path[data-dimension="m"]');
+    const otherPaths = spinner.locator('svg path:not([data-dimension="m"])');
 
-    const pathElements = await svgIconPaths.all();
+    await expect(selectedPath).not.toHaveCSS('display', 'none');
+
+    const pathElements = await otherPaths.all();
     expect(pathElements.length).toBeGreaterThan(0);
     for (const path of pathElements) {
       await expect(path).toHaveCSS('display', 'none');
     }
+  });
+
+  test('disables animation when reduced motion is preferred', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto(getPlaygroundScenarioPath(neutralScenarioId));
+
+    await expect(page.getByTestId('spinner').locator('svg')).toHaveCSS('animation-name', 'none');
   });
 });
