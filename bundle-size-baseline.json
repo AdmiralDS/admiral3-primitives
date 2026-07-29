@@ -9,8 +9,12 @@
       "rawBytes": 1422
     },
     "button": {
-      "gzipBytes": 5518,
-      "rawBytes": 22237
+      "gzipBytes": 5703,
+      "rawBytes": 22675
+    },
+    "link": {
+      "gzipBytes": 960,
+      "rawBytes": 2147
     },
     "skeleton": {
       "gzipBytes": 548,
