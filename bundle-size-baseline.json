@@ -12,13 +12,13 @@
       "gzipBytes": 5513,
       "rawBytes": 22241
     },
+    "check-box": {
+      "gzipBytes": 2771,
+      "rawBytes": 8329
+    },
     "link": {
       "gzipBytes": 960,
       "rawBytes": 2147
-    },
-    "check-box": {
-      "gzipBytes": 2046,
-      "rawBytes": 6063
     },
     "skeleton": {
       "gzipBytes": 550,

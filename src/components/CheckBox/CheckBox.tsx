@@ -43,9 +43,6 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
       onChange,
       onClick,
       onKeyDown,
-      'aria-describedby': ariaDescribedBy,
-      'aria-label': ariaLabel,
-      'aria-labelledby': ariaLabelledBy,
       ...props
     },
     ref,
@@ -55,7 +52,6 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
     const StateIcon = indeterminate ? MINUS_ICONS[dimension] : SUCCESS_ICONS[dimension];
     const labelId = `${generatedId}-label`;
     const extraTextId = `${generatedId}-extra-text`;
-    const describedBy = [ariaDescribedBy, extraText ? extraTextId : undefined].filter(Boolean).join(' ') || undefined;
 
     useLayoutEffect(() => {
       if (inputRef.current) {
@@ -66,27 +62,27 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
     return (
       <StyledCheckBox $dimension={dimension} $disabled={disabled} $error={error} $readOnly={readOnly}>
         <Input
+          aria-describedby={extraText ? extraTextId : undefined}
+          aria-invalid={error || undefined}
+          aria-labelledby={!props['aria-label'] && children ? labelId : undefined}
+          aria-checked={indeterminate ? 'mixed' : undefined}
+          aria-readonly={readOnly || undefined}
+          disabled={disabled}
+          readOnly={readOnly}
           {...props}
           ref={refSetter(inputRef, ref)}
           type="checkbox"
-          disabled={disabled}
-          readOnly={readOnly}
-          data-read-only={readOnly}
-          aria-describedby={describedBy}
-          aria-invalid={error || undefined}
-          aria-label={ariaLabel}
-          aria-labelledby={ariaLabelledBy ?? (!ariaLabel && children ? labelId : undefined)}
-          aria-checked={indeterminate ? 'mixed' : undefined}
+          data-read-only={readOnly ? '' : undefined}
           onChange={(event) => {
             if (!readOnly) onChange?.(event);
           }}
           onClick={(event) => {
-            onClick?.(event);
             if (readOnly) event.preventDefault();
+            onClick?.(event);
           }}
           onKeyDown={(event) => {
-            onKeyDown?.(event);
             if (readOnly && event.key === ' ') event.preventDefault();
+            onKeyDown?.(event);
           }}
         />
         <Background aria-hidden="true">

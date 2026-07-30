@@ -123,21 +123,21 @@ export const StyledCheckBox = styled.label.attrs<
     display: block;
   }
 
-  ${Input}:not(:disabled):not([data-read-only='true']):hover + ${Background} {
+  ${Input}:not(:disabled):not([data-read-only]):hover + ${Background} {
     background: ${cssToken('--admiral-color-neutral-base-1-hover', (theme) => theme.color.neutral.base._1.hover)};
   }
 
-  ${Input}:not(:disabled):not([data-read-only='true']):checked:hover + ${Background},
-  ${Input}:not(:disabled):not([data-read-only='true']):indeterminate:hover + ${Background} {
+  ${Input}:not(:disabled):not([data-read-only]):checked:hover + ${Background},
+  ${Input}:not(:disabled):not([data-read-only]):indeterminate:hover + ${Background} {
     background: ${cssToken('--admiral-color-primary-base-1-hover', (theme) => theme.color.primary.base._1.hover)};
   }
 
-  ${Input}:not(:disabled):not([data-read-only='true']):active + ${Background} {
+  ${Input}:not(:disabled):not([data-read-only]):active + ${Background} {
     background: ${cssToken('--admiral-color-neutral-base-1-press', (theme) => theme.color.neutral.base._1.press)};
   }
 
-  ${Input}:not(:disabled):not([data-read-only='true']):checked:active + ${Background},
-  ${Input}:not(:disabled):not([data-read-only='true']):indeterminate:active + ${Background} {
+  ${Input}:not(:disabled):not([data-read-only]):checked:active + ${Background},
+  ${Input}:not(:disabled):not([data-read-only]):indeterminate:active + ${Background} {
     background: ${cssToken('--admiral-color-primary-base-1-press', (theme) => theme.color.primary.base._1.press)};
   }
 
@@ -157,8 +157,8 @@ export const StyledCheckBox = styled.label.attrs<
 
   ${Input}:disabled:checked + ${Background},
   ${Input}:disabled:indeterminate + ${Background},
-  ${Input}[data-read-only='true']:checked + ${Background},
-  ${Input}[data-read-only='true']:indeterminate + ${Background} {
+  ${Input}[data-read-only]:checked + ${Background},
+  ${Input}[data-read-only]:indeterminate + ${Background} {
     background: ${cssToken('--admiral-color-primary-base-1-disable', (theme) => theme.color.primary.base._1.disable)};
   }
 `;
