@@ -15,6 +15,7 @@ import {
   StyledCheckBox,
 } from './style';
 import type { CheckBoxProps } from './types';
+import { refSetter } from '../../utils/refSetter';
 
 const SUCCESS_ICONS = {
   m: SuccessMIcon,
@@ -62,20 +63,11 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
       }
     }, [indeterminate]);
 
-    const setRef = (node: HTMLInputElement | null) => {
-      inputRef.current = node;
-      if (typeof ref === 'function') {
-        ref(node);
-      } else if (ref) {
-        ref.current = node;
-      }
-    };
-
     return (
       <StyledCheckBox $dimension={dimension} $disabled={disabled} $error={error} $readOnly={readOnly}>
         <Input
           {...props}
-          ref={setRef}
+          ref={refSetter(inputRef, ref)}
           type="checkbox"
           disabled={disabled}
           readOnly={readOnly}
