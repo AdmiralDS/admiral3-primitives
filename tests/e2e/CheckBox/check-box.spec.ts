@@ -77,6 +77,10 @@ test.describe('CheckBox playground', () => {
 
     await readOnly.locator('xpath=..').click();
     await expect(readOnly).toBeChecked();
+
+    await readOnly.focus();
+    await page.keyboard.press('Space');
+    await expect(readOnly).toBeChecked();
   });
 
   test('keeps the intended success and minus icon placement in every dimension', async ({ page }) => {

@@ -1,5 +1,7 @@
 import { forwardRef, useId, useLayoutEffect, useRef } from 'react';
 
+// Иконки отличаются от стандартных из пакета по path
+// поэтому для этого компонента выгружены отдельно по размерам
 import MinusMIcon from './assets/Minus_M.svg?react';
 import MinusSIcon from './assets/Minus_S.svg?react';
 import MinusXsIcon from './assets/Minus_XS.svg?react';
@@ -42,7 +44,6 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
       disabled = false,
       onChange,
       onClick,
-      onKeyDown,
       ...props
     },
     ref,
@@ -52,6 +53,20 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
     const StateIcon = indeterminate ? MINUS_ICONS[dimension] : SUCCESS_ICONS[dimension];
     const labelId = `${generatedId}-label`;
     const extraTextId = `${generatedId}-extra-text`;
+
+    const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
+      if (readOnly) {
+        event.preventDefault();
+      }
+
+      onClick?.(event);
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (!readOnly) {
+        onChange?.(event);
+      }
+    };
 
     useLayoutEffect(() => {
       if (inputRef.current) {
@@ -73,17 +88,8 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
           ref={refSetter(inputRef, ref)}
           type="checkbox"
           data-read-only={readOnly ? '' : undefined}
-          onChange={(event) => {
-            if (!readOnly) onChange?.(event);
-          }}
-          onClick={(event) => {
-            if (readOnly) event.preventDefault();
-            onClick?.(event);
-          }}
-          onKeyDown={(event) => {
-            if (readOnly && event.key === ' ') event.preventDefault();
-            onKeyDown?.(event);
-          }}
+          onChange={handleChange}
+          onClick={handleClick}
         />
         <Background aria-hidden="true">
           <StateIcon data-icon={indeterminate ? 'minus' : 'success'} focusable="false" />

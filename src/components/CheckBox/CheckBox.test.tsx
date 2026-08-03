@@ -92,7 +92,7 @@ describe('CheckBox', () => {
     expect(input).toHaveAttribute('data-read-only', '');
     expect(onChange).not.toHaveBeenCalled();
     expect(onClick.mock.calls[0][0].isDefaultPrevented()).toBe(true);
-    expect(onKeyDown.mock.calls[0][0].isDefaultPrevented()).toBe(true);
+    expect(onKeyDown.mock.calls[0][0].isDefaultPrevented()).toBe(false);
 
     input.focus();
     expect(input).toHaveFocus();
