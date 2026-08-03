@@ -1,4 +1,4 @@
-import { textStyles } from '@admiral-ds/admiral3-tokens';
+import { animation, textStyles } from '@admiral-ds/admiral3-tokens';
 import styled, { css, type CSSObject } from 'styled-components';
 
 import { CHECK_BOX_DIMENSION_PARAMETERS, CHECK_BOX_ROOT_DATA_ATTRIBUTE } from './constants';
@@ -10,6 +10,11 @@ const typography: Record<CheckBoxDimension, CSSObject> = {
   s: textStyles.body.body2Short,
   xs: textStyles.caption.caption1,
 };
+
+const transitionDuration = `var(--admiral-animation-motion-duration-short-2, ${animation.motion.duration.short_2}ms)`;
+const transitionEasing = `var(--admiral-animation-motion-easing-linear, cubic-bezier(${animation.motion.easing.linear.join(
+  ', ',
+)}))`;
 
 export const Input = styled.input`
   position: absolute;
@@ -33,6 +38,13 @@ export const Background = styled.span`
   border-radius: ${cssToken('--admiral-radius-by-base-4-small', (theme) => theme.radius.byBase['4'].small)};
   background: ${cssToken('--admiral-color-neutral-base-1-rest', (theme) => theme.color.neutral.base._1.rest)};
   color: ${cssToken('--admiral-color-neutral-text-static-white-1', (theme) => theme.color.neutral.text.staticWhite._1)};
+  transition:
+    background-color ${transitionDuration} ${transitionEasing},
+    border-color ${transitionDuration} ${transitionEasing};
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
 
   > svg {
     display: none;
@@ -47,7 +59,7 @@ export const CheckboxComponentLabel = styled.div<{
 }>`
   display: flex;
   flex-direction: column;
-  margin-left: 8px;
+  margin-left: ${({ $dimension }) => CHECK_BOX_DIMENSION_PARAMETERS[$dimension].labelGap}px;
   padding-top: ${({ $dimension }) =>
     (CHECK_BOX_DIMENSION_PARAMETERS[$dimension].containerHeight -
       CHECK_BOX_DIMENSION_PARAMETERS[$dimension].controlSize) /
@@ -64,7 +76,7 @@ export const CheckboxComponentLabelText = styled.span``;
 export const CheckboxComponentHint = styled.div<{
   $dimension: CheckBoxDimension;
 }>`
-  margin-top: 6px;
+  margin-top: 2px;
   color: ${cssToken('--admiral-color-neutral-text-2-rest', (theme) => theme.color.neutral.text._2.rest)};
   ${({ $dimension }) => typography[$dimension]}
 `;
@@ -147,8 +159,9 @@ export const StyledCheckBox = styled.label.attrs<
     outline-offset: 2px;
   }
 
-  ${Input}:disabled + ${Background} {
-    border-color: transparent;
+  ${Input}:disabled + ${Background},
+  ${Input}[data-read-only] + ${Background} {
+    border-color: ${cssToken('--admiral-color-neutral-stroke-1-rest', (theme) => theme.color.neutral.stroke._1.rest)};
     background: ${cssToken(
       '--admiral-color-neutral-base-opacity-rest',
       (theme) => theme.color.neutral.base.opacity.rest,
@@ -159,6 +172,7 @@ export const StyledCheckBox = styled.label.attrs<
   ${Input}:disabled:indeterminate + ${Background},
   ${Input}[data-read-only]:checked + ${Background},
   ${Input}[data-read-only]:indeterminate + ${Background} {
+    border-color: transparent;
     background: ${cssToken('--admiral-color-primary-base-1-disable', (theme) => theme.color.primary.base._1.disable)};
   }
 `;

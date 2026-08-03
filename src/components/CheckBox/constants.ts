@@ -7,19 +7,23 @@ export const CHECK_BOX_DIMENSION_PARAMETERS: Record<
   {
     controlSize: number;
     containerHeight: number;
+    labelGap: number;
   }
 > = {
   m: {
     controlSize: 20,
     containerHeight: 24,
+    labelGap: 10,
   },
   s: {
     controlSize: 16,
     containerHeight: 20,
+    labelGap: 8,
   },
   xs: {
     controlSize: 14,
     containerHeight: 16,
+    labelGap: 8,
   },
 };
 

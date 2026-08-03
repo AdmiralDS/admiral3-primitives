@@ -47,16 +47,16 @@ type CheckBoxState = {
 };
 
 const CHECK_BOX_STATES: CheckBoxState[] = [
-  { label: 'Обычный', props: {} },
-  { label: 'Выбран', props: { defaultChecked: true } },
-  { label: 'Частично выбран', props: { indeterminate: true } },
-  { label: 'Ошибка', props: { error: true } },
-  { label: 'Отключён', props: { disabled: true } },
-  { label: 'Выбран и отключён', props: { defaultChecked: true, disabled: true } },
-  { label: 'Частично выбран и отключён', props: { indeterminate: true, disabled: true } },
-  { label: 'Только для чтения', props: { readOnly: true } },
-  { label: 'Выбран, только для чтения', props: { defaultChecked: true, readOnly: true } },
-  { label: 'Частично выбран, только для чтения', props: { indeterminate: true, readOnly: true } },
+  { label: 'Default', props: {} },
+  { label: 'Checked', props: { defaultChecked: true } },
+  { label: 'Indeterminate', props: { indeterminate: true } },
+  { label: 'Error', props: { error: true } },
+  { label: 'Disabled', props: { disabled: true } },
+  { label: 'Disabled Checked', props: { defaultChecked: true, disabled: true } },
+  { label: 'Disabled Indeterminate', props: { indeterminate: true, disabled: true } },
+  { label: 'Read Only', props: { readOnly: true } },
+  { label: 'Read Only Checked', props: { defaultChecked: true, readOnly: true } },
+  { label: 'Read Only Indeterminate', props: { indeterminate: true, readOnly: true } },
 ];
 
 export const CheckBoxStatesTemplate = (args: CheckBoxProps) => (
