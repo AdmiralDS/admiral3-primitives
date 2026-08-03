@@ -39,8 +39,7 @@ export const StyledRadioButton = styled.label<StyledRadioButtonProps>`
   box-sizing: border-box;
   width: fit-content;
   color: ${({ $disabled }) => ($disabled ? textDisabled : textColor)};
-  cursor: ${({ $disabled }) => ($disabled ? 'not-allowed' : 'pointer')};
-  ${({ $readOnly }) => $readOnly && 'pointer-events: none;'};
+  cursor: ${({ $disabled, $readOnly }) => ($disabled ? 'not-allowed' : $readOnly ? 'default' : 'pointer')};
   gap: ${RADIO_BUTTON_DIMENSION_PARAMETERS.m.gap}px;
   ${RADIO_BUTTON_DIMENSION_PARAMETERS.m.typography}
 
