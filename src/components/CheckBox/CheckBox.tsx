@@ -68,13 +68,15 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
       if (!readOnly) {
         onChange?.(event);
       }
+
+      event.currentTarget.indeterminate = indeterminate;
     };
 
     useLayoutEffect(() => {
       if (inputRef.current) {
         inputRef.current.indeterminate = indeterminate;
       }
-    }, [indeterminate]);
+    });
 
     return (
       <StyledCheckBox
@@ -86,7 +88,7 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
         style={style}
       >
         <Input
-          aria-describedby={extraText ? extraTextId : undefined}
+          aria-describedby={children && extraText ? extraTextId : undefined}
           aria-invalid={error || undefined}
           aria-labelledby={!props['aria-label'] && children ? labelId : undefined}
           aria-checked={indeterminate ? 'mixed' : undefined}

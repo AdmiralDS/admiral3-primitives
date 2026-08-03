@@ -69,6 +69,10 @@ export const CheckboxComponentLabel = styled.div<{
       ? cssToken('--admiral-color-neutral-text-disable-rest', (theme) => theme.color.neutral.text.disable.rest)
       : cssToken('--admiral-color-neutral-text-1-rest', (theme) => theme.color.neutral.text._1.rest)};
   ${({ $dimension }) => typography[$dimension]}
+
+  fieldset:disabled & {
+    color: ${cssToken('--admiral-color-neutral-text-disable-rest', (theme) => theme.color.neutral.text.disable.rest)};
+  }
 `;
 
 export const CheckboxComponentLabelText = styled.span``;
@@ -83,6 +87,10 @@ export const CheckboxComponentHint = styled.div<{
       ? cssToken('--admiral-color-neutral-text-disable-rest', (theme) => theme.color.neutral.text.disable.rest)
       : cssToken('--admiral-color-neutral-text-2-rest', (theme) => theme.color.neutral.text._2.rest)};
   ${({ $dimension }) => typography[$dimension]}
+
+  fieldset:disabled & {
+    color: ${cssToken('--admiral-color-neutral-text-disable-rest', (theme) => theme.color.neutral.text.disable.rest)};
+  }
 `;
 
 export const StyledCheckBox = styled.label.attrs<
@@ -101,6 +109,10 @@ export const StyledCheckBox = styled.label.attrs<
   vertical-align: middle;
   cursor: ${({ $disabled, $readOnly }) => ($disabled ? 'not-allowed' : $readOnly ? 'default' : 'pointer')};
   user-select: none;
+
+  fieldset:disabled & {
+    cursor: not-allowed;
+  }
 
   ${Input} {
     top: ${({ $dimension }) =>

@@ -89,6 +89,46 @@ describe('CheckBox', () => {
     expect(container.querySelector('[data-icon="minus"]')).toBeInTheDocument();
   });
 
+  it('keeps the native indeterminate state while the prop remains true', () => {
+    const { rerender } = render(<CheckBox indeterminate aria-label="Option" />);
+    const input = screen.getByRole('checkbox', { name: 'Option' });
+
+    fireEvent.click(input);
+    expect(input).toHaveProperty('indeterminate', true);
+
+    rerender(<CheckBox indeterminate aria-label="Option" />);
+    expect(input).toHaveProperty('indeterminate', true);
+  });
+
+  it('does not reference additional text when the label is omitted', () => {
+    render(<CheckBox extraText="Дополнительный текст" aria-label="Option" />);
+
+    const input = screen.getByRole('checkbox', { name: 'Option' });
+
+    expect(input).not.toHaveAttribute('aria-describedby');
+    expect(screen.queryByText('Дополнительный текст')).not.toBeInTheDocument();
+  });
+
+  it('inherits the disabled presentation from a fieldset', () => {
+    render(
+      <fieldset disabled>
+        <CheckBox extraText="Дополнительный текст">Option</CheckBox>
+      </fieldset>,
+    );
+
+    const input = screen.getByRole('checkbox', { name: 'Option' });
+    const root = input.parentElement;
+
+    expect(input).toBeDisabled();
+    expect(root).toHaveStyle({ cursor: 'not-allowed' });
+    expect(screen.getByText('Option').parentElement).toHaveStyle({
+      color: 'var(--admiral-color-neutral-text-disable-rest, rgba(0, 0, 0, 0.26))',
+    });
+    expect(screen.getByText('Дополнительный текст')).toHaveStyle({
+      color: 'var(--admiral-color-neutral-text-disable-rest, rgba(0, 0, 0, 0.26))',
+    });
+  });
+
   it('prevents changing a readOnly checkbox', () => {
     const onChange = vi.fn();
     const onClick = vi.fn();
