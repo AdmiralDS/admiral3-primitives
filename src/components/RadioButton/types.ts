@@ -3,10 +3,6 @@ import type { RADIO_BUTTON_DIMENSIONS } from './constants';
 export type RadioButtonDimension = (typeof RADIO_BUTTON_DIMENSIONS)[number];
 
 export interface RadioButtonProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'size' | 'type'> {
-  /** Контролируемое состояние выбора RadioButton. */
-  checked?: boolean;
-  /** Начальное состояние выбора RadioButton. */
-  defaultChecked?: boolean;
   /** Размер RadioButton. Значение по умолчанию 'm'. */
   dimension?: RadioButtonDimension;
   /** Состояние ошибки. */
