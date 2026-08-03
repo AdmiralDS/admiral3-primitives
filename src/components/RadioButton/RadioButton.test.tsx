@@ -30,6 +30,12 @@ describe('RadioButton', () => {
     expect(ref.current).toBe(screen.getByRole('radio'));
   });
 
+  it('passes className to the root label', () => {
+    render(<RadioButton className="custom-radio">Radio</RadioButton>);
+
+    expect(screen.getByRole('radio').closest('label')).toHaveClass('custom-radio');
+  });
+
   it.each(RADIO_BUTTON_DIMENSIONS)('sets %s dimension data-attribute', (dimension) => {
     render(<RadioButton dimension={dimension}>Radio</RadioButton>);
 
@@ -51,6 +57,25 @@ describe('RadioButton', () => {
     render(<RadioButton error>Radio</RadioButton>);
 
     expect(screen.getByRole('radio')).toHaveAttribute('aria-invalid', 'true');
+  });
+
+  it('emits click and change when activated', () => {
+    const onChange = vi.fn((event: React.ChangeEvent<HTMLInputElement>) => event.currentTarget.checked);
+    const onClick = vi.fn();
+    render(
+      <RadioButton onChange={onChange} onClick={onClick}>
+        Radio
+      </RadioButton>,
+    );
+
+    const radio = screen.getByRole('radio');
+    fireEvent.click(radio);
+
+    expect(radio).toBeChecked();
+    expect(onClick).toHaveBeenCalledOnce();
+    expect(onClick.mock.calls[0][0]).toHaveProperty('defaultPrevented', false);
+    expect(onChange).toHaveBeenCalledOnce();
+    expect(onChange.mock.results[0].value).toBe(true);
   });
 
   it('prevents activation click and does not emit change when readOnly', () => {

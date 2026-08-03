@@ -4,6 +4,7 @@ import type { PlaygroundScenario } from './index';
 import { RadioButtonFieldsetTemplate } from '../../src/components/RadioButton/stories/RadioButtonFieldset.template';
 import { RadioButtonFieldsetReadOnlyTemplate } from '../../src/components/RadioButton/stories/RadioButtonFieldsetReadOnly.template';
 import { RadioButtonPlaygroundTemplate } from '../../src/components/RadioButton/stories/RadioButtonPlayground.template';
+import { RadioButtonStatesTemplate } from '../../src/components/RadioButton/stories/RadioButtonStates.template';
 import { RadioButtonTableDirtyTemplate } from '../../src/components/RadioButton/stories/RadioButtonTableDirty.template';
 
 const playgroundArgs: RadioButtonProps = {
@@ -31,5 +32,10 @@ export const radioButtonScenarios: PlaygroundScenario[] = [
     id: 'radio-button/table',
     title: 'RadioButton Table',
     render: () => <RadioButtonTableDirtyTemplate />,
+  },
+  {
+    id: 'radio-button/states',
+    title: 'RadioButton States',
+    render: () => <RadioButtonStatesTemplate />,
   },
 ];

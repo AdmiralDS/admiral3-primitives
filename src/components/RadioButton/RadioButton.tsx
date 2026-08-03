@@ -62,10 +62,10 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
           {...props}
         />
         <Control $error={error} aria-hidden="true" />
-        {children && (
+        {children != null && (
           <LabelContent>
             {children}
-            {extraText && <Hint $disabled={disabled}>{extraText}</Hint>}
+            {extraText != null && <Hint $disabled={disabled}>{extraText}</Hint>}
           </LabelContent>
         )}
       </StyledRadioButton>
