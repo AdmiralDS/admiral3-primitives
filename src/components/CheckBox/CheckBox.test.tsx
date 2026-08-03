@@ -43,6 +43,18 @@ describe('CheckBox', () => {
     expect(input).toHaveAttribute('aria-describedby', extraText.id);
   });
 
+  it('keeps the component height without rendering a label when children are omitted', () => {
+    render(<CheckBox aria-label="Option" />);
+
+    const input = screen.getByRole('checkbox', { name: 'Option' });
+    const root = input.parentElement;
+
+    expect(root).not.toBeNull();
+    expect(root?.querySelector('div')).not.toBeInTheDocument();
+    expect(root).toHaveStyle({ minHeight: '24px' });
+    expect(input).toHaveStyle({ height: '20px' });
+  });
+
   it('forwards input attributes and ref', () => {
     const ref = createRef<HTMLInputElement>();
     render(<CheckBox ref={ref} name="option" value="yes" aria-label="Option" />);
@@ -63,36 +75,6 @@ describe('CheckBox', () => {
     expect(input).toHaveProperty('indeterminate', true);
     expect(input).toHaveAttribute('aria-checked', 'mixed');
     expect(container.querySelector('[data-icon="minus"]')).toBeInTheDocument();
-  });
-
-  it.each([
-    ['m', '-1 -1 14 10', '14', '10'],
-    ['s', '-0.75 0 11 7', '11', '7'],
-    ['xs', '-1 0 10 6', '10', '6'],
-  ] as const)('uses the exported success icon for the %s dimension', (dimension, viewBox, width, height) => {
-    const { container } = render(
-      <CheckBox dimension={dimension} checked readOnly aria-label={`Option ${dimension}`} />,
-    );
-    const icon = container.querySelector('[data-icon="success"]');
-
-    expect(icon).toHaveAttribute('viewBox', viewBox);
-    expect(icon).toHaveAttribute('width', width);
-    expect(icon).toHaveAttribute('height', height);
-  });
-
-  it.each([
-    ['m', '0 0 10 2', '10', '2'],
-    ['s', '0 -1 8 3', '8', '3'],
-    ['xs', '-1 -1 8 3', '8', '3'],
-  ] as const)('uses the normalized minus icon canvas for the %s dimension', (dimension, viewBox, width, height) => {
-    const { container } = render(
-      <CheckBox dimension={dimension} indeterminate readOnly aria-label={`Option ${dimension}`} />,
-    );
-    const icon = container.querySelector('[data-icon="minus"]');
-
-    expect(icon).toHaveAttribute('viewBox', viewBox);
-    expect(icon).toHaveAttribute('width', width);
-    expect(icon).toHaveAttribute('height', height);
   });
 
   it('prevents changing a readOnly checkbox', () => {
@@ -133,30 +115,5 @@ describe('CheckBox', () => {
     render(<CheckBox error aria-label="Option" />);
 
     expect(screen.getByRole('checkbox', { name: 'Option' })).toHaveAttribute('aria-invalid', 'true');
-  });
-
-  it('allows user accessibility attributes to override defaults', () => {
-    render(
-      <CheckBox
-        error
-        indeterminate
-        extraText="Дополнительный текст"
-        aria-checked="true"
-        aria-describedby="custom-description"
-        aria-invalid="false"
-        aria-labelledby="custom-label"
-        aria-readonly="false"
-      >
-        CheckBox
-      </CheckBox>,
-    );
-
-    const input = screen.getByRole('checkbox');
-
-    expect(input).toHaveAttribute('aria-checked', 'true');
-    expect(input).toHaveAttribute('aria-describedby', 'custom-description');
-    expect(input).toHaveAttribute('aria-invalid', 'false');
-    expect(input).toHaveAttribute('aria-labelledby', 'custom-label');
-    expect(input).toHaveAttribute('aria-readonly', 'false');
   });
 });

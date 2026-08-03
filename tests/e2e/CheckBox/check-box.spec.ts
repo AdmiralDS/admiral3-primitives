@@ -4,6 +4,7 @@ import { getPlaygroundScenarioPath, resolveCssColorToken } from '../utils';
 
 const defaultScenarioId = 'check-box/default';
 const statesScenarioId = 'check-box/states';
+const tableSelectionScenarioId = 'check-box/table-selection';
 
 test.describe('CheckBox playground', () => {
   test('supports mouse and keyboard interaction and resolves theme colors', async ({ page }) => {
@@ -18,6 +19,8 @@ test.describe('CheckBox playground', () => {
     await expect(label).toHaveAttribute('data-dimension', 'm');
     await expect(input).toHaveCSS('width', '20px');
     await expect(input).toHaveCSS('height', '20px');
+    await expect(control).toHaveCSS('transition-duration', '0.1s, 0.1s');
+    await expect(control).toHaveCSS('transition-timing-function', 'cubic-bezier(0, 0, 1, 1), cubic-bezier(0, 0, 1, 1)');
 
     await input.click();
     await expect(input).toBeChecked();
@@ -36,14 +39,25 @@ test.describe('CheckBox playground', () => {
     await expect(control).toHaveCSS('background-color', expectedDarkColor);
   });
 
+  test('disables color transitions when reduced motion is preferred', async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: 'reduce' });
+    await page.goto(getPlaygroundScenarioPath(defaultScenarioId));
+
+    const control = page.getByTestId('check-box').locator('xpath=following-sibling::span[1]');
+
+    await expect(control).toHaveCSS('transition-duration', '0s');
+  });
+
   test('renders indeterminate, error, disabled and readOnly states', async ({ page }) => {
     await page.goto(getPlaygroundScenarioPath(statesScenarioId));
 
     const table = page.getByRole('table', { name: 'Состояния CheckBox по размерам' });
-    const indeterminate = page.getByRole('checkbox', { name: 'Частично выбран, размер M', exact: true });
-    const error = page.getByRole('checkbox', { name: 'Ошибка, размер M' });
-    const disabled = page.getByRole('checkbox', { name: 'Отключён, размер M', exact: true });
-    const readOnly = page.getByRole('checkbox', { name: 'Выбран, только для чтения, размер M', exact: true });
+    const indeterminate = page.getByRole('checkbox', { name: 'Indeterminate, размер M', exact: true });
+    const error = page.getByRole('checkbox', { name: 'Error, размер M' });
+    const disabled = page.getByRole('checkbox', { name: 'Disabled, размер M', exact: true });
+    const readOnlyRest = page.getByRole('checkbox', { name: 'Read Only, размер M', exact: true });
+    const readOnly = page.getByRole('checkbox', { name: 'Read Only Checked, размер M', exact: true });
+    const disabledBorderColor = await resolveCssColorToken(page, '--admiral-color-neutral-stroke-1-rest');
 
     await expect(table).toBeVisible();
     await expect(table.getByRole('checkbox')).toHaveCount(30);
@@ -53,6 +67,11 @@ test.describe('CheckBox playground', () => {
     await expect(disabled).toBeDisabled();
     await expect(disabled).toHaveCSS('cursor', 'not-allowed');
     await expect(disabled.locator('xpath=..')).toHaveCSS('cursor', 'not-allowed');
+    await expect(disabled.locator('xpath=following-sibling::span[1]')).toHaveCSS('border-color', disabledBorderColor);
+    await expect(readOnlyRest.locator('xpath=following-sibling::span[1]')).toHaveCSS(
+      'border-color',
+      disabledBorderColor,
+    );
     await expect(readOnly).toBeChecked();
     await expect(readOnly).toHaveAttribute('aria-readonly', 'true');
 
@@ -64,19 +83,19 @@ test.describe('CheckBox playground', () => {
     await page.goto(getPlaygroundScenarioPath(statesScenarioId));
 
     const expectedOffsets = {
-      Выбран: {
+      Checked: {
         M: { horizontal: 0.5, vertical: 0.5 },
         S: { horizontal: 0.6, vertical: -0.13 },
         XS: { horizontal: 0.4, vertical: -0.26 },
       },
-      'Частично выбран': {
+      Indeterminate: {
         M: { horizontal: 0, vertical: 0 },
         S: { horizontal: 0, vertical: 0.6 },
         XS: { horizontal: 0.5, vertical: 0.4 },
       },
     } as const;
 
-    for (const state of ['Выбран', 'Частично выбран']) {
+    for (const state of ['Checked', 'Indeterminate']) {
       const row = page.getByRole('row').filter({ has: page.getByRole('rowheader', { name: state, exact: true }) });
 
       for (const dimension of ['M', 'S', 'XS']) {
@@ -103,6 +122,31 @@ test.describe('CheckBox playground', () => {
         expect(Math.abs(left - right - expectedOffset.horizontal)).toBeLessThanOrEqual(0.08);
         expect(Math.abs(top - bottom - expectedOffset.vertical)).toBeLessThanOrEqual(0.08);
       }
+    }
+  });
+
+  test('selects individual and all table rows', async ({ page }) => {
+    await page.goto(getPlaygroundScenarioPath(tableSelectionScenarioId));
+
+    const table = page.getByRole('table', { name: 'Документы' });
+    const selectAll = table.getByRole('checkbox', { name: 'Выбрать все строки' });
+    const firstRow = table.getByRole('checkbox', { name: 'Выбрать строку «Ежемесячный отчёт»' });
+    const rowCheckBoxes = table.locator('tbody').getByRole('checkbox');
+
+    await expect(rowCheckBoxes).toHaveCount(4);
+    await firstRow.check();
+    await expect(firstRow).toBeChecked();
+    await expect(selectAll).toHaveJSProperty('indeterminate', true);
+
+    await selectAll.check();
+    for (let index = 0; index < 4; index += 1) {
+      await expect(rowCheckBoxes.nth(index)).toBeChecked();
+    }
+    await expect(selectAll).toBeChecked();
+
+    await selectAll.uncheck();
+    for (let index = 0; index < 4; index += 1) {
+      await expect(rowCheckBoxes.nth(index)).not.toBeChecked();
     }
   });
 });
