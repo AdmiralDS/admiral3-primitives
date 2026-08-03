@@ -1,79 +1,35 @@
-import { useState } from 'react';
+import type { RadioButtonProps } from '@admiral-ds/admiral3-primitives';
 
 import type { PlaygroundScenario } from './index';
-import { RadioButton } from '../../src/components/RadioButton';
+import { RadioButtonFieldsetTemplate } from '../../src/components/RadioButton/stories/RadioButtonFieldset.template';
+import { RadioButtonFieldsetReadOnlyTemplate } from '../../src/components/RadioButton/stories/RadioButtonFieldsetReadOnly.template';
+import { RadioButtonPlaygroundTemplate } from '../../src/components/RadioButton/stories/RadioButtonPlayground.template';
+import { RadioButtonTableDirtyTemplate } from '../../src/components/RadioButton/stories/RadioButtonTableDirty.template';
 
-const ReadOnlyGroupScenario = () => {
-  const [value, setValue] = useState('first');
-  const [changeCount, setChangeCount] = useState(0);
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value);
-    setChangeCount((count) => count + 1);
-  };
-
-  return (
-    <>
-      <RadioButton
-        data-testid="first"
-        name="readonly-group"
-        value="first"
-        checked={value === 'first'}
-        readOnly
-        onChange={handleChange}
-      >
-        First
-      </RadioButton>
-      <RadioButton
-        data-testid="readonly"
-        name="readonly-group"
-        value="readonly"
-        checked={value === 'readonly'}
-        readOnly
-        onChange={handleChange}
-      >
-        Read only
-      </RadioButton>
-      <RadioButton
-        data-testid="last"
-        name="readonly-group"
-        value="last"
-        checked={value === 'last'}
-        readOnly
-        onChange={handleChange}
-      >
-        Last
-      </RadioButton>
-      <output data-testid="value">{value}</output>
-      <output data-testid="change-count">{changeCount}</output>
-    </>
-  );
+const playgroundArgs: RadioButtonProps = {
+  children: 'RadioButton',
+  name: 'default',
 };
 
 export const radioButtonScenarios: PlaygroundScenario[] = [
   {
     id: 'radio-button/default',
     title: 'RadioButton Default',
-    render: () => (
-      <RadioButton data-testid="radio-button" name="default">
-        RadioButton
-      </RadioButton>
-    ),
+    render: () => <RadioButtonPlaygroundTemplate {...playgroundArgs} data-testid="radio-button" />,
   },
   {
     id: 'radio-button/fieldset',
     title: 'RadioButton in Fieldset',
-    render: () => (
-      <fieldset data-testid="fieldset" data-dimension="xs" disabled>
-        <RadioButton data-testid="radio-button" defaultChecked>
-          RadioButton
-        </RadioButton>
-      </fieldset>
-    ),
+    render: () => <RadioButtonFieldsetTemplate />,
   },
   {
-    id: 'radio-button/readonly-group',
-    title: 'RadioButton ReadOnly Group',
-    render: () => <ReadOnlyGroupScenario />,
+    id: 'radio-button/readonly-fieldset',
+    title: 'RadioButton ReadOnly Fieldset',
+    render: () => <RadioButtonFieldsetReadOnlyTemplate />,
+  },
+  {
+    id: 'radio-button/table',
+    title: 'RadioButton Table',
+    render: () => <RadioButtonTableDirtyTemplate />,
   },
 ];

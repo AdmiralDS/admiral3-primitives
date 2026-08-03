@@ -21,7 +21,7 @@ const Legend = styled.legend`
     ${textStyles.caption.caption1}
   }
   fieldset:disabled & {
-    color: var('--admiral-color-neutral-text-disable-rest');
+    color: var(--admiral-color-neutral-text-disable-rest);
   }
 `;
 
@@ -39,13 +39,13 @@ export const RadioButtonFieldsetTemplate = (args: RadioButtonProps) => (
     <Fieldset>
       <Legend>Выберите способ доставки</Legend>
       <RadioButtonList>
-        <RadioButton {...args} name="delivery" value="courier" defaultChecked>
+        <RadioButton {...args} name="delivery-m" value="courier" defaultChecked>
           Курьером
         </RadioButton>
-        <RadioButton {...args} name="delivery" value="pickup">
+        <RadioButton {...args} name="delivery-m" value="pickup">
           Самовывоз
         </RadioButton>
-        <RadioButton {...args} name="delivery" value="post">
+        <RadioButton {...args} name="delivery-m" value="post">
           Почтой
         </RadioButton>
       </RadioButtonList>
@@ -53,13 +53,13 @@ export const RadioButtonFieldsetTemplate = (args: RadioButtonProps) => (
     <Fieldset data-dimension="s">
       <Legend>Выберите способ доставки</Legend>
       <RadioButtonList>
-        <RadioButton {...args} name="delivery" value="courier" defaultChecked>
+        <RadioButton {...args} name="delivery-s" value="courier" defaultChecked>
           Курьером
         </RadioButton>
-        <RadioButton {...args} name="delivery" value="pickup">
+        <RadioButton {...args} name="delivery-s" value="pickup">
           Самовывоз
         </RadioButton>
-        <RadioButton {...args} name="delivery" value="post">
+        <RadioButton {...args} name="delivery-s" value="post">
           Почтой
         </RadioButton>
       </RadioButtonList>
@@ -67,13 +67,13 @@ export const RadioButtonFieldsetTemplate = (args: RadioButtonProps) => (
     <Fieldset data-dimension="xs" disabled>
       <Legend>Выберите способ доставки</Legend>
       <RadioButtonList>
-        <RadioButton {...args} name="delivery" value="courier" defaultChecked>
+        <RadioButton {...args} name="delivery-xs" value="courier" defaultChecked>
           Курьером
         </RadioButton>
-        <RadioButton {...args} name="delivery" value="pickup">
+        <RadioButton {...args} name="delivery-xs" value="pickup">
           Самовывоз
         </RadioButton>
-        <RadioButton {...args} name="delivery" value="post">
+        <RadioButton {...args} name="delivery-xs" value="post">
           Почтой
         </RadioButton>
       </RadioButtonList>

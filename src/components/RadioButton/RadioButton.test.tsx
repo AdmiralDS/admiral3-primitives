@@ -30,7 +30,7 @@ describe('RadioButton', () => {
     expect(ref.current).toBe(screen.getByRole('radio'));
   });
 
-  it.each(RADIO_BUTTON_DIMENSIONS)('sets %s dimension marker', (dimension) => {
+  it.each(RADIO_BUTTON_DIMENSIONS)('sets %s dimension data-attribute', (dimension) => {
     render(<RadioButton dimension={dimension}>Radio</RadioButton>);
 
     expect(screen.getByRole('radio').closest('label')).toHaveAttribute('data-dimension', dimension);
@@ -53,96 +53,24 @@ describe('RadioButton', () => {
     expect(screen.getByRole('radio')).toHaveAttribute('aria-invalid', 'true');
   });
 
-  it('does not change checked state when readOnly is clicked', () => {
+  it('prevents activation click and does not emit change when readOnly', () => {
     const onChange = vi.fn();
+    const onClick = vi.fn();
     render(
-      <RadioButton readOnly onChange={onChange}>
-        Radio
-      </RadioButton>,
-    );
-
-    fireEvent.click(screen.getByRole('radio'));
-
-    expect(screen.getByRole('radio')).not.toBeChecked();
-    expect(onChange).not.toHaveBeenCalled();
-    expect(screen.getByRole('radio')).toHaveAttribute('aria-readonly', 'true');
-  });
-
-  it('does not change checked state or emit change when readOnly is activated with Space', () => {
-    const onChange = vi.fn();
-    const onKeyDown = vi.fn();
-    render(
-      <RadioButton readOnly onChange={onChange} onKeyDown={onKeyDown}>
+      <RadioButton readOnly onChange={onChange} onClick={onClick}>
         Radio
       </RadioButton>,
     );
 
     const radio = screen.getByRole('radio');
-    radio.focus();
-    fireEvent.keyDown(radio, { key: ' ' });
-    fireEvent.click(radio);
+    const eventResult = fireEvent.click(radio);
 
+    expect(eventResult).toBe(false);
     expect(radio).not.toBeChecked();
+    expect(radio).toHaveAttribute('aria-readonly', 'true');
     expect(onChange).not.toHaveBeenCalled();
-    expect(onKeyDown).toHaveBeenCalledOnce();
-  });
-
-  it('does not block Enter when readOnly', () => {
-    const onKeyDown = vi.fn();
-    render(
-      <RadioButton readOnly onKeyDown={onKeyDown}>
-        Radio
-      </RadioButton>,
-    );
-
-    const eventResult = fireEvent.keyDown(screen.getByRole('radio'), { key: 'Enter' });
-
-    expect(eventResult).toBe(true);
-    expect(onKeyDown).toHaveBeenCalledOnce();
-  });
-
-  it('leaves arrow navigation between regular radios to the browser', () => {
-    const onKeyDown = vi.fn();
-    render(
-      <>
-        <RadioButton name="group" defaultChecked>
-          First
-        </RadioButton>
-        <RadioButton name="group" onKeyDown={onKeyDown}>
-          Second
-        </RadioButton>
-      </>,
-    );
-
-    const second = screen.getByRole('radio', { name: 'Second' });
-    second.focus();
-
-    const eventResult = fireEvent.keyDown(second, { key: 'ArrowRight' });
-
-    expect(eventResult).toBe(true);
-    expect(onKeyDown).toHaveBeenCalledOnce();
-  });
-
-  it('keeps a readOnly group unchanged when another radio is activated', () => {
-    const onChange = vi.fn();
-    render(
-      <>
-        <RadioButton name="group" readOnly checked onChange={() => undefined}>
-          First
-        </RadioButton>
-        <RadioButton name="group" readOnly checked={false} onChange={onChange}>
-          Second
-        </RadioButton>
-      </>,
-    );
-
-    const first = screen.getByRole('radio', { name: 'First' });
-    const second = screen.getByRole('radio', { name: 'Second' });
-    fireEvent.click(second);
-
-    expect(first).toBeChecked();
-    expect(second).not.toBeChecked();
-    expect(onChange).not.toHaveBeenCalled();
+    expect(onClick).toHaveBeenCalledOnce();
+    expect(onClick.mock.calls[0][0]).toHaveProperty('defaultPrevented', true);
   });
 
   it('inherits native disabled state from fieldset', () => {

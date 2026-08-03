@@ -33,7 +33,7 @@ const textDisabled = cssToken(
 // TODO При разработке RadioGroup рассмотреть возможность отказа от fieldset[data-dimension], fieldset:disabled стилизации
 
 export const StyledRadioButton = styled.label<StyledRadioButtonProps>`
-  display: inline-flex;
+  display: flex;
   align-items: flex-start;
   position: relative;
   box-sizing: border-box;
