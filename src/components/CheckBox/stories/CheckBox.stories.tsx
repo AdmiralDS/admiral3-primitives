@@ -10,6 +10,8 @@ import { CheckBoxSizesTemplate } from './CheckBoxSizes.template';
 import checkBoxSizesTemplateRaw from './CheckBoxSizes.template?raw';
 import { CheckBoxStatesTemplate } from './CheckBoxStates.template';
 import checkBoxStatesTemplateRaw from './CheckBoxStates.template?raw';
+import { CheckBoxTableSelectionTemplate } from './CheckBoxTableSelection.template';
+import checkBoxTableSelectionTemplateRaw from './CheckBoxTableSelection.template?raw';
 import { CHECK_BOX_DIMENSIONS } from '../constants';
 
 const meta = {
@@ -59,6 +61,14 @@ export const WithAdditionalText: StoryObj<CheckBoxProps> = {
   parameters: {
     controls: { exclude: ['dimension', 'extraText'] },
     docs: { source: { code: checkBoxAdditionalTextTemplateRaw } },
+  },
+};
+
+export const TableSelection: StoryObj<CheckBoxProps> = {
+  render: CheckBoxTableSelectionTemplate,
+  parameters: {
+    controls: { disable: true },
+    docs: { source: { code: checkBoxTableSelectionTemplateRaw } },
   },
 };
 
