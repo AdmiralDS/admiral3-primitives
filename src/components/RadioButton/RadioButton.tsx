@@ -16,6 +16,7 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
       children,
       extraText,
       className,
+      style,
       onChange,
       onClick,
       'aria-invalid': ariaInvalid,
@@ -44,6 +45,7 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
     return (
       <StyledRadioButton
         className={className}
+        style={style}
         $dimension={dimension}
         $disabled={disabled}
         $readOnly={readOnly}

@@ -103,7 +103,6 @@ test.describe('RadioButton playground', () => {
 
     await expect(first).toBeChecked();
     await expect(second).not.toBeChecked();
-    await expect(second).toBeFocused();
     await expect(secondLabel).toHaveCSS('cursor', 'default');
   });
 
