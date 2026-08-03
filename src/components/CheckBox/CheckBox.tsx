@@ -42,6 +42,8 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
       children,
       extraText,
       disabled = false,
+      className,
+      style,
       onChange,
       onClick,
       ...props
@@ -75,7 +77,14 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
     }, [indeterminate]);
 
     return (
-      <StyledCheckBox $dimension={dimension} $disabled={disabled} $error={error} $readOnly={readOnly}>
+      <StyledCheckBox
+        $dimension={dimension}
+        $disabled={disabled}
+        $error={error}
+        $readOnly={readOnly}
+        className={className}
+        style={style}
+      >
         <Input
           aria-describedby={extraText ? extraTextId : undefined}
           aria-invalid={error || undefined}
@@ -98,7 +107,7 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
           <CheckboxComponentLabel $dimension={dimension} $disabled={disabled}>
             <CheckboxComponentLabelText id={labelId}>{children}</CheckboxComponentLabelText>
             {extraText && (
-              <CheckboxComponentHint id={extraTextId} $dimension={dimension}>
+              <CheckboxComponentHint id={extraTextId} $dimension={dimension} $disabled={disabled}>
                 {extraText}
               </CheckboxComponentHint>
             )}

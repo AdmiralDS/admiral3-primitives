@@ -75,9 +75,13 @@ export const CheckboxComponentLabelText = styled.span``;
 
 export const CheckboxComponentHint = styled.div<{
   $dimension: CheckBoxDimension;
+  $disabled: boolean;
 }>`
   margin-top: 2px;
-  color: ${cssToken('--admiral-color-neutral-text-2-rest', (theme) => theme.color.neutral.text._2.rest)};
+  color: ${({ $disabled }) =>
+    $disabled
+      ? cssToken('--admiral-color-neutral-text-disable-rest', (theme) => theme.color.neutral.text.disable.rest)
+      : cssToken('--admiral-color-neutral-text-2-rest', (theme) => theme.color.neutral.text._2.rest)};
   ${({ $dimension }) => typography[$dimension]}
 `;
 

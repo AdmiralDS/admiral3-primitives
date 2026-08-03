@@ -64,6 +64,18 @@ describe('CheckBox', () => {
     expect(ref.current).toHaveAttribute('value', 'yes');
   });
 
+  it('applies className and style to the root element', () => {
+    render(<CheckBox className="custom-checkbox" style={{ marginTop: 8 }} aria-label="Option" />);
+
+    const input = screen.getByRole('checkbox', { name: 'Option' });
+    const root = input.parentElement;
+
+    expect(root).toHaveClass('custom-checkbox');
+    expect(root).toHaveStyle({ marginTop: '8px' });
+    expect(input).not.toHaveClass('custom-checkbox');
+    expect(input).not.toHaveAttribute('style');
+  });
+
   it('supports checked and indeterminate states', () => {
     const { container, rerender } = render(<CheckBox checked readOnly aria-label="Option" />);
     const input = screen.getByRole('checkbox', { name: 'Option' });
