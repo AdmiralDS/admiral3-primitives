@@ -2,7 +2,7 @@ import { animation, textStyles } from '@admiral-ds/admiral3-tokens';
 import styled from 'styled-components';
 
 import { RADIO_BUTTON_DIMENSION_PARAMETERS } from './constants';
-import type { RadioButtonDimension, StyledRadioButtonProps } from './types';
+import type { StyledRadioButtonProps } from './types';
 import { cssToken } from '../../theme/cssToken';
 
 const backgroundRest = cssToken('--admiral-color-neutral-base-1-rest', (theme) => theme.color.neutral.base._1.rest);
@@ -61,7 +61,7 @@ export const StyledRadioButton = styled.label<StyledRadioButtonProps>`
   }
 `;
 
-export const NativeInput = styled.input<{ $dimension: RadioButtonDimension }>`
+export const NativeInput = styled.input`
   position: absolute;
   top: 0;
   bottom: 0;

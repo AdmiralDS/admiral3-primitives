@@ -53,7 +53,6 @@ export const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
       >
         <NativeInput
           ref={ref}
-          $dimension={dimension}
           type="radio"
           disabled={disabled}
           readOnly={readOnly}
