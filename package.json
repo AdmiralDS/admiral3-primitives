@@ -34,6 +34,10 @@
       "types": "./dist/components/Spinner/index.d.ts",
       "import": "./dist/components/Spinner/index.js"
     },
+    "./radio-button": {
+      "types": "./dist/components/RadioButton/index.d.ts",
+      "import": "./dist/components/RadioButton/index.js"
+    },
     "./check-box": {
       "types": "./dist/components/CheckBox/index.d.ts",
       "import": "./dist/components/CheckBox/index.js"
