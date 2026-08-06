@@ -65,16 +65,22 @@ test.describe('CheckBox playground', () => {
     await expect(tableWithExtraText.getByRole('checkbox')).toHaveCount(30);
     await expect(tableWithExtraText.getByText('Дополнительный текст')).toHaveCount(30);
 
-    for (const [dimension, expectedMargin] of Object.entries({ M: '2px', S: '2px', XS: '1px' })) {
+    const dimensionGeometry = {
+      M: { labelMargin: '2px', controlOffset: 0 },
+      S: { labelMargin: '2px', controlOffset: 0 },
+      XS: { labelMargin: '0px', controlOffset: 1 },
+    };
+
+    for (const [dimension, { labelMargin, controlOffset }] of Object.entries(dimensionGeometry)) {
       const input = table.getByRole('checkbox', { name: `Default, размер ${dimension}`, exact: true });
       const control = input.locator('xpath=following-sibling::span[1]');
       const label = input.locator('xpath=following-sibling::span[2]');
       const [controlBox, labelBox] = await Promise.all([control.boundingBox(), label.boundingBox()]);
 
-      expect(controlBox && labelBox ? controlBox.y - labelBox.y : undefined).toBe(0);
+      expect(controlBox && labelBox ? controlBox.y - labelBox.y : undefined).toBe(controlOffset);
       await expect(label).toHaveCSS('padding-top', '0px');
-      await expect(label).toHaveCSS('margin-top', expectedMargin);
-      await expect(label).toHaveCSS('margin-bottom', expectedMargin);
+      await expect(label).toHaveCSS('margin-top', labelMargin);
+      await expect(label).toHaveCSS('margin-bottom', labelMargin);
     }
 
     await expect(indeterminate).toHaveJSProperty('indeterminate', true);

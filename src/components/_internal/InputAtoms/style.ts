@@ -24,19 +24,19 @@ export const SelectionControlLabelContent = styled.span<{ $hasExtraText: boolean
   display: flex;
   min-width: 0;
   flex-direction: column;
-  margin-top: ${INPUT_DIMENSION_PARAMETERS.m.controlMarginBlock}px;
-  margin-bottom: ${({ $hasExtraText }) => ($hasExtraText ? 0 : INPUT_DIMENSION_PARAMETERS.m.controlMarginBlock)}px;
+  margin-top: ${INPUT_DIMENSION_PARAMETERS.m.labelMarginBlock}px;
+  margin-bottom: ${({ $hasExtraText }) => ($hasExtraText ? 0 : INPUT_DIMENSION_PARAMETERS.m.labelMarginBlock)}px;
 
   &[data-dimension='s'],
   fieldset[data-dimension='s'] & {
-    margin-top: ${INPUT_DIMENSION_PARAMETERS.s.controlMarginBlock}px;
-    margin-bottom: ${({ $hasExtraText }) => ($hasExtraText ? 0 : INPUT_DIMENSION_PARAMETERS.s.controlMarginBlock)}px;
+    margin-top: ${INPUT_DIMENSION_PARAMETERS.s.labelMarginBlock}px;
+    margin-bottom: ${({ $hasExtraText }) => ($hasExtraText ? 0 : INPUT_DIMENSION_PARAMETERS.s.labelMarginBlock)}px;
   }
 
   &[data-dimension='xs'],
   fieldset[data-dimension='xs'] & {
-    margin-top: ${INPUT_DIMENSION_PARAMETERS.xs.controlMarginBlock}px;
-    margin-bottom: ${({ $hasExtraText }) => ($hasExtraText ? 0 : INPUT_DIMENSION_PARAMETERS.xs.controlMarginBlock)}px;
+    margin-top: ${INPUT_DIMENSION_PARAMETERS.xs.labelMarginBlock}px;
+    margin-bottom: ${({ $hasExtraText }) => ($hasExtraText ? 0 : INPUT_DIMENSION_PARAMETERS.xs.labelMarginBlock)}px;
   }
 `;
 
@@ -52,6 +52,7 @@ export const SelectionControlExtraText = styled.span<{ $disabled: boolean }>`
 
   [data-dimension='xs'] > &,
   fieldset[data-dimension='xs'] & {
+    margin-top: 2px;
     ${INPUT_DIMENSION_PARAMETERS.xs.typography}
   }
 

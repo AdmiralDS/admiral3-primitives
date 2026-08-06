@@ -8,6 +8,7 @@ export const INPUT_DIMENSION_PARAMETERS: Record<
   {
     controlSize: number;
     controlMarginBlock: number;
+    labelMarginBlock: number;
     gap: number;
     typography: CSSObject;
   }
@@ -15,18 +16,21 @@ export const INPUT_DIMENSION_PARAMETERS: Record<
   m: {
     controlSize: 20,
     controlMarginBlock: 2,
+    labelMarginBlock: 2,
     gap: 10,
     typography: textStyles.body.body1Short,
   },
   s: {
     controlSize: 16,
     controlMarginBlock: 2,
+    labelMarginBlock: 2,
     gap: 8,
     typography: textStyles.body.body2Short,
   },
   xs: {
     controlSize: 14,
     controlMarginBlock: 1,
+    labelMarginBlock: 0,
     gap: 8,
     typography: textStyles.caption.caption1,
   },
