@@ -1,9 +1,10 @@
-import { animation, textStyles } from '@admiral-ds/admiral3-tokens';
+import { animation } from '@admiral-ds/admiral3-tokens';
 import styled from 'styled-components';
 
 import { RADIO_BUTTON_DIMENSION_PARAMETERS } from './constants';
 import type { StyledRadioButtonProps } from './types';
 import { cssToken } from '../../theme/cssToken';
+import { NativeInput } from '../_internal/InputAtoms';
 
 const backgroundRest = cssToken('--admiral-color-neutral-base-1-rest', (theme) => theme.color.neutral.base._1.rest);
 const backgroundHover = cssToken('--admiral-color-neutral-base-1-hover', (theme) => theme.color.neutral.base._1.hover);
@@ -24,7 +25,6 @@ const selectedDisabled = cssToken(
 const errorColor = cssToken('--admiral-color-error-stroke-1-rest', (theme) => theme.color.error.stroke._1.rest);
 const focusColor = cssToken('--admiral-color-primary-base-1-rest', (theme) => theme.color.primary.base._1.rest);
 const textColor = cssToken('--admiral-color-neutral-text-1-rest', (theme) => theme.color.neutral.text._1.rest);
-const hintColor = cssToken('--admiral-color-neutral-text-2-rest', (theme) => theme.color.neutral.text._2.rest);
 const textDisabled = cssToken(
   '--admiral-color-neutral-text-disable-rest',
   (theme) => theme.color.neutral.text.disable.rest,
@@ -59,20 +59,6 @@ export const StyledRadioButton = styled.label<StyledRadioButtonProps>`
     color: ${textDisabled};
     cursor: not-allowed;
   }
-`;
-
-export const NativeInput = styled.input`
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  opacity: 0;
-  cursor: inherit;
 `;
 
 export const Control = styled.span<{ $error: boolean }>`
@@ -146,42 +132,5 @@ export const Control = styled.span<{ $error: boolean }>`
   ${NativeInput}:focus-visible + & {
     outline: 2px solid ${focusColor};
     outline-offset: 2px;
-  }
-`;
-
-export const LabelContent = styled.span`
-  display: flex;
-  min-width: 0;
-  flex-direction: column;
-  margin-block: ${RADIO_BUTTON_DIMENSION_PARAMETERS.m.controlMarginBlock}px;
-
-  ${StyledRadioButton}[data-dimension='s'] &,
-  fieldset[data-dimension='s'] & {
-    margin-block: ${RADIO_BUTTON_DIMENSION_PARAMETERS.s.controlMarginBlock}px;
-  }
-
-  ${StyledRadioButton}[data-dimension='xs'] &,
-  fieldset[data-dimension='xs'] & {
-    margin-block: ${RADIO_BUTTON_DIMENSION_PARAMETERS.xs.controlMarginBlock}px;
-  }
-`;
-
-export const Hint = styled.span<{ $disabled: boolean }>`
-  color: ${({ $disabled }) => ($disabled ? textDisabled : hintColor)};
-  margin-top: 4px;
-  ${textStyles.body.body1Short}
-
-  ${StyledRadioButton}:is([data-dimension='s']) &,
-  fieldset:is([data-dimension='s']) & {
-    ${textStyles.body.body2Short}
-  }
-
-  ${StyledRadioButton}:is([data-dimension='xs']) &,
-  fieldset:is([data-dimension='xs']) & {
-    ${textStyles.caption.caption1}
-  }
-
-  fieldset:disabled & {
-    color: ${textDisabled};
   }
 `;

@@ -1,33 +1,4 @@
-import { textStyles } from '@admiral-ds/admiral3-tokens';
-import type { CSSObject } from 'styled-components';
+import { INPUT_DIMENSIONS, INPUT_DIMENSION_PARAMETERS } from '../_internal/InputAtoms/constants';
 
-export const CHECK_BOX_DIMENSIONS = ['m', 's', 'xs'] as const;
-
-export const CHECK_BOX_DIMENSION_PARAMETERS: Record<
-  (typeof CHECK_BOX_DIMENSIONS)[number],
-  {
-    controlSize: number;
-    controlMarginBlock: number;
-    gap: number;
-    typography: CSSObject;
-  }
-> = {
-  m: {
-    controlSize: 20,
-    controlMarginBlock: 2,
-    gap: 10,
-    typography: textStyles.body.body1Short,
-  },
-  s: {
-    controlSize: 16,
-    controlMarginBlock: 2,
-    gap: 8,
-    typography: textStyles.body.body2Short,
-  },
-  xs: {
-    controlSize: 14,
-    controlMarginBlock: 1,
-    gap: 8,
-    typography: textStyles.caption.caption1,
-  },
-};
+export const CHECK_BOX_DIMENSIONS = INPUT_DIMENSIONS;
+export const CHECK_BOX_DIMENSION_PARAMETERS = INPUT_DIMENSION_PARAMETERS;

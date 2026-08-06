@@ -8,9 +8,10 @@ import MinusXsIcon from './assets/Minus_XS.svg?react';
 import SuccessMIcon from './assets/Success_M.svg?react';
 import SuccessSIcon from './assets/Success_S.svg?react';
 import SuccessXsIcon from './assets/Success_XS.svg?react';
-import { Control, Hint, LabelContent, NativeInput, StyledCheckBox } from './style';
+import { Control, StyledCheckBox } from './style';
 import type { CheckBoxProps } from './types';
 import { refSetter } from '../../utils/refSetter';
+import { NativeInput, SelectionControlExtraText, SelectionControlLabelContent } from '../_internal/InputAtoms';
 
 const SUCCESS_ICONS = {
   m: SuccessMIcon,
@@ -94,10 +95,12 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
           <StateIcon data-icon={indeterminate ? 'minus' : 'success'} focusable="false" />
         </Control>
         {children != null && (
-          <LabelContent>
+          <SelectionControlLabelContent $hasExtraText={extraText != null} data-dimension={dimension}>
             {children}
-            {extraText != null && <Hint $disabled={disabled}>{extraText}</Hint>}
-          </LabelContent>
+            {extraText != null && (
+              <SelectionControlExtraText $disabled={disabled}>{extraText}</SelectionControlExtraText>
+            )}
+          </SelectionControlLabelContent>
         )}
       </StyledCheckBox>
     );
