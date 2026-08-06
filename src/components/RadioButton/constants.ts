@@ -20,14 +20,14 @@ export const RADIO_BUTTON_DIMENSION_PARAMETERS: Record<
     controlMarginBlock: 2,
     gap: 10,
     checkedBorderWidth: 5,
-    typography: textStyles.body.body1Long,
+    typography: textStyles.body.body1Short,
   },
   s: {
     controlSize: 16,
     controlMarginBlock: 2,
     gap: 8,
     checkedBorderWidth: 4,
-    typography: textStyles.body.body2Long,
+    typography: textStyles.body.body2Short,
   },
   xs: {
     controlSize: 14,

@@ -153,15 +153,31 @@ export const LabelContent = styled.span`
   display: flex;
   min-width: 0;
   flex-direction: column;
+  margin-block: ${RADIO_BUTTON_DIMENSION_PARAMETERS.m.controlMarginBlock}px;
+
+  ${StyledRadioButton}[data-dimension='s'] &,
+  fieldset[data-dimension='s'] & {
+    margin-block: ${RADIO_BUTTON_DIMENSION_PARAMETERS.s.controlMarginBlock}px;
+  }
+
+  ${StyledRadioButton}[data-dimension='xs'] &,
+  fieldset[data-dimension='xs'] & {
+    margin-block: ${RADIO_BUTTON_DIMENSION_PARAMETERS.xs.controlMarginBlock}px;
+  }
 `;
 
 export const Hint = styled.span<{ $disabled: boolean }>`
   color: ${({ $disabled }) => ($disabled ? textDisabled : hintColor)};
   margin-top: 4px;
-  ${textStyles.body.body2Long}
+  ${textStyles.body.body1Short}
 
-  ${StyledRadioButton}:is([data-dimension='s'], [data-dimension='xs']) &,
-  fieldset:is([data-dimension='s'], [data-dimension='xs']) & {
+  ${StyledRadioButton}:is([data-dimension='s']) &,
+  fieldset:is([data-dimension='s']) & {
+    ${textStyles.body.body2Short}
+  }
+
+  ${StyledRadioButton}:is([data-dimension='xs']) &,
+  fieldset:is([data-dimension='xs']) & {
     ${textStyles.caption.caption1}
   }
 
