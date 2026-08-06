@@ -1,49 +1,123 @@
 import { animation, textStyles } from '@admiral-ds/admiral3-tokens';
-import styled, { css, type CSSObject } from 'styled-components';
+import styled from 'styled-components';
 
-import { CHECK_BOX_DIMENSION_PARAMETERS, CHECK_BOX_ROOT_DATA_ATTRIBUTE } from './constants';
-import type { CheckBoxDimension, StyledCheckBoxProps } from './types';
+import { CHECK_BOX_DIMENSION_PARAMETERS } from './constants';
+import type { StyledCheckBoxProps } from './types';
 import { cssToken } from '../../theme/cssToken';
 
-const typography: Record<CheckBoxDimension, CSSObject> = {
-  m: textStyles.body.body1Short,
-  s: textStyles.body.body2Short,
-  xs: textStyles.caption.caption1,
-};
-
+const backgroundRest = cssToken('--admiral-color-neutral-base-1-rest', (theme) => theme.color.neutral.base._1.rest);
+const backgroundHover = cssToken('--admiral-color-neutral-base-1-hover', (theme) => theme.color.neutral.base._1.hover);
+const backgroundPress = cssToken('--admiral-color-neutral-base-1-press', (theme) => theme.color.neutral.base._1.press);
+const backgroundDisabled = cssToken(
+  '--admiral-color-neutral-base-opacity-rest',
+  (theme) => theme.color.neutral.base.opacity.rest,
+);
+const borderRest = cssToken('--admiral-color-neutral-stroke-2-rest', (theme) => theme.color.neutral.stroke._2.rest);
+const borderDisabled = cssToken('--admiral-color-neutral-stroke-1-rest', (theme) => theme.color.neutral.stroke._1.rest);
+const selectedRest = cssToken('--admiral-color-primary-base-1-rest', (theme) => theme.color.primary.base._1.rest);
+const selectedHover = cssToken('--admiral-color-primary-base-1-hover', (theme) => theme.color.primary.base._1.hover);
+const selectedPress = cssToken('--admiral-color-primary-base-1-press', (theme) => theme.color.primary.base._1.press);
+const selectedDisabled = cssToken(
+  '--admiral-color-primary-base-1-disable',
+  (theme) => theme.color.primary.base._1.disable,
+);
+const errorColor = cssToken('--admiral-color-error-stroke-1-rest', (theme) => theme.color.error.stroke._1.rest);
+const focusColor = cssToken('--admiral-color-primary-stroke-1-rest', (theme) => theme.color.primary.stroke._1.rest);
+const textColor = cssToken('--admiral-color-neutral-text-1-rest', (theme) => theme.color.neutral.text._1.rest);
+const hintColor = cssToken('--admiral-color-neutral-text-2-rest', (theme) => theme.color.neutral.text._2.rest);
+const textDisabled = cssToken(
+  '--admiral-color-neutral-text-disable-rest',
+  (theme) => theme.color.neutral.text.disable.rest,
+);
+const iconColor = cssToken(
+  '--admiral-color-neutral-text-static-white-1',
+  (theme) => theme.color.neutral.text.staticWhite._1,
+);
+const borderRadius = cssToken('--admiral-radius-by-base-4-small', (theme) => theme.radius.byBase['4'].small);
 const transitionDuration = `var(--admiral-animation-motion-duration-short-2, ${animation.motion.duration.short_2}ms)`;
 const transitionEasing = `var(--admiral-animation-motion-easing-linear, cubic-bezier(${animation.motion.easing.linear.join(
   ', ',
 )}))`;
 
-export const Input = styled.input`
+export const NativeInput = styled.input`
   position: absolute;
-  left: 0;
-  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
-  border: 0;
   opacity: 0;
   cursor: inherit;
 `;
 
-export const Background = styled.span`
+// TODO При разработке CheckBoxGroup рассмотреть возможность отказа от fieldset[data-dimension], fieldset:disabled стилизации
+
+export const StyledCheckBox = styled.label.attrs<
+  StyledCheckBoxProps & {
+    'data-dimension': string;
+  }
+>((props) => ({
+  'data-dimension': props.$dimension,
+}))<StyledCheckBoxProps>`
+  display: flex;
+  align-items: flex-start;
   position: relative;
   box-sizing: border-box;
+  width: fit-content;
+  color: ${({ $disabled }) => ($disabled ? textDisabled : textColor)};
+  cursor: ${({ $disabled, $readOnly }) => ($disabled ? 'not-allowed' : $readOnly ? 'default' : 'pointer')};
+  gap: ${CHECK_BOX_DIMENSION_PARAMETERS.m.gap}px;
+  ${CHECK_BOX_DIMENSION_PARAMETERS.m.typography}
+
+  &[data-dimension='s'],
+  fieldset[data-dimension='s'] & {
+    gap: ${CHECK_BOX_DIMENSION_PARAMETERS.s.gap}px;
+    ${CHECK_BOX_DIMENSION_PARAMETERS.s.typography}
+  }
+
+  &[data-dimension='xs'],
+  fieldset[data-dimension='xs'] & {
+    gap: ${CHECK_BOX_DIMENSION_PARAMETERS.xs.gap}px;
+    ${CHECK_BOX_DIMENSION_PARAMETERS.xs.typography}
+  }
+
+  fieldset:disabled & {
+    color: ${textDisabled};
+    cursor: not-allowed;
+  }
+`;
+
+export const Control = styled.span<{ $error: boolean }>`
+  position: relative;
+  box-sizing: border-box;
+  flex: 0 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
-  flex: 0 0 auto;
-  border: 1px solid ${cssToken('--admiral-color-neutral-stroke-2-rest', (theme) => theme.color.neutral.stroke._2.rest)};
-  border-radius: ${cssToken('--admiral-radius-by-base-4-small', (theme) => theme.radius.byBase['4'].small)};
-  background: ${cssToken('--admiral-color-neutral-base-1-rest', (theme) => theme.color.neutral.base._1.rest)};
-  color: ${cssToken('--admiral-color-neutral-text-static-white-1', (theme) => theme.color.neutral.text.staticWhite._1)};
+  border: 1px solid ${({ $error }) => ($error ? errorColor : borderRest)};
+  border-radius: ${borderRadius};
+  background: ${backgroundRest};
+  color: ${iconColor};
   transition:
     background-color ${transitionDuration} ${transitionEasing},
     border-color ${transitionDuration} ${transitionEasing};
+  pointer-events: none;
+  width: ${CHECK_BOX_DIMENSION_PARAMETERS.m.controlSize}px;
+  height: ${CHECK_BOX_DIMENSION_PARAMETERS.m.controlSize}px;
+  margin-block: ${CHECK_BOX_DIMENSION_PARAMETERS.m.controlMarginBlock}px;
 
-  @media (prefers-reduced-motion: reduce) {
-    transition: none;
+  ${StyledCheckBox}[data-dimension='s'] &,
+  fieldset[data-dimension='s'] & {
+    width: ${CHECK_BOX_DIMENSION_PARAMETERS.s.controlSize}px;
+    height: ${CHECK_BOX_DIMENSION_PARAMETERS.s.controlSize}px;
+    margin-block: ${CHECK_BOX_DIMENSION_PARAMETERS.s.controlMarginBlock}px;
+  }
+
+  ${StyledCheckBox}[data-dimension='xs'] &,
+  fieldset[data-dimension='xs'] & {
+    width: ${CHECK_BOX_DIMENSION_PARAMETERS.xs.controlSize}px;
+    height: ${CHECK_BOX_DIMENSION_PARAMETERS.xs.controlSize}px;
+    margin-block: ${CHECK_BOX_DIMENSION_PARAMETERS.xs.controlMarginBlock}px;
   }
 
   > svg {
@@ -51,144 +125,82 @@ export const Background = styled.span`
     flex: 0 0 auto;
     overflow: visible;
   }
-`;
 
-export const CheckboxComponentLabel = styled.div<{
-  $dimension: CheckBoxDimension;
-  $disabled: boolean;
-}>`
-  display: flex;
-  flex-direction: column;
-  margin-left: ${({ $dimension }) => CHECK_BOX_DIMENSION_PARAMETERS[$dimension].labelGap}px;
-  padding-top: ${({ $dimension }) =>
-    (CHECK_BOX_DIMENSION_PARAMETERS[$dimension].containerHeight -
-      CHECK_BOX_DIMENSION_PARAMETERS[$dimension].controlSize) /
-    2}px;
-  color: ${({ $disabled }) =>
-    $disabled
-      ? cssToken('--admiral-color-neutral-text-disable-rest', (theme) => theme.color.neutral.text.disable.rest)
-      : cssToken('--admiral-color-neutral-text-1-rest', (theme) => theme.color.neutral.text._1.rest)};
-  ${({ $dimension }) => typography[$dimension]}
-
-  fieldset:disabled & {
-    color: ${cssToken('--admiral-color-neutral-text-disable-rest', (theme) => theme.color.neutral.text.disable.rest)};
-  }
-`;
-
-export const CheckboxComponentLabelText = styled.span``;
-
-export const CheckboxComponentHint = styled.div<{
-  $dimension: CheckBoxDimension;
-  $disabled: boolean;
-}>`
-  margin-top: 2px;
-  color: ${({ $disabled }) =>
-    $disabled
-      ? cssToken('--admiral-color-neutral-text-disable-rest', (theme) => theme.color.neutral.text.disable.rest)
-      : cssToken('--admiral-color-neutral-text-2-rest', (theme) => theme.color.neutral.text._2.rest)};
-  ${({ $dimension }) => typography[$dimension]}
-
-  fieldset:disabled & {
-    color: ${cssToken('--admiral-color-neutral-text-disable-rest', (theme) => theme.color.neutral.text.disable.rest)};
-  }
-`;
-
-export const StyledCheckBox = styled.label.attrs<
-  StyledCheckBoxProps & {
-    'data-dimension': string;
-  }
->((props) => ({
-  [CHECK_BOX_ROOT_DATA_ATTRIBUTE]: 'true',
-  'data-dimension': props.$dimension,
-}))<StyledCheckBoxProps>`
-  box-sizing: border-box;
-  position: relative;
-  display: inline-flex;
-  align-items: flex-start;
-  min-height: ${({ $dimension }) => CHECK_BOX_DIMENSION_PARAMETERS[$dimension].containerHeight}px;
-  vertical-align: middle;
-  cursor: ${({ $disabled, $readOnly }) => ($disabled ? 'not-allowed' : $readOnly ? 'default' : 'pointer')};
-  user-select: none;
-
-  fieldset:disabled & {
-    cursor: not-allowed;
-  }
-
-  ${Input} {
-    top: ${({ $dimension }) =>
-      (CHECK_BOX_DIMENSION_PARAMETERS[$dimension].containerHeight -
-        CHECK_BOX_DIMENSION_PARAMETERS[$dimension].controlSize) /
-      2}px;
-    width: ${({ $dimension }) => CHECK_BOX_DIMENSION_PARAMETERS[$dimension].controlSize}px;
-    height: ${({ $dimension }) => CHECK_BOX_DIMENSION_PARAMETERS[$dimension].controlSize}px;
-  }
-
-  ${Background} {
-    margin-top: ${({ $dimension }) =>
-      (CHECK_BOX_DIMENSION_PARAMETERS[$dimension].containerHeight -
-        CHECK_BOX_DIMENSION_PARAMETERS[$dimension].controlSize) /
-      2}px;
-    width: ${({ $dimension }) => CHECK_BOX_DIMENSION_PARAMETERS[$dimension].controlSize}px;
-    height: ${({ $dimension }) => CHECK_BOX_DIMENSION_PARAMETERS[$dimension].controlSize}px;
-  }
-
-  ${({ $error }) =>
-    $error &&
-    css`
-      ${Input}:not(:checked) + ${Background} {
-        border-color: ${cssToken('--admiral-color-error-stroke-1-rest', (theme) => theme.color.error.stroke._1.rest)};
-      }
-    `}
-
-  ${Input}:checked + ${Background},
-  ${Input}:indeterminate + ${Background} {
+  ${NativeInput}:checked + &,
+  ${NativeInput}:indeterminate + & {
     border-color: transparent;
-    background: ${cssToken('--admiral-color-primary-base-1-rest', (theme) => theme.color.primary.base._1.rest)};
+    background: ${selectedRest};
+
+    > svg {
+      display: block;
+    }
   }
 
-  ${Input}:checked + ${Background} > svg,
-  ${Input}:indeterminate + ${Background} > svg {
-    display: block;
+  ${NativeInput}:not(:disabled):not([data-read-only]):hover + & {
+    background: ${backgroundHover};
   }
 
-  ${Input}:not(:disabled):not([data-read-only]):hover + ${Background} {
-    background: ${cssToken('--admiral-color-neutral-base-1-hover', (theme) => theme.color.neutral.base._1.hover)};
+  ${NativeInput}:not(:disabled):not([data-read-only]):is(:checked, :indeterminate):hover + & {
+    background: ${selectedHover};
   }
 
-  ${Input}:not(:disabled):not([data-read-only]):checked:hover + ${Background},
-  ${Input}:not(:disabled):not([data-read-only]):indeterminate:hover + ${Background} {
-    background: ${cssToken('--admiral-color-primary-base-1-hover', (theme) => theme.color.primary.base._1.hover)};
+  ${NativeInput}:not(:disabled):not([data-read-only]):active + & {
+    background: ${backgroundPress};
   }
 
-  ${Input}:not(:disabled):not([data-read-only]):active + ${Background} {
-    background: ${cssToken('--admiral-color-neutral-base-1-press', (theme) => theme.color.neutral.base._1.press)};
+  ${NativeInput}:not(:disabled):not([data-read-only]):is(:checked, :indeterminate):active + & {
+    background: ${selectedPress};
   }
 
-  ${Input}:not(:disabled):not([data-read-only]):checked:active + ${Background},
-  ${Input}:not(:disabled):not([data-read-only]):indeterminate:active + ${Background} {
-    background: ${cssToken('--admiral-color-primary-base-1-press', (theme) => theme.color.primary.base._1.press)};
+  ${NativeInput}:is(:disabled, [data-read-only]) + & {
+    border-color: ${borderDisabled};
+    background: ${backgroundDisabled};
   }
 
-  ${Input}:focus-visible + ${Background} {
-    outline: 2px solid
-      ${cssToken('--admiral-color-primary-stroke-1-rest', (theme) => theme.color.primary.stroke._1.rest)};
+  ${NativeInput}:is(:disabled, [data-read-only]):is(:checked, :indeterminate) + & {
+    border-color: transparent;
+    background: ${selectedDisabled};
+  }
+
+  ${NativeInput}:focus-visible + & {
+    outline: 2px solid ${focusColor};
     outline-offset: 2px;
   }
+`;
 
-  ${Input}:disabled + ${Background},
-  ${Input}[data-read-only] + ${Background} {
-    border-color: ${cssToken('--admiral-color-neutral-stroke-1-rest', (theme) => theme.color.neutral.stroke._1.rest)};
-    background: ${cssToken(
-      '--admiral-color-neutral-base-opacity-rest',
-      (theme) => theme.color.neutral.base.opacity.rest,
-    )};
+export const LabelContent = styled.span`
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  margin-block: ${CHECK_BOX_DIMENSION_PARAMETERS.m.controlMarginBlock}px;
+
+  ${StyledCheckBox}[data-dimension='s'] &,
+  fieldset[data-dimension='s'] & {
+    margin-block: ${CHECK_BOX_DIMENSION_PARAMETERS.s.controlMarginBlock}px;
   }
 
-  ${Input}:disabled:checked + ${Background},
-  ${Input}:disabled:indeterminate + ${Background},
-  ${Input}[data-read-only]:checked + ${Background},
-  ${Input}[data-read-only]:indeterminate + ${Background} {
-    border-color: transparent;
-    background: ${cssToken('--admiral-color-primary-base-1-disable', (theme) => theme.color.primary.base._1.disable)};
+  ${StyledCheckBox}[data-dimension='xs'] &,
+  fieldset[data-dimension='xs'] & {
+    margin-block: ${CHECK_BOX_DIMENSION_PARAMETERS.xs.controlMarginBlock}px;
+  }
+`;
+
+export const Hint = styled.span<{ $disabled: boolean }>`
+  color: ${({ $disabled }) => ($disabled ? textDisabled : hintColor)};
+  margin-top: 4px;
+  ${textStyles.body.body1Short}
+
+  ${StyledCheckBox}:is([data-dimension='s']) &,
+  fieldset:is([data-dimension='s']) & {
+    ${textStyles.body.body2Short}
+  }
+
+  ${StyledCheckBox}:is([data-dimension='xs']) &,
+  fieldset:is([data-dimension='xs']) & {
+    ${textStyles.caption.caption1}
+  }
+
+  fieldset:disabled & {
+    color: ${textDisabled};
   }
 `;

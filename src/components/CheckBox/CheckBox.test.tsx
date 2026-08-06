@@ -4,7 +4,7 @@ import { cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 
 import { CheckBox } from './CheckBox';
-import { CHECK_BOX_DIMENSIONS, CHECK_BOX_ROOT_DATA_ATTRIBUTE } from './constants';
+import { CHECK_BOX_DIMENSIONS } from './constants';
 
 describe('CheckBox', () => {
   afterEach(() => {
@@ -25,7 +25,6 @@ describe('CheckBox', () => {
     const root = screen.getByText('CheckBox').closest('label');
 
     expect(root).toHaveAttribute('data-dimension', 'm');
-    expect(root).toHaveAttribute(CHECK_BOX_ROOT_DATA_ATTRIBUTE, 'true');
 
     CHECK_BOX_DIMENSIONS.forEach((dimension) => {
       rerender(<CheckBox dimension={dimension}>CheckBox</CheckBox>);
@@ -36,11 +35,19 @@ describe('CheckBox', () => {
   it('renders additional text under the label', () => {
     render(<CheckBox extraText="Дополнительный текст">CheckBox</CheckBox>);
 
-    const input = screen.getByRole('checkbox', { name: 'CheckBox' });
-    const extraText = screen.getByText('Дополнительный текст');
+    const input = screen.getByRole('checkbox', { name: /CheckBox.*Дополнительный текст/ });
 
-    expect(input).toHaveAccessibleDescription('Дополнительный текст');
-    expect(input).toHaveAttribute('aria-describedby', extraText.id);
+    expect(input).not.toHaveAttribute('aria-labelledby');
+    expect(input).not.toHaveAttribute('aria-describedby');
+  });
+
+  it('renders non-null ReactNode labels and hints', () => {
+    const { rerender } = render(<CheckBox>{0}</CheckBox>);
+
+    expect(screen.getByRole('checkbox', { name: '0' })).toBeInTheDocument();
+
+    rerender(<CheckBox extraText={0}>CheckBox</CheckBox>);
+    expect(screen.getByRole('checkbox', { name: /CheckBox.*0/ })).toBeInTheDocument();
   });
 
   it('keeps the component height without rendering a label when children are omitted', () => {
@@ -51,8 +58,8 @@ describe('CheckBox', () => {
 
     expect(root).not.toBeNull();
     expect(root?.querySelector('div')).not.toBeInTheDocument();
-    expect(root).toHaveStyle({ minHeight: '24px' });
-    expect(input).toHaveStyle({ height: '20px' });
+    expect(input.nextElementSibling).toHaveStyle({ width: '20px', height: '20px', marginBlock: '2px' });
+    expect(input).toHaveStyle({ width: '100%', height: '100%' });
   });
 
   it('forwards input attributes and ref', () => {
@@ -74,6 +81,20 @@ describe('CheckBox', () => {
     expect(root).toHaveStyle({ marginTop: '8px' });
     expect(input).not.toHaveClass('custom-checkbox');
     expect(input).not.toHaveAttribute('style');
+  });
+
+  it('inherits dimension from a fieldset', () => {
+    render(
+      <fieldset data-dimension="xs">
+        <CheckBox>Option</CheckBox>
+      </fieldset>,
+    );
+
+    const input = screen.getByRole('checkbox', { name: 'Option' });
+    const control = input.nextElementSibling;
+
+    expect(input.parentElement).toHaveStyle({ gap: '8px' });
+    expect(control).toHaveStyle({ width: '14px', height: '14px', marginBlock: '1px' });
   });
 
   it('supports checked and indeterminate states', () => {
@@ -116,7 +137,7 @@ describe('CheckBox', () => {
       </fieldset>,
     );
 
-    const input = screen.getByRole('checkbox', { name: 'Option' });
+    const input = screen.getByRole('checkbox', { name: /Option.*Дополнительный текст/ });
     const root = input.parentElement;
 
     expect(input).toBeDisabled();

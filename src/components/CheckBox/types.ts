@@ -21,6 +21,5 @@ export interface CheckBoxProps extends Omit<InputHTMLAttributes<HTMLInputElement
 export interface StyledCheckBoxProps {
   $dimension: CheckBoxDimension;
   $disabled: boolean;
-  $error: boolean;
   $readOnly: boolean;
 }

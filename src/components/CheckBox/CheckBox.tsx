@@ -1,4 +1,4 @@
-import { forwardRef, useId, useLayoutEffect, useRef } from 'react';
+import { forwardRef, useLayoutEffect, useRef } from 'react';
 
 // Иконки отличаются от стандартных из пакета по path
 // поэтому для этого компонента выгружены отдельно по размерам
@@ -8,14 +8,7 @@ import MinusXsIcon from './assets/Minus_XS.svg?react';
 import SuccessMIcon from './assets/Success_M.svg?react';
 import SuccessSIcon from './assets/Success_S.svg?react';
 import SuccessXsIcon from './assets/Success_XS.svg?react';
-import {
-  Background,
-  CheckboxComponentHint,
-  CheckboxComponentLabel,
-  CheckboxComponentLabelText,
-  Input,
-  StyledCheckBox,
-} from './style';
+import { Control, Hint, LabelContent, NativeInput, StyledCheckBox } from './style';
 import type { CheckBoxProps } from './types';
 import { refSetter } from '../../utils/refSetter';
 
@@ -46,15 +39,13 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
       style,
       onChange,
       onClick,
+      'aria-invalid': ariaInvalid,
       ...props
     },
     ref,
   ) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
-    const generatedId = useId();
     const StateIcon = indeterminate ? MINUS_ICONS[dimension] : SUCCESS_ICONS[dimension];
-    const labelId = `${generatedId}-label`;
-    const extraTextId = `${generatedId}-extra-text`;
 
     const handleClick = (event: React.MouseEvent<HTMLInputElement>) => {
       if (readOnly) {
@@ -82,38 +73,31 @@ export const CheckBox = forwardRef<HTMLInputElement, CheckBoxProps>(
       <StyledCheckBox
         $dimension={dimension}
         $disabled={disabled}
-        $error={error}
         $readOnly={readOnly}
         className={className}
         style={style}
       >
-        <Input
-          aria-describedby={children && extraText ? extraTextId : undefined}
-          aria-invalid={error || undefined}
-          aria-labelledby={!props['aria-label'] && children ? labelId : undefined}
-          aria-checked={indeterminate ? 'mixed' : undefined}
-          aria-readonly={readOnly || undefined}
-          disabled={disabled}
-          readOnly={readOnly}
-          {...props}
+        <NativeInput
           ref={refSetter(inputRef, ref)}
           type="checkbox"
+          disabled={disabled}
+          readOnly={readOnly}
+          aria-readonly={readOnly || undefined}
           data-read-only={readOnly ? '' : undefined}
+          aria-invalid={error || ariaInvalid || undefined}
+          aria-checked={indeterminate ? 'mixed' : undefined}
           onChange={handleChange}
           onClick={handleClick}
+          {...props}
         />
-        <Background aria-hidden="true">
+        <Control $error={error} aria-hidden="true">
           <StateIcon data-icon={indeterminate ? 'minus' : 'success'} focusable="false" />
-        </Background>
-        {children && (
-          <CheckboxComponentLabel $dimension={dimension} $disabled={disabled}>
-            <CheckboxComponentLabelText id={labelId}>{children}</CheckboxComponentLabelText>
-            {extraText && (
-              <CheckboxComponentHint id={extraTextId} $dimension={dimension} $disabled={disabled}>
-                {extraText}
-              </CheckboxComponentHint>
-            )}
-          </CheckboxComponentLabel>
+        </Control>
+        {children != null && (
+          <LabelContent>
+            {children}
+            {extraText != null && <Hint $disabled={disabled}>{extraText}</Hint>}
+          </LabelContent>
         )}
       </StyledCheckBox>
     );

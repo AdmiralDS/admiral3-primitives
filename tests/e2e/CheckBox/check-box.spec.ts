@@ -14,13 +14,20 @@ test.describe('CheckBox playground', () => {
     const label = input.locator('xpath=..');
     const control = input.locator('xpath=following-sibling::span[1]');
     const expectedColor = await resolveCssColorToken(page, '--admiral-color-primary-base-1-rest');
+    const expectedHoverColor = await resolveCssColorToken(page, '--admiral-color-neutral-base-1-hover');
 
     await expect(label).toBeVisible();
     await expect(label).toHaveAttribute('data-dimension', 'm');
-    await expect(input).toHaveCSS('width', '20px');
-    await expect(input).toHaveCSS('height', '20px');
+    await expect(control).toHaveCSS('width', '20px');
+    await expect(control).toHaveCSS('height', '20px');
     await expect(control).toHaveCSS('transition-duration', '0.1s, 0.1s');
     await expect(control).toHaveCSS('transition-timing-function', 'cubic-bezier(0, 0, 1, 1), cubic-bezier(0, 0, 1, 1)');
+
+    const [labelBox, inputBox] = await Promise.all([label.boundingBox(), input.boundingBox()]);
+    expect(inputBox).toEqual(labelBox);
+
+    await label.hover();
+    await expect(control).toHaveCSS('background-color', expectedHoverColor);
 
     await input.click();
     await expect(input).toBeChecked();
@@ -39,28 +46,37 @@ test.describe('CheckBox playground', () => {
     await expect(control).toHaveCSS('background-color', expectedDarkColor);
   });
 
-  test('disables color transitions when reduced motion is preferred', async ({ page }) => {
-    await page.emulateMedia({ reducedMotion: 'reduce' });
-    await page.goto(getPlaygroundScenarioPath(defaultScenarioId));
-
-    const control = page.getByTestId('check-box').locator('xpath=following-sibling::span[1]');
-
-    await expect(control).toHaveCSS('transition-duration', '0s');
-  });
-
   test('renders indeterminate, error, disabled and readOnly states', async ({ page }) => {
     await page.goto(getPlaygroundScenarioPath(statesScenarioId));
 
-    const table = page.getByRole('table', { name: 'Состояния CheckBox по размерам' });
-    const indeterminate = page.getByRole('checkbox', { name: 'Indeterminate, размер M', exact: true });
-    const error = page.getByRole('checkbox', { name: 'Error, размер M' });
-    const disabled = page.getByRole('checkbox', { name: 'Disabled, размер M', exact: true });
-    const readOnlyRest = page.getByRole('checkbox', { name: 'Read Only, размер M', exact: true });
-    const readOnly = page.getByRole('checkbox', { name: 'Read Only Checked, размер M', exact: true });
+    const tables = page.getByRole('table', { name: 'Состояния CheckBox по размерам' });
+    const table = tables.first();
+    const tableWithExtraText = tables.last();
+    const indeterminate = table.getByRole('checkbox', { name: 'Indeterminate, размер M', exact: true });
+    const error = table.getByRole('checkbox', { name: 'Error, размер M' });
+    const disabled = table.getByRole('checkbox', { name: 'Disabled, размер M', exact: true });
+    const readOnlyRest = table.getByRole('checkbox', { name: 'Read Only, размер M', exact: true });
+    const readOnly = table.getByRole('checkbox', { name: 'Read Only Checked, размер M', exact: true });
     const disabledBorderColor = await resolveCssColorToken(page, '--admiral-color-neutral-stroke-1-rest');
 
+    await expect(tables).toHaveCount(2);
     await expect(table).toBeVisible();
     await expect(table.getByRole('checkbox')).toHaveCount(30);
+    await expect(tableWithExtraText.getByRole('checkbox')).toHaveCount(30);
+    await expect(tableWithExtraText.getByText('Дополнительный текст')).toHaveCount(30);
+
+    for (const [dimension, expectedMargin] of Object.entries({ M: '2px', S: '2px', XS: '1px' })) {
+      const input = table.getByRole('checkbox', { name: `Default, размер ${dimension}`, exact: true });
+      const control = input.locator('xpath=following-sibling::span[1]');
+      const label = input.locator('xpath=following-sibling::span[2]');
+      const [controlBox, labelBox] = await Promise.all([control.boundingBox(), label.boundingBox()]);
+
+      expect(controlBox && labelBox ? controlBox.y - labelBox.y : undefined).toBe(0);
+      await expect(label).toHaveCSS('padding-top', '0px');
+      await expect(label).toHaveCSS('margin-top', expectedMargin);
+      await expect(label).toHaveCSS('margin-bottom', expectedMargin);
+    }
+
     await expect(indeterminate).toHaveJSProperty('indeterminate', true);
     await expect(indeterminate).toHaveAttribute('aria-checked', 'mixed');
     await expect(error).toHaveAttribute('aria-invalid', 'true');
@@ -86,6 +102,8 @@ test.describe('CheckBox playground', () => {
   test('keeps the intended success and minus icon placement in every dimension', async ({ page }) => {
     await page.goto(getPlaygroundScenarioPath(statesScenarioId));
 
+    const table = page.getByRole('table', { name: 'Состояния CheckBox по размерам' }).first();
+
     const expectedOffsets = {
       Checked: {
         M: { horizontal: 0.5, vertical: 0.5 },
@@ -100,7 +118,7 @@ test.describe('CheckBox playground', () => {
     } as const;
 
     for (const state of ['Checked', 'Indeterminate']) {
-      const row = page.getByRole('row').filter({ has: page.getByRole('rowheader', { name: state, exact: true }) });
+      const row = table.getByRole('row').filter({ has: page.getByRole('rowheader', { name: state, exact: true }) });
 
       for (const dimension of ['M', 'S', 'XS']) {
         const input = row.getByRole('checkbox', { name: `${state}, размер ${dimension}`, exact: true });

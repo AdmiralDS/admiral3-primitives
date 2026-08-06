@@ -1,8 +1,8 @@
 import type { CheckBoxProps } from '@admiral-ds/admiral3-primitives';
 
+import { CheckBoxStatesPlaygroundTemplate } from './CheckBoxStatesPlayground.template';
 import type { PlaygroundScenario } from './index';
 import { CheckBoxPlaygroundTemplate } from '../../src/components/CheckBox/stories/CheckBoxPlayground.template';
-import { CheckBoxStatesTemplate } from '../../src/components/CheckBox/stories/CheckBoxStates.template';
 import { CheckBoxTableSelectionTemplate } from '../../src/components/CheckBox/stories/CheckBoxTableSelection.template';
 
 const defaultArgs: CheckBoxProps = {
@@ -18,7 +18,7 @@ export const checkBoxScenarios: PlaygroundScenario[] = [
   {
     id: 'check-box/states',
     title: 'CheckBox States',
-    render: () => <CheckBoxStatesTemplate {...defaultArgs} />,
+    render: () => <CheckBoxStatesPlaygroundTemplate {...defaultArgs} />,
   },
   {
     id: 'check-box/table-selection',

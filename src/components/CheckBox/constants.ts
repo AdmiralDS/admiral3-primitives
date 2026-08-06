@@ -1,30 +1,33 @@
-import type { CheckBoxDimension } from './types';
+import { textStyles } from '@admiral-ds/admiral3-tokens';
+import type { CSSObject } from 'styled-components';
 
 export const CHECK_BOX_DIMENSIONS = ['m', 's', 'xs'] as const;
 
 export const CHECK_BOX_DIMENSION_PARAMETERS: Record<
-  CheckBoxDimension,
+  (typeof CHECK_BOX_DIMENSIONS)[number],
   {
     controlSize: number;
-    containerHeight: number;
-    labelGap: number;
+    controlMarginBlock: number;
+    gap: number;
+    typography: CSSObject;
   }
 > = {
   m: {
     controlSize: 20,
-    containerHeight: 24,
-    labelGap: 10,
+    controlMarginBlock: 2,
+    gap: 10,
+    typography: textStyles.body.body1Short,
   },
   s: {
     controlSize: 16,
-    containerHeight: 20,
-    labelGap: 8,
+    controlMarginBlock: 2,
+    gap: 8,
+    typography: textStyles.body.body2Short,
   },
   xs: {
     controlSize: 14,
-    containerHeight: 16,
-    labelGap: 8,
+    controlMarginBlock: 1,
+    gap: 8,
+    typography: textStyles.caption.caption1,
   },
 };
-
-export const CHECK_BOX_ROOT_DATA_ATTRIBUTE = 'data-admiral-check-box' as const;
