@@ -4,4 +4,5 @@ export * from './components/Button';
 export * from './components/Link';
 export * from './components/Spinner';
 export * from './components/Skeleton';
+export * from './components/RadioButton';
 export * from './components/Pulse';
