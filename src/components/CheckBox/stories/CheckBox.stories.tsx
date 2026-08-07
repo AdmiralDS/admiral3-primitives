@@ -4,6 +4,8 @@ import { CheckBox, type CheckBoxProps } from '@admiral-ds/admiral3-primitives';
 
 import { CheckBoxAdditionalTextTemplate } from './CheckBoxAdditionalText.template';
 import checkBoxAdditionalTextTemplateRaw from './CheckBoxAdditionalText.template?raw';
+import { CheckBoxInformerTemplate } from './CheckBoxInformer.template';
+import checkBoxInformerTemplateRaw from './CheckBoxInformer.template?raw';
 import { CheckBoxPlaygroundTemplate } from './CheckBoxPlayground.template';
 import checkBoxPlaygroundTemplateRaw from './CheckBoxPlayground.template?raw';
 import { CheckBoxSizesTemplate } from './CheckBoxSizes.template';
@@ -61,6 +63,15 @@ export const WithAdditionalText: StoryObj<CheckBoxProps> = {
   parameters: {
     controls: { exclude: ['dimension', 'extraText'] },
     docs: { source: { code: checkBoxAdditionalTextTemplateRaw } },
+  },
+};
+
+export const WithInformer: StoryObj<CheckBoxProps> = {
+  args: defaultArgs,
+  render: CheckBoxInformerTemplate,
+  parameters: {
+    controls: { exclude: ['dimension', 'extraText'] },
+    docs: { source: { code: checkBoxInformerTemplateRaw } },
   },
 };
 
