@@ -1,0 +1,22 @@
+import type { PulseProps } from '@admiral-ds/admiral3-primitives';
+
+import type { PlaygroundScenario } from './index';
+import { PulsePlaygroundTemplate } from '../../src/components/Pulse/stories/PulsePlayground.template';
+
+const defaultArgs: PulseProps = {
+  dimension: 'l',
+  status: 'info',
+};
+
+export const pulseScenarios: PlaygroundScenario[] = [
+  {
+    id: 'pulse/default',
+    title: 'Pulse Default',
+    render: () => <PulsePlaygroundTemplate {...defaultArgs} data-testid="pulse" />,
+  },
+  {
+    id: 'pulse/dismissed',
+    title: 'Pulse Dismissed',
+    render: () => <PulsePlaygroundTemplate {...defaultArgs} data-testid="pulse" dismiss />,
+  },
+];
