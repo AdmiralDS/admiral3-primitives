@@ -41,6 +41,10 @@
     "./check-box": {
       "types": "./dist/components/CheckBox/index.d.ts",
       "import": "./dist/components/CheckBox/index.js"
+    },
+    "./helper-components": {
+      "types": "./dist/components/HelperComponents/index.d.ts",
+      "import": "./dist/components/HelperComponents/index.js"
     }
   },
   "keywords": [
