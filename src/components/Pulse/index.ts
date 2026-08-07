@@ -1,2 +1,2 @@
-export * from './Pulse';
-export * from './types';
+export { Pulse } from './Pulse';
+export type { PulseDimension, PulseProps, PulseStatus } from './types';

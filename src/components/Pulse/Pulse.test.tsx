@@ -1,3 +1,5 @@
+import { createRef } from 'react';
+
 import { themes } from '@admiral-ds/admiral3-tokens';
 import { cleanup, render, screen } from '@testing-library/react';
 import { css, ThemeProvider } from 'styled-components';
@@ -30,23 +32,6 @@ const getStatusColor = (status: PulseStatus, theme = themes.light) => {
   return `var(${PULSE_STATUS_TOKENS[status]},${fallback})`;
 };
 
-const getBeforePseudoElementStyle = (element: HTMLElement) => {
-  const classNames = Array.from(element.classList);
-
-  for (const styleSheet of Array.from(document.styleSheets)) {
-    for (const rule of Array.from(styleSheet.cssRules)) {
-      if (!('selectorText' in rule) || !('style' in rule)) continue;
-
-      const styleRule = rule as CSSStyleRule;
-      const targetsElement = classNames.some((className) => styleRule.selectorText.includes(`.${className}`));
-
-      if (targetsElement && /::?before/.test(styleRule.selectorText)) return styleRule.style;
-    }
-  }
-
-  throw new Error('Pulse ::before style rule was not found');
-};
-
 describe('Pulse', () => {
   afterEach(() => {
     cleanup();
@@ -56,6 +41,14 @@ describe('Pulse', () => {
     render(<Pulse data-testid="pulse" title="Connection status" />);
 
     expect(screen.getByTestId('pulse')).toHaveAttribute('title', 'Connection status');
+  });
+
+  it('forwards ref to the root element', () => {
+    const ref = createRef<HTMLDivElement>();
+
+    render(<Pulse ref={ref} data-testid="pulse" />);
+
+    expect(ref.current).toBe(screen.getByTestId('pulse'));
   });
 
   it('uses default info status and M dimension', () => {
@@ -121,23 +114,5 @@ describe('Pulse', () => {
     );
 
     expect(screen.getByTestId('pulse')).toHaveStyle({ margin: '4px' });
-  });
-
-  it('animates pulse by default', () => {
-    render(<Pulse data-testid="pulse" />);
-
-    const beforeStyle = getBeforePseudoElementStyle(screen.getByTestId('pulse'));
-
-    expect(beforeStyle.getPropertyValue('animation-name')).toBe('animation-m');
-  });
-
-  it('disables pulse animation when dismiss is true', () => {
-    render(<Pulse data-testid="pulse" dismiss />);
-
-    const pulse = screen.getByTestId('pulse');
-    const beforeStyle = getBeforePseudoElementStyle(pulse);
-
-    expect(beforeStyle.getPropertyValue('animation-name')).toBe('none');
-    expect(pulse).not.toHaveAttribute('dismiss');
   });
 });

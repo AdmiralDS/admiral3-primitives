@@ -34,8 +34,9 @@ const Description = () => (
   </Desc>
 );
 
-export default {
+const meta = {
   title: 'Components/Pulse',
+  tags: ['autodocs'],
   decorators: undefined,
   component: Pulse,
   parameters: {
@@ -65,8 +66,9 @@ export default {
   },
 } satisfies Meta<typeof Pulse>;
 
+export default meta;
+
 export const Playground: StoryObj = {
-  // args: defaultArgs,
   render: (args) => <PulsePlaygroundTemplate {...args} />,
 
   parameters: {
@@ -79,7 +81,6 @@ export const Playground: StoryObj = {
 };
 
 export const Sizes: StoryObj = {
-  // args: defaultArgs,
   render: (args) => <PulseDimensionTemplate {...args} />,
 
   parameters: {
@@ -92,7 +93,6 @@ export const Sizes: StoryObj = {
 };
 
 export const Status: StoryObj = {
-  // args: defaultArgs,
   render: (args) => <PulseStatusTemplate {...args} />,
 
   parameters: {

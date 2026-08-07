@@ -1,9 +1,11 @@
 import { Pulse, type PulseProps } from '@admiral-ds/admiral3-primitives';
 
-export const PulsePlaygroundTemplate = (props: PulseProps) => {
+import { StoryDemoContainer } from '../../stories/StoryContainers';
+
+export const PulsePlaygroundTemplate = (args: PulseProps) => {
   return (
-    <>
-      <Pulse {...props} />
-    </>
+    <StoryDemoContainer>
+      <Pulse {...args} />
+    </StoryDemoContainer>
   );
 };
