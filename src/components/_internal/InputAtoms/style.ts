@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { INPUT_DIMENSION_PARAMETERS } from './constants';
 import { cssToken } from '../../../theme/cssToken';
 
-const hintColor = cssToken('--admiral-color-neutral-text-2-rest', (theme) => theme.color.neutral.text._2.rest);
+const extraTextColor = cssToken('--admiral-color-neutral-text-2-rest', (theme) => theme.color.neutral.text._2.rest);
 const textDisabled = cssToken(
   '--admiral-color-neutral-text-disable-rest',
   (theme) => theme.color.neutral.text.disable.rest,
@@ -41,7 +41,7 @@ export const SelectionControlLabelContent = styled.span<{ $hasExtraText: boolean
 `;
 
 export const SelectionControlExtraText = styled.span<{ $disabled: boolean }>`
-  color: ${({ $disabled }) => ($disabled ? textDisabled : hintColor)};
+  color: ${({ $disabled }) => ($disabled ? textDisabled : extraTextColor)};
   margin-top: 4px;
   ${INPUT_DIMENSION_PARAMETERS.m.typography}
 
