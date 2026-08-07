@@ -23,7 +23,7 @@ const selectedDisabled = cssToken(
   (theme) => theme.color.primary.base._1.disable,
 );
 const errorColor = cssToken('--admiral-color-error-stroke-1-rest', (theme) => theme.color.error.stroke._1.rest);
-const focusColor = cssToken('--admiral-color-primary-base-1-rest', (theme) => theme.color.primary.base._1.rest);
+const focusColor = cssToken('--admiral-color-primary-stroke-1-rest', (theme) => theme.color.primary.stroke._1.rest);
 const textColor = cssToken('--admiral-color-neutral-text-1-rest', (theme) => theme.color.neutral.text._1.rest);
 const textDisabled = cssToken(
   '--admiral-color-neutral-text-disable-rest',
