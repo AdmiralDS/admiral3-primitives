@@ -53,11 +53,12 @@ const directoryHasFiles = (directoryPath) =>
   });
 
 /**
- * Находит имена компонентных директорий в `src/components`.
+ * Находит непустые публичные директории с PascalCase-именем в `src/components`.
  *
- * Компонентом считается непустая директория с PascalCase-именем.
+ * Обычный компонент ниже определяется по наличию одноимённого файла реализации.
+ * Папки без такого файла считаются группирующими публичными entrypoints.
  */
-const getComponentNames = () =>
+const getPublicDirectoryNames = () =>
   readdirSync(componentsDir, { withFileTypes: true })
     .filter((entry) => {
       const componentDir = join(componentsDir, entry.name);
@@ -199,7 +200,9 @@ const importMentionsType = (importText, typeName) => {
 };
 
 const errors = [];
-const componentNames = getComponentNames();
+const publicDirectoryNames = getPublicDirectoryNames();
+const componentNames = publicDirectoryNames.filter((name) => existsSync(join(componentsDir, name, `${name}.tsx`)));
+const componentGroupNames = publicDirectoryNames.filter((name) => !componentNames.includes(name));
 const rootIndexContent = readProjectFile(rootIndexPath);
 const packageJson = readProjectJson(packageJsonPath);
 const packageExportKeys = Object.keys(packageJson.exports ?? {});
@@ -348,6 +351,7 @@ for (const componentName of componentNames) {
 const expectedPackageExportKeys = new Set([
   '.',
   './package.json',
+  ...componentGroupNames.map((name) => `./${toKebabCase(name)}`),
   ...componentNames.map((name) => `./${toKebabCase(name)}`),
 ]);
 
