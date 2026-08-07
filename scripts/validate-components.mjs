@@ -206,6 +206,25 @@ const componentGroupNames = publicDirectoryNames.filter((name) => !componentName
 const rootIndexContent = readProjectFile(rootIndexPath);
 const packageJson = readProjectJson(packageJsonPath);
 const packageExportKeys = Object.keys(packageJson.exports ?? {});
+const rootExportSources = getExportSources(rootIndexContent);
+
+const sortedRootExportSources = [...rootExportSources].sort((first, second) => first.localeCompare(second));
+if (JSON.stringify(rootExportSources) !== JSON.stringify(sortedRootExportSources)) {
+  errors.push(`${formatPath(rootIndexPath)} component exports must be sorted alphabetically.`);
+}
+
+const expectedPackageExportOrder = [
+  '.',
+  './package.json',
+  ...packageExportKeys
+    .filter((exportKey) => exportKey !== '.' && exportKey !== './package.json')
+    .sort((first, second) => first.localeCompare(second)),
+];
+if (JSON.stringify(packageExportKeys) !== JSON.stringify(expectedPackageExportOrder)) {
+  errors.push(
+    `${formatPath(packageJsonPath)} exports must keep root and package.json first, then sort subpaths alphabetically.`,
+  );
+}
 
 for (const exportKey of packageExportKeys) {
   if (exportKey !== '.' && exportKey !== './package.json' && !componentExportPattern.test(exportKey)) {
@@ -215,7 +234,7 @@ for (const exportKey of packageExportKeys) {
   }
 }
 
-for (const exportSource of getExportSources(rootIndexContent)) {
+for (const exportSource of rootExportSources) {
   if (!publicComponentExportPattern.test(exportSource)) {
     errors.push(
       `${formatPath(rootIndexPath)} exports "${exportSource}". Root API must re-export only component barrels from src/components/ComponentName.`,
